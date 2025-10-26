@@ -2,6 +2,9 @@
 /* --- BỔ SUNG: LIGHT/DARK MODE & NÚT CHUYỂN THEME --- */
 /* ====================================================== */
 
+
+
+
 /* --- Style cho Nút Chuyển Theme --- */
 .theme-toggle-btn {
     background: none;
@@ -98,39 +101,30 @@ body.light-mode .social-links a:hover {
 body.light-mode .contact-form input,
 body.light-mode .contact-form textarea {
     background-color: rgba(0, 0, 0, 0.05);
-    border-color: rgba(0, 0, 0, 0.1);
-    color: var(--text-primary);
 }
 
-body.light-mode .contact-form input:focus,
-body.light-mode .contact-form textarea:focus {
-    border-color: var(--gradient-purple);
-    box-shadow: 0 0 0 3px rgba(192, 132, 252, 0.15);
+/* Đổi màu cho các tiêu đề phụ như "General Expertise", "Soft Skills"... */
+body.light-mode .skills-subtitle {
+    color: #6200ee;
+    /* Một màu tím đậm, dễ đọc trên nền trắng */
 }
 
-body.light-mode .footer-copyright {
-    border-top-color: var(--border-color);
-}
-
-body.light-mode .main-footer {
-    border-top-color: var(--border-color);
-}
-
-body.light-mode .project-tags span {
+/* Đổi màu cho từng ô kỹ năng (pill/tag) */
+body.light-mode .grid-item {
     background-color: rgba(0, 0, 0, 0.05);
+    /* Nền xám nhạt */
     border-color: rgba(0, 0, 0, 0.1);
+    color: var(--text-secondary);
+    /* Chữ màu xám đậm, kế thừa từ biến màu */
+}
+
+/* Đổi màu cho hiệu ứng hover của ô kỹ năng */
+body.light-mode .grid-item:hover {
     color: var(--text-primary);
-}
-
-body.light-mode .showcase-card {
-    background-color: #f9fafb;
-    color: #1f2937;
-}
-
-body.light-mode .text-features li {
-    color: #4b5563;
-}
-
-body.light-mode .showcase-header {
-    color: #9ca3af;
+    /* Chữ màu đen */
+    border-color: #007bff;
+    /* Viền xanh dương đậm hơn */
+    background-color: rgba(0, 123, 255, 0.1);
+    /* Nền xanh dương nhạt */
+    box-shadow: 0 0 20px rgba(0, 123, 255, 0.3);
 }

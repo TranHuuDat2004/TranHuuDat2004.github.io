@@ -15,6 +15,18 @@
     --resume-button-bg: var(--gradient-green);
 }
 
+/* === BỔ SUNG: BIẾN MÀU CHO LIGHT MODE === */
+body.light-mode {
+    background-color: var(--bg-dark); /* Explicitly set background */
+    --bg-dark: #f5f5f5;
+    --bg-card: rgba(255, 255, 255, 0.8);
+    --border-color: rgba(0, 0, 0, 0.1);
+    --text-primary: #212121;
+    --text-secondary: #5f5f5f;
+    --resume-button-bg: #18181b;
+    /* Nút resume nền đen chữ trắng */
+}
+
 * {
     margin: 0;
     padding: 0;

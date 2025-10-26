@@ -326,27 +326,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggleBtn = document.getElementById('theme-toggle');
 
     if (themeToggleBtn) {
-        const currentTheme = localStorage.getItem('theme');
-
-        // Áp dụng theme đã lưu khi trang vừa tải
-        if (currentTheme) {
-            document.body.classList.add(currentTheme);
-        }
-
-        // Gắn sự kiện click cho nút
-        themeToggleBtn.addEventListener('click', () => {
-            document.body.classList.toggle('light-mode');
-
-            // Lưu lựa chọn vào localStorage
-            let theme = document.body.classList.contains('light-mode') ? 'light-mode' : 'dark-mode';
-
-            // Nếu không có class light-mode, có nghĩa là đang ở dark mode, nhưng ta không cần lưu 'dark-mode'
-            // vì nó là mặc định. Chỉ cần lưu 'light-mode' thôi.
+        // Function to set the theme
+        function setTheme(theme) {
             if (theme === 'light-mode') {
+                document.body.classList.add('light-mode');
                 localStorage.setItem('theme', 'light-mode');
             } else {
-                localStorage.removeItem('theme'); // Xóa key khi quay về dark mode
+                document.body.classList.remove('light-mode');
+                localStorage.removeItem('theme');
             }
+        }
+
+        // Event listener for the button
+        themeToggleBtn.addEventListener('click', () => {
+            const isLight = document.body.classList.contains('light-mode');
+            setTheme(isLight ? 'dark-mode' : 'light-mode');
         });
+
+        // Apply initial theme on load
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            setTheme(savedTheme);
+        }
     }
 }); // <-- Dấu ngoặc đóng của sự kiện DOMContentLoaded duy nhất
