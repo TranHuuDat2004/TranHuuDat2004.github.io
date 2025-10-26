@@ -1,0 +1,38 @@
+name: Update GitHub Stats
+
+# Các trình kích hoạt (triggers) cho workflow
+on:
+  # 1. Chạy tự động mỗi ngày vào lúc 1:00 sáng (giờ Việt Nam)
+  schedule:
+    - cron: '0 18 * * *' # Đây là 18:00 UTC, tương đương 1:00 sáng hôm sau ở VN
+  
+  # 2. Cho phép chạy thủ công từ tab "Actions" trên GitHub
+  workflow_dispatch:
+
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest # Chạy trên một máy ảo Ubuntu mới nhất
+    steps:
+      # Bước 1: Lấy mã nguồn của bạn từ kho lưu trữ
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      # Bước 2: Thiết lập môi trường Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' # Sử dụng Node.js phiên bản 18
+
+      # Bước 3: Chạy tập lệnh update-stats.js
+      - name: Run update script
+        run: node scripts/update-stats.js
+
+      # Bước 4: Tự động commit và đẩy các thay đổi (nếu có)
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'chore: Tự động cập nhật số liệu thống kê GitHub'
+          file_pattern: 'github_stats.json' # Chỉ commit nếu tệp này thay đổi
+          commit_user_name: 'GitHub Actions Bot'
+          commit_user_email: 'actions@github.com'
+          commit_author: 'GitHub Actions Bot <actions@github.com>'

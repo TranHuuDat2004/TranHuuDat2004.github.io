@@ -115,21 +115,15 @@ document.addEventListener('DOMContentLoaded', () => {
         // Icon mặc định cho các ngôn ngữ không có trong danh sách trên
         const defaultIcon = 'assets/icons/default.png';
 
-        const username = 'tranhuudat2004';
-        const apiUrl = `https://api.github.com/users/${username}/repos?per_page=100&sort=pushed`;
+        const apiUrl = 'github_stats.json';
 
         try {
             // --- BƯỚC 2: FETCH VÀ PHÂN TÍCH GITHUB ---
             const response = await fetch(apiUrl);
             if (!response.ok) throw new Error(`GitHub API Error: ${response.status}`);
-            const repos = await response.json();
+            const langStatsData = await response.json();
 
-            const langStats = new Map();
-            repos.forEach(repo => {
-                if (repo.language) {
-                    langStats.set(repo.language, (langStats.get(repo.language) || 0) + 1);
-                }
-            });
+            const langStats = new Map(Object.entries(langStatsData));
 
             // --- BƯỚC 3: TÍNH TOÁN & CẬP NHẬT PHẦN TRĂM ---
             langStats.forEach((count, lang) => {
