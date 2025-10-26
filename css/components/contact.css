@@ -1,0 +1,85 @@
+/* ====================================================== */
+/* --- CONTACT SECTION --- */
+/* ====================================================== */
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 2rem;
+}
+
+.contact-info-wrapper h3 {
+    margin-bottom: 1.5rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.contact-item i {
+    font-size: 1.25rem;
+    color: var(--gradient-purple);
+    margin-top: 5px;
+}
+
+.contact-item span {
+    display: block;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.contact-item a {
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.contact-item a:hover {
+    color: var(--gradient-pink);
+}
+
+.status-title {
+    margin-top: 2rem;
+}
+
+.contact-status {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+}
+
+.contact-form h3 {
+    margin-bottom: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    color: var(--text-primary);
+    font-family: 'Sora', sans-serif;
+    font-size: 0.9rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: var(--gradient-purple);
+    box-shadow: 0 0 0 3px rgba(192, 132, 252, 0.2);
+}
+
+.contact-form button {
+    width: 100%;
+    justify-content: center;
+}

@@ -1,0 +1,120 @@
+/* ====================================================== */
+/* --- FOOTER (THAY THẾ TOÀN BỘ CSS FOOTER CŨ) --- */
+/* ====================================================== */
+.main-footer {
+    background-color: var(--color-surface); /* << SỬA Ở ĐÂY */
+    color: var(--text-secondary);
+    padding-top: 4rem;
+    border-top: 1px solid var(--border-color);
+    margin-top: 4rem;
+    transition: background-color 0.3s, border-color 0.3s; /* Thêm transition cho mượt */
+}
+
+.footer-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    /* Layout 3 cột */
+    gap: 3rem;
+    /* Khoảng cách giữa các cột */
+    padding-bottom: 3rem;
+}
+
+.footer-column h4.footer-title {
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+/* Cột 1: Giới thiệu */
+.footer-logo {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    padding-right: 400px;
+}
+
+.footer-logo span {
+    background: linear-gradient(to right, var(--gradient-purple), var(--gradient-pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.footer-about p {
+    max-width: 300px;
+    line-height: 1.7;
+}
+
+/* Cột 2 & 3: Links */
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-column ul li {
+    margin-bottom: 0.75rem;
+}
+
+.footer-column ul a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.3s, padding-left 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.footer-column ul a:hover {
+    color: var(--text-primary);
+    padding-left: 5px;
+    /* Hiệu ứng đẩy sang phải khi hover */
+}
+
+/* Dòng Copyright */
+.footer-copyright {
+    padding: 1.5rem 0;
+    text-align: center;
+    font-size: 0.875rem;
+    border-top: 1px solid var(--border-color);
+}
+
+/* --- Responsive cho Footer --- */
+@media (max-width: 768px) {
+    .footer-container {
+        grid-template-columns: 1fr;
+        /* Chuyển thành 1 cột trên mobile */
+        text-align: center;
+        /* Căn giữa nội dung */
+    }
+
+    .footer-about p {
+        margin: 0 auto;
+        /* Căn giữa đoạn text */
+    }
+
+    .footer-column ul a {
+        justify-content: center;
+        /* Căn giữa các item link */
+    }
+
+    .footer-logo {
+        padding-right: 40px;
+    }
+
+    .skills-wrapper {
+        max-width: 400px;
+        /* Chiều rộng tối đa của lưới kỹ năng */
+        margin: 0 auto;
+        /* Tự động căn giữa, tạo ra khoảng trống hai bên */
+    }
+
+    /* SỬA LẠI KHỐI NÀY */
+    .skills-grid {
+        display: grid;
+        /* Luôn hiển thị 3 cột */
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+}

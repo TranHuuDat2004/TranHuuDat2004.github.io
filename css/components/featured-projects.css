@@ -1,0 +1,210 @@
+/* ====================================================== */
+/* --- NEW FEATURED PROJECT SHOWCASE STYLES --- */
+/* ====================================================== */
+
+/* ====================================================== */
+/* --- FEATURED PROJECTS - ALTERNATING LAYOUT STYLES --- */
+/* ====================================================== */
+#projects .container {
+    max-width: 1400px;
+}
+
+.project-showcase-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    /* Cột showcase trái, cột details phải */
+    gap: 2rem;
+    align-items: center;
+    margin-bottom: 6rem;
+    /* Tăng khoảng cách giữa các dự án */
+}
+
+.project-showcase-grid:last-child {
+    margin-bottom: 0;
+    /* Bỏ margin cho dự án cuối cùng */
+}
+
+/* --- The Main Card (Showcase) --- */
+.showcase-card {
+    background-color: #ffffff;
+    color: #121212;
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    border-top: 8px solid var(--gradient-purple);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.showcase-header {
+    font-weight: 600;
+    margin-bottom: 2rem;
+    color: #888;
+}
+
+.showcase-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+}
+
+.text-features h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+}
+
+.text-features .feature-title {
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+.text-features ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.text-features li {
+    margin-bottom: 1rem;
+    color: #555;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.text-features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--gradient-purple);
+    font-weight: bold;
+}
+
+.image-gallery .showcase-img {
+    width: 100%;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* --- The Details Column --- */
+.details-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.details-column h2 {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    text-align: right;
+}
+
+.details-column .project-category {
+    color: var(--gradient-green);
+    font-weight: 600;
+    text-align: right;
+    margin-top: -1.5rem;
+}
+
+.project-tags {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.project-tags span {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    padding: 0.4rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+}
+
+.description-box {
+    padding: 1.5rem;
+    color: var(--text-secondary);
+    text-align: right;
+}
+
+.project-links {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    font-size: 1.25rem;
+}
+
+/* --- STYLES FOR THE REVERSED LAYOUT --- */
+.layout-reversed {
+    grid-template-columns: 1fr 2fr;
+    /* Đảo ngược tỉ lệ cột */
+}
+
+.layout-reversed .showcase-card {
+    grid-column: 2 / 3;
+    /* Chuyển card sang cột 2 */
+    grid-row: 1 / 2;
+}
+
+.layout-reversed .details-column {
+    grid-column: 1 / 2;
+    /* Chuyển details sang cột 1 */
+    grid-row: 1 / 2;
+}
+
+.layout-reversed .details-column h2,
+.layout-reversed .details-column .project-category,
+.layout-reversed .description-box {
+    text-align: left;
+    /* Đổi hướng text */
+}
+
+.layout-reversed .project-tags,
+.layout-reversed .project-links {
+    justify-content: flex-start;
+    /* Đổi hướng các nút */
+}
+
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 992px) {
+
+    .project-showcase-grid,
+    .layout-reversed {
+        grid-template-columns: 1fr;
+        /* Chuyển tất cả về 1 cột */
+    }
+
+    .layout-reversed .showcase-card,
+    .layout-reversed .details-column {
+        /* Reset lại vị trí cột trên mobile */
+        grid-column: auto;
+        grid-row: auto;
+    }
+
+    .details-column {
+        margin-top: 2rem;
+        align-items: center;
+        text-align: center;
+    }
+
+    .details-column h2,
+    .details-column .project-category,
+    .description-box,
+    .layout-reversed .details-column h2,
+    .layout-reversed .details-column .project-category,
+    .layout-reversed .description-box {
+        text-align: center;
+        /* Căn giữa tất cả text */
+    }
+
+    .project-tags,
+    .project-links,
+    .layout-reversed .project-tags,
+    .layout-reversed .project-links {
+        justify-content: center;
+        /* Căn giữa tất cả nút */
+    }
+}

@@ -1,0 +1,138 @@
+/* ====================================================== */
+/* --- THANH TIẾN TRÌNH & HEADER --- */
+/* ====================================================== */
+.scroll-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    background: linear-gradient(to right, var(--gradient-purple), var(--gradient-pink));
+    width: 0%;
+    z-index: 1000;
+    transition: width 0.1s linear;
+}
+
+.main-header {
+    position: fixed;
+    top: 1.5rem;
+    left: 50%;
+    z-index: 999;
+
+    width: 80%;
+    max-width: 1100px;
+
+    background: rgba(24, 24, 27, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color);
+    border-radius: 9999px;
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+
+    /* === THAY ĐỔI DÒNG NÀY === */
+    justify-content: center;
+    /* Căn giữa tất cả các mục */
+
+    gap: 2rem;
+    /* Tăng khoảng cách giữa logo và khối nav */
+    opacity: 0;
+    transform: translate(-50%, -100px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+/* === THAY ĐỔI LOGO THEO THIẾT KẾ MỚI === */
+.logo {
+    font-weight: bold;
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    /* Chuyển màu gradient sang một phần của tên */
+    background: linear-gradient(to right, #a855f7, #ec4899);
+    /* Tím-Hồng */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+/* === THÊM KHỐI NÀY === */
+.header-navigation {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    /* Khoảng cách giữa nav và nút resume */
+}
+
+/* Các style khác cho .main-nav, .resume-button... giữ nguyên */
+
+
+.main-header.visible {
+    opacity: 1;
+    transform: translateX(-50%);
+}
+
+.logo {
+    font-weight: bold;
+    font-size: 1.25rem;
+    text-decoration: none;
+    color: var(--text-primary);
+}
+
+.logo span {
+    background: linear-gradient(to right, var(--gradient-purple), var(--gradient-pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.main-nav {
+    position: relative;
+}
+
+.main-nav a {
+    position: relative;
+    z-index: 1;
+    /* Đảm bảo link luôn nằm trên indicator */
+    padding: 0.5rem 0.75rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.3s;
+}
+
+.main-nav a:hover {
+    color: var(--text-primary);
+}
+
+.main-nav a.is-active {
+    /* Thêm một class để highlight text khi active */
+    color: var(--text-primary);
+}
+
+/* Style cho vạch active di chuyển */
+.nav-indicator {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    /* JS sẽ cập nhật giá trị này */
+    height: 100%;
+    background-color: rgba(0, 247, 255, 0.1);
+    border-radius: 9999px;
+    z-index: 0;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    /* Hiệu ứng mượt mà */
+    opacity: 0;
+    /* Ban đầu ẩn đi */
+}
+
+.resume-button {
+    background: var(--resume-button-bg);
+    color: #121212;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: transform 0.2s;
+}
+
+.resume-button:hover {
+    transform: scale(1.05);
+}

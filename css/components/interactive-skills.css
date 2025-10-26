@@ -1,0 +1,115 @@
+/* ====================================================== */
+/* 9. SKILLS SECTION (Interactive Grid Version - UPDATED) */
+/* ====================================================== */
+
+/* --- Tiêu đề phụ trong section Skills (General Expertise, Soft Skills...) --- */
+.skills-subtitle {
+    text-align: center;
+    font-weight: 600;
+    color: #c084fc;
+    /* Màu tím nhạt, nổi bật trên nền tối */
+    margin: 2.5rem 0 1.25rem 0;
+    letter-spacing: 0.5px;
+}
+
+/* --- Icon ở đầu mỗi mục (Professional Skills, Tech Stack) --- */
+.feature-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 0.75rem;
+    background: linear-gradient(135deg, #8A2BE2, #4A00E0);
+    /* Gradient tím */
+    color: white;
+    font-size: 1.5rem;
+    margin-right: 1rem;
+    flex-shrink: 0;
+}
+
+/* --- Vùng chứa lưới các kỹ năng --- */
+.interactive-grid-container {
+    display: flex;
+    justify-content: center;
+}
+
+/* --- CẬP NHẬT QUAN TRỌNG: Chuyển sang layout LƯỚI (GRID) --- */
+.interactive-grid {
+    display: grid;
+    /* Mặc định trên màn hình lớn: 3 cột bằng nhau */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    /* Khoảng cách giữa các ô kỹ năng */
+    width: 100%;
+    /* Đảm bảo lưới chiếm toàn bộ chiều rộng của container */
+    max-width: 900px;
+    /* Giới hạn chiều rộng tối đa để trông đẹp hơn */
+}
+
+
+/* --- Từng ô kỹ năng (Pill/Tag) - Giữ nguyên style --- */
+.grid-item {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    padding: 0.6rem 1.4rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.85);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    text-align: center;
+    /* Căn giữa chữ trong từng ô */
+}
+
+/* --- Hiệu ứng khi di chuột vào ô kỹ năng (Giữ nguyên) --- */
+.grid-item:hover {
+    transform: translateY(-3px);
+    border-color: #00bfff;
+    background-color: rgba(0, 191, 255, 0.1);
+    box-shadow: 0 0 20px rgba(0, 191, 255, 0.4);
+    color: #fff;
+}
+
+/* --- Tooltip và Mũi tên (Giữ nguyên) --- */
+.grid-item:hover::after {
+    content: attr(data-text);
+    position: absolute;
+    bottom: 140%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #007bff;
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 5px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    z-index: 10;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease;
+}
+
+.grid-item:hover::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: #007bff transparent transparent transparent;
+    z-index: 10;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease;
+}
+
+.grid-item::before,
+.grid-item::after {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}

@@ -1,0 +1,118 @@
+/* ====================================================== */
+/* --- PROJECTS & WORKS SECTION --- */
+/* ====================================================== */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+}
+
+.project-card {
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* THAY THẾ TOÀN BỘ KHỐI NÀY */
+.project-image-container {
+    background-color: #000000;
+    /* Nền đen cho "khung viền" */
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.3rem;
+    /* Tạo khoảng trống xung quanh ảnh */
+    aspect-ratio: 16 / 9;
+    /* Giữ tỉ lệ cho container */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* VÀ KHỐI NÀY */
+.project-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Đảm bảo ảnh không bị méo */
+    border-radius: 0.5rem;
+    /* Bo góc cho ảnh bên trong */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    /* Thêm bóng đổ cho đẹp */
+    transition: transform 0.4s ease;
+}
+
+.project-card:hover .project-image {
+    transform: scale(1.03);
+    /* Hiệu ứng zoom nhỏ hơn một chút cho tinh tế */
+}
+
+.project-content {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.project-content h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.project-content p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    flex-grow: 1;
+    margin-bottom: 1rem;
+}
+
+.project-role {
+    font-style: italic;
+    font-size: 0.85rem;
+}
+
+.project-role strong {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.project-tags span {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+}
+
+.project-links {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    color: white;
+}
+
+.btn-project-link {
+    text-decoration: none;
+    color: var(--text-secondary);
+    transition: color 0.2s;
+}
+
+.btn-project-link:hover {
+    color: var(--text-primary);
+}
+
+.btn-project-demo {
+    margin-left: auto;
+    background: linear-gradient(to right, var(--gradient-purple), var(--gradient-pink));
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+}

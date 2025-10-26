@@ -1,0 +1,33 @@
+/* ====================================================== */
+/* --- CODING ACTIVITY SECTION (WAKATIME) --- */
+/* ====================================================== */
+.wakatime-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.wakatime-card {
+    padding: 2rem;
+    text-align: center;
+}
+
+.wakatime-card h3 {
+    margin-bottom: 1.5rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.wakatime-card figure,
+.wakatime-card embed {
+    width: 100%;
+    height: 300px;
+    /* Bạn có thể điều chỉnh chiều cao này */
+}
+
+/* Responsive cho màn hình nhỏ */
+@media (max-width: 768px) {
+    .wakatime-grid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,52 @@
+/* ====================================================== */
+/* --- MUSIC PLAYER WIDGET --- */
+/* ====================================================== */
+.music-player-widget {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(28, 28, 31, 0.7);
+    backdrop-filter: blur(10px);
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.75rem;
+    border: 1px solid var(--border-color);
+    z-index: 998;
+    color: var(--text-secondary);
+}
+
+.song-cover {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.song-info h4 {
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.song-info p {
+    font-size: 0.75rem;
+    line-height: 1;
+}
+
+.player-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0 0.5rem;
+}
+
+.player-controls i {
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.player-controls i:hover {
+    color: var(--text-primary);
+}

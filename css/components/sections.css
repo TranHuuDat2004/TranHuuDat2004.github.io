@@ -1,0 +1,35 @@
+/* ====================================================== */
+/* --- CÁC SECTION NỘI DUNG CHUNG --- */
+/* ====================================================== */
+.content-section {
+    padding: 6rem 0;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.section-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+    color: var(--text-secondary);
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.title-underline {
+    width: 6rem;
+    height: 4px;
+    background: linear-gradient(to right, var(--gradient-purple), var(--gradient-pink));
+    border-radius: 9999px;
+    margin: 0.75rem auto 0 auto;
+}

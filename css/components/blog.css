@@ -1,0 +1,124 @@
+/* ====================================================== */
+/* --- BLOG SECTION (MỚI) --- */
+/* ====================================================== */
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* 3 cột trên màn hình lớn */
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.blog-post-card {
+    padding: 0;
+    /* Bỏ padding mặc định của glass-card */
+    display: flex;
+    flex-direction: column;
+    /* Sắp xếp ảnh và nội dung theo chiều dọc */
+}
+
+.blog-card-image-link {
+    display: block;
+}
+
+.blog-card-image {
+    aspect-ratio: 16 / 9;
+    /* Giữ tỉ lệ ảnh 16:9 */
+    overflow: hidden;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+}
+
+.blog-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Đảm bảo ảnh lấp đầy khung mà không bị méo */
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.blog-post-card:hover .blog-card-image img {
+    transform: scale(1.05);
+    /* Hiệu ứng zoom khi hover */
+}
+
+.blog-card-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    /* Giúp nội dung card co giãn, đẩy link "Read More" xuống dưới */
+}
+
+.blog-card-tags {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.blog-card-tags span {
+    background-color: rgba(192, 132, 252, 0.1);
+    color: var(--gradient-purple);
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.blog-card-content h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.75rem;
+}
+
+.blog-card-content h3 a {
+    color: var(--text-primary);
+}
+
+.blog-card-content h3 a:hover {
+    color: var(--gradient-pink);
+}
+
+.blog-card-content p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+}
+
+.blog-card-link {
+    margin-top: auto;
+    /* Đẩy link này xuống cuối card */
+    color: var(--text-primary);
+    font-weight: 500;
+    align-self: flex-start;
+    /* Căn lề trái */
+}
+
+.blog-card-link i {
+    margin-left: 0.25rem;
+    transition: transform 0.3s;
+}
+
+.blog-card-link:hover i {
+    transform: translateX(4px);
+}
+
+.view-all-posts-container {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+/* Responsive cho section blog */
+@media (max-width: 992px) {
+    .blog-grid {
+        grid-template-columns: 1fr 1fr;
+        /* 2 cột trên tablet */
+    }
+}
+
+@media (max-width: 768px) {
+    .blog-grid {
+        grid-template-columns: 1fr;
+        /* 1 cột trên mobile */
+    }
+}

@@ -1,0 +1,89 @@
+/* ====================================================== */
+/* --- ANIMATION & RESPONSIVE (LAYOUT SỬA LỖI) --- */
+/* ====================================================== */
+
+
+/* THAY THẾ KHỐI NÀY */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    /* Giữ nguyên transition cho cả lúc hiện và lúc ẩn */
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animate-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* SỬA LỖI: Đặt @media cho header vào đúng khu vực responsive */
+@media (max-width: 1600px) {
+    .main-header {
+        gap: 0.75rem;
+        padding: 0.75rem 0.75rem;
+    }
+
+    .logo {
+        font-size: 1.1rem;
+    }
+
+    .main-nav a {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.8rem;
+    }
+
+    .resume-button {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 992px) {
+
+    /* SỬA LỖI: Chuyển Hero section sang layout 1 cột trên màn hình nhỏ */
+    .hero-container {
+        grid-template-columns: 1fr;
+        /* Chuyển thành 1 cột */
+        justify-items: center;
+        /* Căn các item vào giữa */
+    }
+
+    .hero-text-content {
+        text-align: center;
+        /* Căn giữa lại text */
+        order: -1;
+        /* Đưa khối text lên trên khối profile */
+        margin-bottom: 3rem;
+        /* Tạo khoảng cách với khối profile bên dưới */
+    }
+
+    /* Căn giữa lại các nút và icon social trên màn hình nhỏ */
+    .hero-buttons,
+    .social-links {
+        justify-content: center;
+    }
+
+    .about-grid,
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .main-nav {
+        display: none;
+        /* Hoặc có thể làm menu hamburger */
+    }
+}
+
+@media (max-width: 768px) {
+    .main-header {
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 0.75rem;
+        border-radius: 1rem;
+    }
+
+    .music-player-widget {
+        display: none;
+        /* Ẩn trên mobile cho gọn */
+    }
+}

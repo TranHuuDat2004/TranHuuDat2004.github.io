@@ -1,0 +1,54 @@
+/* ====================================================== */
+/* --- EXPERIENCE SECTION --- */
+/* ====================================================== */
+.timeline {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.timeline::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    background: var(--border-color);
+    top: 0;
+    bottom: 0;
+    left: 11px;
+}
+
+.timeline-item {
+    padding-left: 40px;
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: 0;
+    top: 5px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--bg-dark);
+    border: 3px solid var(--gradient-purple);
+    z-index: 1;
+}
+
+.timeline-content {
+    padding: 1.5rem;
+}
+
+.timeline-content h3 {
+    font-size: 1.2rem;
+}
+
+.timeline-meta {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}

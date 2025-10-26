@@ -1,0 +1,118 @@
+/* --- CSS CHO AWARD SECTION --- */
+
+.award-card {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    /* Chia làm 2 cột, cột mô tả rộng hơn */
+    gap: 2rem;
+    padding: 2.5rem;
+    align-items: center;
+}
+
+.award-info {
+    text-align: right;
+    border-right: 2px solid var(--border-color);
+    padding-right: 2rem;
+}
+
+.award-date {
+    color: var(--gradient-purple);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.award-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.award-competition {
+    font-style: italic;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.award-issuer {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.award-description ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.award-description li {
+    position: relative;
+    padding-left: 1.75rem;
+    margin-bottom: 1rem;
+    color: var(--text-secondary);
+}
+
+.award-description li::before {
+    content: '🏆';
+    /* Hoặc dùng '✨', '✓' */
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--gradient-yellow);
+    font-size: 1rem;
+}
+
+/* Responsive cho màn hình nhỏ */
+@media (max-width: 768px) {
+    .award-card {
+        grid-template-columns: 1fr;
+        /* Chuyển thành 1 cột */
+        gap: 1.5rem;
+    }
+
+    .award-info {
+        text-align: center;
+        border-right: none;
+        border-bottom: 2px solid var(--border-color);
+        padding-right: 0;
+        padding-bottom: 1.5rem;
+    }
+
+    .award-description li {
+        padding-left: 1.5rem;
+    }
+}
+
+.award-photo-card {
+    margin-top: 2rem;
+    padding: 2rem;
+    text-align: center;
+}
+
+.award-photo-card .photo-title {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
+.award-photo-card .photo-wrapper {
+    max-width: 700px;
+    margin: 0 auto;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.award-photo-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.award-photo-card .photo-caption {
+    margin-top: 1.5rem;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}

@@ -1,0 +1,136 @@
+/* ====================================================== */
+/* --- BỔ SUNG: LIGHT/DARK MODE & NÚT CHUYỂN THEME --- */
+/* ====================================================== */
+
+/* --- Style cho Nút Chuyển Theme --- */
+.theme-toggle-btn {
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+    /* Đảm bảo nút không bị co lại */
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.theme-toggle-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+body.light-mode .theme-toggle-btn:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.theme-toggle-btn .fa-sun,
+.theme-toggle-btn .fa-moon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+/* Trạng thái Dark (mặc định): Hiện mặt trăng, ẩn mặt trời */
+.theme-toggle-btn .fa-moon {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+}
+
+.theme-toggle-btn .fa-sun {
+    transform: translate(-50%, -150%);
+    opacity: 0;
+}
+
+/* Trạng thái Light: Ẩn mặt trăng, hiện mặt trời */
+body.light-mode .theme-toggle-btn .fa-moon {
+    transform: translate(-50%, 150%);
+    opacity: 0;
+}
+
+body.light-mode .theme-toggle-btn .fa-sun {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+}
+
+
+/* --- Các điều chỉnh cho Light Mode --- */
+body.light-mode .main-header {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+body.light-mode .resume-button {
+    color: #f4f4f5;
+    /* Chữ trắng */
+}
+
+body.light-mode .main-nav a.is-active {
+    color: var(--text-primary);
+}
+
+body.light-mode .nav-indicator {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode .welcome-badge {
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-color);
+}
+
+body.light-mode .btn-secondary {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+body.light-mode .social-links a {
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+body.light-mode .social-links a:hover {
+    color: var(--text-primary);
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+body.light-mode .contact-form input,
+body.light-mode .contact-form textarea {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: var(--text-primary);
+}
+
+body.light-mode .contact-form input:focus,
+body.light-mode .contact-form textarea:focus {
+    border-color: var(--gradient-purple);
+    box-shadow: 0 0 0 3px rgba(192, 132, 252, 0.15);
+}
+
+body.light-mode .footer-copyright {
+    border-top-color: var(--border-color);
+}
+
+body.light-mode .main-footer {
+    border-top-color: var(--border-color);
+}
+
+body.light-mode .project-tags span {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: var(--text-primary);
+}
+
+body.light-mode .showcase-card {
+    background-color: #f9fafb;
+    color: #1f2937;
+}
+
+body.light-mode .text-features li {
+    color: #4b5563;
+}
+
+body.light-mode .showcase-header {
+    color: #9ca3af;
+}

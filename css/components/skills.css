@@ -1,0 +1,112 @@
+/* ====================================================== */
+/* --- SKILLS SECTION --- */
+/* ====================================================== */
+/* Đảm bảo badge hiển thị lại bình thường */
+#skills .section-badge {
+    display: inline-block;
+}
+
+.skills-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Chuyển grid thành 2 cột trên màn hình lớn để các thanh dài hơn và đẹp hơn */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+/* Style cho trạng thái loading */
+.skills-loading {
+    grid-column: 1 / -1;
+    text-align: center;
+    font-size: 1rem;
+    color: var(--text-secondary);
+    padding: 3rem 0;
+}
+
+.skills-loading i {
+    margin-right: 0.5rem;
+}
+
+.skill-card {
+    padding: 1.25rem;
+}
+
+.skill-header {
+    display: flex;
+    justify-content: space-between;
+    /* Đẩy tên và % ra hai phía */
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+/* KHỐI MỚI: Dùng để nhóm icon và tên kỹ năng */
+.skill-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    /* Khoảng cách giữa icon và tên */
+}
+
+/* KHỐI MỚI: Style cho icon trong header */
+.skill-icon-header {
+    width: 24px;
+    height: 24px;
+}
+
+.skill-name {
+    font-weight: 500;
+}
+
+.skill-percentage {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.skill-bar {
+    width: 100%;
+    height: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 9999px;
+    overflow: hidden;
+}
+
+/* Tìm và cập nhật lại khối này */
+.skill-level {
+    height: 100%;
+    background: linear-gradient(to right, var(--gradient-purple), var(--gradient-pink), var(--gradient-purple));
+    border-radius: 9999px;
+    width: 0;
+    transition: width 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+
+    /* THÊM 2 DÒNG DƯỚI ĐÂY */
+    background-size: 200% 100%;
+    /* Làm cho nền gradient rộng gấp đôi */
+    animation: animateGradient 3s ease infinite;
+    /* Áp dụng animation đã tạo */
+}
+
+/* Responsive: Chuyển về 1 cột trên màn hình nhỏ */
+@media (max-width: 768px) {
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Thêm vào cuối file new-version.css */
+@keyframes animateGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}

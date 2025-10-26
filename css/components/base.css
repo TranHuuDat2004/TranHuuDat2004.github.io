@@ -1,0 +1,67 @@
+/* ====================================================== */
+/* --- BIẾN MÀU VÀ THIẾT LẬP CHUNG --- */
+/* ====================================================== */
+:root {
+    /* Bảng màu mới */
+    --bg-dark: #121212;
+    --bg-card: rgba(28, 28, 31, 0.6);
+    --border-color: rgba(255, 255, 255, 0.1);
+    --text-primary: #f4f4f5;
+    --text-secondary: #a1a1aa;
+    --gradient-purple: #c084fc;
+    --gradient-pink: #f472b6;
+    --gradient-green: #4ade80;
+    --gradient-yellow: #facc15;
+    --resume-button-bg: var(--gradient-green);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    /* Font mới */
+    font-family: 'Sora', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+a {
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--gradient-purple);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* Helper class cho hiệu ứng kính mờ */
+.glass-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}

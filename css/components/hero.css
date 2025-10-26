@@ -1,0 +1,269 @@
+/* ====================================================== */
+/* --- HERO SECTION (LAYOUT ĐÃ SỬA LỖI) --- */
+/* ====================================================== */
+.hero-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding-top: 8rem;
+}
+
+.hero-background {
+    position: absolute;
+    inset: 0;
+    background-image: url('../../assets/wallpaper5.webp');
+    /* ĐỔI TÊN ẢNH NỀN */
+    background-size: cover;
+    background-position: center;
+    z-index: -2;
+    opacity: 0.8;
+}
+
+.hero-background::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, rgba(18, 18, 18, 0.2) 0%, rgba(18, 18, 18, 0.8) 70%);
+    z-index: -1;
+}
+
+/* SỬA LỖI: Chuyển sang CSS Grid để layout ổn định */
+.hero-container {
+    display: grid;
+    grid-template-columns: 340px auto;
+    /* Cột 1 cho card, cột 2 cho text */
+    align-items: center;
+    /* Căn giữa các item theo chiều dọc */
+    gap: 3rem;
+    /* Tăng khoảng cách giữa card và text */
+    width: 100%;
+    position: relative;
+}
+
+/* SỬA LỖI: Bỏ position absolute */
+.profile-card-container {
+    width: 340px;
+    /* Đã bỏ position: absolute, left, top, transform */
+}
+
+.profile-card .profile-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.avatar-wrapper {
+    position: relative;
+}
+
+.avatar {
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--gradient-purple);
+}
+
+.status-indicator.online {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 14px;
+    height: 14px;
+    background-color: #22c55e;
+    border-radius: 50%;
+    border: 3px solid var(--bg-card);
+}
+
+.job-title {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.profile-details {
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.profile-details p {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.card-divider {
+    border: none;
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 1rem 0;
+}
+
+.discord-status {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.discord-status .fa-discord {
+    font-size: 1.25rem;
+    color: #7289DA;
+}
+
+.discord-info h4 {
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.discord-info p {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    line-height: 1;
+}
+
+/* SỬA LỖI: Chuyển text-align sang left và bỏ margin auto */
+.hero-text-content {
+    text-align: left;
+    max-width: 800px;
+    margin: 0;
+}
+
+.welcome-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-color);
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+}
+
+.hero-text-content h1 {
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+}
+
+.gradient-text {
+    background: linear-gradient(to right, var(--gradient-purple), var(--gradient-pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-text-content p {
+    font-size: 1.125rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0;
+}
+
+/* Bỏ margin auto */
+
+/* SỬA LỖI: Căn lề trái cho các nút */
+.hero-buttons {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-start;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: 600;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary {
+    background: linear-gradient(to right, var(--gradient-purple), var(--gradient-pink));
+    color: white;
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+/* SỬA LỖI: Căn lề trái cho các icon social */
+.social-links {
+    margin-top: 2.5rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-start;
+}
+
+.social-links a {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s;
+}
+
+.social-links a:hover {
+    color: var(--text-primary);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: var(--gradient-purple);
+}
+
+.scroll-down-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 40px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 9999px;
+}
+
+.scroll-down-indicator::before {
+    content: '';
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.6);
+    animation: scroll-down-anim 2s infinite;
+}
+
+@keyframes scroll-down-anim {
+    0% {
+        transform: translate(-50%, 0);
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 1;
+    }
+
+    80% {
+        transform: translate(-50%, 16px);
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
