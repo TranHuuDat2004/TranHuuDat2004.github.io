@@ -12,6 +12,8 @@ on:
 jobs:
   update-stats:
     runs-on: ubuntu-latest # Chạy trên một máy ảo Ubuntu mới nhất
+    permissions:
+      contents: write # Cấp quyền ghi cho workflow
     steps:
       # Bước 1: Lấy mã nguồn của bạn từ kho lưu trữ
       - name: Check out repository
