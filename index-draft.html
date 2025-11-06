@@ -4,14 +4,18 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Trần Hữu Đạt - Happy Birthday!</title>
+    <!-- TIÊU ĐỀ MỚI -->
+    <title>Trần Hữu Đạt - Full-stack Web Developer</title>
+    <!-- THAY ICON MỚI (NẾU CÓ) -->
     <link rel="icon" type="image/png" href="assets/favicon.png" />
 
+    <!-- THÊM FONT MỚI TỪ GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/components/base.css" />
+    <!-- LINK CSS VÀ FONT AWESOME -->
+        <link rel="stylesheet" href="css/components/base.css" />
     <link rel="stylesheet" href="css/components/header.css" />
     <link rel="stylesheet" href="css/components/hero.css" />
     <link rel="stylesheet" href="css/components/music-player.css" />
@@ -30,60 +34,49 @@
     <link rel="stylesheet" href="css/components/interactive-skills.css" />
     <link rel="stylesheet" href="css/components/theme.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        .party-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 9999;
-        }
-        .confetti {
-            position: absolute;
-            top: -20px;
-            animation: confetti-fall 5s linear infinite;
-        }
-        .confetti.confetti-square { width: 10px; height: 10px; }
-        .confetti.confetti-rectangle { width: 15px; height: 8px; }
-        .confetti.confetti-circle { width: 12px; height: 12px; border-radius: 50%; }
-        @keyframes confetti-fall {
-            0% { transform: translateY(0) rotateZ(0) rotateY(0); opacity: 1; }
-            100% { transform: translateY(105vh) rotateZ(720deg) rotateY(360deg); opacity: 0; }
-        }
-    </style>
 </head>
 
-<body class="birthday-theme">
-    <div class="party-container"></div>
+<body>
+    <!-- Thanh tiến trình cuộn giữ nguyên -->
     <div class="scroll-progress-bar"></div>
 
     <header class="main-header">
+        <!-- Nhóm 1: Logo -->
         <a class="logo" href="index.html"><span>tranhuudat</span>2004</a>
-        <div class="header-navigation">
+
+        <!-- Nhóm 2: Khối điều hướng -->
+        <div class="header-navigation"> <!-- THÊM THẺ NÀY -->
             <nav class="main-nav">
                 <a href="#hero">Home</a>
                 <a href="#about">About</a>
                 <a href="#skills">Skills</a>
+                <!-- <a href="#coding-activity">Activity</a> -->
                 <a href="#projects">Projects</a>
                 <a href="#experience">Experience</a>
-                <a href="#blog">Blog</a>
+                <a href="#blog">Blog</a> <!-- << THÊM DÒNG NÀY VÀO -->
                 <a href="#contact">Contact</a>
                 <span class="nav-indicator"></span>
             </nav>
             <a href="download-resume.html" class="resume-button">Resume</a>
+
+            <!-- === BỔ SUNG NÚT CHUYỂN THEME VÀO ĐÂY === -->
             <button id="theme-toggle" class="theme-toggle-btn">
                 <i class="fas fa-sun"></i>
                 <i class="fas fa-moon"></i>
             </button>
-        </div>
+
+        </div> <!-- THÊM THẺ NÀY -->
+
     </header>
 
     <main>
+        <!-- ====================================================== -->
+        <!-- Section 1: Hero (THAY ĐỔI LỚN) -->
+        <!-- ====================================================== -->
         <section id="hero" class="hero-section">
             <div class="hero-background"></div>
             <div class="container hero-container">
+                <!-- Profile Card (bên trái) -->
                 <div class="profile-card-container animate-on-scroll">
                     <div class="profile-card glass-card">
                         <div class="profile-header">
@@ -98,22 +91,35 @@
                         </div>
                         <div class="profile-details">
                             <p><i class="fas fa-map-marker-alt"></i> Ho Chi Minh City, Vietnam</p>
-                            <p><i class="fas fa-birthday-cake"></i> <span id="age"></span> years old</p>
+                            <p><i class="fas fa-calendar-alt"></i> Joined 2022</p>
                             <p><i class="fas fa-briefcase"></i> Ton Duc Thang University</p>
                         </div>
+
                     </div>
                 </div>
+
+                <!-- Hero Text Content (ở giữa) -->
                 <div class="hero-text-content">
-                    <div class="welcome-badge animate-on-scroll">HAPPY BIRTHDAY TO ME!</div>
+                    <div class="welcome-badge animate-on-scroll">Welcome to my Portfolio</div>
                     <h1 class="animate-on-scroll">
-                        Celebrating Another<br>
-                        <span class="gradient-text">Great Year</span>
+                        Building Digital<br>
+                        <span class="gradient-text">Experiences</span>
                     </h1>
-                    <p style="color: white;" class="animate-on-scroll">Thank you for being a part of my journey. Let's celebrate!</p>
+                    <p style="color: white;" class="animate-on-scroll">A passionate Software Engineering student
+                        specializing in creating
+                        efficient, user-centric web applications.</p>
+                    <div class="hero-buttons animate-on-scroll">
+                        <a href="#projects" class="btn btn-primary">View my projects <i
+                                class="fas fa-arrow-right"></i></a>
+                        <a href="#contact" class="btn btn-secondary">Get in touch</a>
+                    </div>
                     <div class="social-links animate-on-scroll">
-                        <a style="color: white;" href="https://linkedin.com/in/tranhuudat2004" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        <a style="color: white;" href="https://github.com/TranHuuDat2004" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                        <a style="color: white;" href="mailto:tranhuudat.cv@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                        <a style="color: white;" href="https://linkedin.com/in/tranhuudat2004" aria-label="LinkedIn"><i
+                                class="fab fa-linkedin-in"></i></a>
+                        <a style="color: white;" href="https://github.com/TranHuuDat2004" aria-label="GitHub"><i
+                                class="fab fa-github"></i></a>
+                        <a style="color: white;" href="mailto:tranhuudat.cv@gmail.com" aria-label="Email"><i
+                                class="fas fa-envelope"></i></a>
                         <a style="color: white;" href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
                     </div>
                 </div>
@@ -121,20 +127,27 @@
             <div class="scroll-down-indicator"></div>
         </section>
 
+        <!-- ====================================================== -->
+        <!-- Music Player Widget -->
+        <!-- ====================================================== -->
         <div class="music-player-widget">
             <img src="assets/song-cover.png" alt="Song Cover" class="song-cover" id="song-cover">
             <div class="song-info">
-                <h4 id="song-title">Happy Birthday</h4>
-                <p id="song-artist">Birthday Song</p>
+                <h4 id="song-title">Điều chưa nói</h4>
+                <p id="song-artist">Tia ft. OMIXX</p>
             </div>
             <div class="player-controls">
+                <!-- Thêm ID cho các nút -->
                 <i class="fas fa-backward-step" id="prev-btn"></i>
-                <i class="fas fa-play" id="play-pause-btn"></i>
+                <i class="fas fa-pause" id="play-pause-btn"></i> <!-- Bắt đầu với icon pause -->
                 <i class="fas fa-forward-step" id="next-btn"></i>
             </div>
-            <i class="fas fa-volume-high"></i>
+            <i class="fas fa-volume-high"></i> <!-- Phần volume sẽ làm sau nếu bạn muốn -->
         </div>
 
+        <!-- ====================================================== -->
+        <!-- Section 2: About Me (CẬP NHẬT) -->
+        <!-- ====================================================== -->
         <section id="about" class="content-section">
             <div class="container">
                 <div class="section-header animate-on-scroll">
@@ -145,26 +158,47 @@
                 <div class="about-grid">
                     <div class="about-image-wrapper animate-on-scroll">
                         <img src="assets/my_image.jpg" alt="A pensive anime character in a snowy city scene">
-                        <div class="status-tag"><span class="green-dot"></span> Available for work</div>
+                        <div class="status-tag">
+                            <span class="green-dot"></span> Available for work
+                        </div>
                     </div>
                     <div class="about-text-content animate-on-scroll">
-                        <p>I am a dedicated Software Engineering student at Ton Duc Thang University with a deep passion for building efficient and user-friendly web solutions. My journey into programming started with a curiosity to understand how things work, and it has grown into a drive to create meaningful applications.</p>
-                        <p>I enjoy tackling challenging problems and continuously expanding my skill set in the ever-evolving world of technology. From developing full-stack e-commerce platforms to creating fun, interactive web apps, my goal is to leverage my technical abilities to build impactful products.</p>
+                        <p>I am a dedicated Software Engineering student at Ton Duc Thang University with a deep passion
+                            for building efficient and user-friendly web solutions. My journey into programming started
+                            with a curiosity to understand how things work, and it has grown into a drive to create
+                            meaningful applications.</p>
+                        <p>I enjoy tackling challenging problems and continuously expanding my skill set in the
+                            ever-evolving world of technology. From developing full-stack e-commerce platforms to
+                            creating fun, interactive web apps, my goal is to leverage my technical abilities to build
+                            impactful products.</p>
                         <div class="info-box-wrapper glass-card">
                             <div class="info-box">
-                                <div><span class="info-label">Name</span><p>Trần Hữu Đạt</p></div>
-                                <div><span class="info-label">Email</span><p>tranhuudat.cv@gmail.com</p></div>
-                                <div><span class="info-label">Location</span><p>Ho Chi Minh City, VN</p></div>
-                                <div><span class="info-label">Availability</span><p class="available-status">Open to Internship</p></div>
+                                <div>
+                                    <span class="info-label">Name</span>
+                                    <p>Trần Hữu Đạt</p>
+                                </div>
+                                <div>
+                                    <span class="info-label">Email</span>
+                                    <p>tranhuudat.cv@gmail.com</p>
+                                </div>
+                                <div>
+                                    <span class="info-label">Location</span>
+                                    <p>Ho Chi Minh City, VN</p>
+                                </div>
+                                <div>
+                                    <span class="info-label">Availability</span>
+                                    <p class="available-status">Open to Internship</p>
+                                </div>
                             </div>
-                            <a href="download-resume.html" download class="btn-download-resume">Download Resume <i class="fas fa-download"></i></a>
+                            <a href="download-resume.html" download class="btn-download-resume">Download Resume <i
+                                    class="fas fa-download"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-                <!-- ====================================================== -->
+        <!-- ====================================================== -->
         <!-- Section 3: Skills (CẬP NHẬT) -->
         <!-- ====================================================== -->
         <section id="skills" class="content-section">
@@ -654,60 +688,6 @@
     <audio id="audio-source"></audio>
     <script src="js/playlist.js"></script>
     <script src="js/scripts.js"></script>
-    <script>
-        // Birthday specific scripts
-        document.addEventListener('DOMContentLoaded', () => {
-            // Age Calculation
-            const ageSpan = document.getElementById('age');
-            if (ageSpan) {
-                const birthDate = new Date(2004, 10, 10); // Month is 0-indexed (November is 10)
-                const today = new Date();
-                let age = today.getFullYear() - birthDate.getFullYear();
-                const m = today.getMonth() - birthDate.getMonth();
-                if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-                    age--;
-                }
-                ageSpan.textContent = age;
-            }
-
-            // Confetti
-            const partyContainer = document.querySelector('.party-container');
-            if (partyContainer) {
-                const confettiShapes = ['confetti-square', 'confetti-rectangle', 'confetti-circle'];
-                const confettiColors = ['#f2d74e', '#f2a64e', '#4ef2d7', '#4e72f2', '#d74ef2', '#f24e72', '#4ef24e'];
-                for (let i = 0; i < 150; i++) {
-                    const confetti = document.createElement('div');
-                    const shape = confettiShapes[Math.floor(Math.random() * confettiShapes.length)];
-                    confetti.classList.add('confetti', shape);
-                    const size = Math.random() * 15 + 5;
-                    confetti.style.width = size + 'px';
-                    if (shape === 'confetti-square' || shape === 'confetti-circle') {
-                        confetti.style.height = size + 'px';
-                    } else {
-                        confetti.style.height = size / 2 + 'px';
-                    }
-                    confetti.style.backgroundColor = confettiColors[Math.floor(Math.random() * confettiColors.length)];
-                    confetti.style.left = Math.random() * 100 + 'vw';
-                    confetti.style.animationDelay = Math.random() * -7 + 's';
-                    confetti.style.animationDuration = 3 + Math.random() * 4 + 's';
-                    partyContainer.appendChild(confetti);
-                }
-            }
-
-            // Override music player for birthday song
-            const audio = document.getElementById('audio-source');
-            const playPauseBtn = document.getElementById('play-pause-btn');
-            const nextBtn = document.getElementById('next-btn');
-            const prevBtn = document.getElementById('prev-btn');
-            const songTitle = document.getElementById('song-title');
-            const songArtist = document.getElementById('song-artist');
-
-            if (audio) audio.src = 'assets/music/happy-birthday.mp3';
-            if (songTitle) songTitle.textContent = 'Happy Birthday';
-            if (songArtist) songArtist.textContent = 'Birthday Song';
-            if (nextBtn) nextBtn.style.display = 'none';
-            if (prevBtn) prevBtn.style.display = 'none';
-        });
-    </script>
 </body>
+
 </html>
