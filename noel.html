@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trần Hữu Đạt - Merry Christmas!</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/components/base.css" />
+    <link rel="stylesheet" href="css/components/header.css" />
+    <link rel="stylesheet" href="css/components/hero.css" />
+    <link rel="stylesheet" href="css/components/music-player.css" />
+    <link rel="stylesheet" href="css/components/sections.css" />
+    <link rel="stylesheet" href="css/components/about.css" />
+    <link rel="stylesheet" href="css/components/skills.css" />
+    <link rel="stylesheet" href="css/components/projects.css" />
+    <link rel="stylesheet" href="css/components/blog.css" />
+    <link rel="stylesheet" href="css/components/experience.css" />
+    <link rel="stylesheet" href="css/components/contact.css" />
+    <link rel="stylesheet" href="css/components/animations.css" />
+    <link rel="stylesheet" href="css/components/awards.css" />
+    <link rel="stylesheet" href="css/components/footer.css" />
+    <link rel="stylesheet" href="css/components/wakatime.css" />
+    <link rel="stylesheet" href="css/components/featured-projects.css" />
+    <link rel="stylesheet" href="css/components/interactive-skills.css" />
+    <link rel="stylesheet" href="css/components/theme.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .snow-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+        .snowflake {
+            position: absolute;
+            top: -20px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: snowfall linear infinite;
+        }
+        @keyframes snowfall {
+            0% { transform: translateY(0) translateX(0); }
+            100% { transform: translateY(105vh) translateX(50px); }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="snow-container"></div>
+    <div class="scroll-progress-bar"></div>
+
+    <header class="main-header">
+        <a class="logo" href="index.html"><span>tranhuudat</span>2004</a>
+        <div class="header-navigation">
+            <nav class="main-nav">
+                <a href="#hero">Home</a>
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#projects">Projects</a>
+                <a href="#experience">Experience</a>
+                <a href="#blog">Blog</a>
+                <a href="#contact">Contact</a>
+                <span class="nav-indicator"></span>
+            </nav>
+            <a href="download-resume.html" class="resume-button">Resume</a>
+            <button id="theme-toggle" class="theme-toggle-btn">
+                <i class="fas fa-sun"></i>
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero" class="hero-section">
+            <div class="hero-background"></div>
+            <div class="container hero-container">
+                <div class="profile-card-container animate-on-scroll">
+                    <div class="profile-card glass-card">
+                        <div class="profile-header">
+                            <div class="avatar-wrapper">
+                                <img src="assets/my_image1.jpg" alt="Avatar" class="avatar" />
+                                <div class="status-indicator online"></div>
+                            </div>
+                            <div class="profile-info">
+                                <h2>Trần Hữu Đạt</h2>
+                                <p class="job-title">Full-stack Web Developer</p>
+                            </div>
+                        </div>
+                        <div class="profile-details">
+                            <p><i class="fas fa-map-marker-alt"></i> Ho Chi Minh City, Vietnam</p>
+                            <p><i class="fas fa-briefcase"></i> Ton Duc Thang University</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-text-content">
+                    <div class="welcome-badge animate-on-scroll">MERRY CHRISTMAS!</div>
+                    <h1 class="animate-on-scroll">
+                        Season's Greetings<br>
+                        <span class="gradient-text">And Joy</span>
+                    </h1>
+                    <p style="color: white;" class="animate-on-scroll">Wishing you a festive and joyful holiday season.</p>
+                    <div class="social-links animate-on-scroll">
+                        <a style="color: white;" href="https://linkedin.com/in/tranhuudat2004" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a style="color: white;" href="https://github.com/TranHuuDat2004" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a style="color: white;" href="mailto:tranhuudat.cv@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                        <a style="color: white;" href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-down-indicator"></div>
+        </section>
+
+        <div class="music-player-widget">
+            <img src="assets/song-cover.png" alt="Song Cover" class="song-cover" id="song-cover">
+            <div class="song-info">
+                <h4 id="song-title">Jingle Bells</h4>
+                <p id="song-artist">Christmas Song</p>
+            </div>
+            <div class="player-controls">
+                <i class="fas fa-backward-step" id="prev-btn"></i>
+                <i class="fas fa-play" id="play-pause-btn"></i>
+                <i class="fas fa-forward-step" id="next-btn"></i>
+            </div>
+            <i class="fas fa-volume-high"></i>
+        </div>
+
+        <section id="about" class="content-section">
+            <div class="container">
+                <div class="section-header animate-on-scroll">
+                    <div class="section-badge">My personal story</div>
+                    <h2 class="section-title">About Me</h2>
+                    <div class="title-underline"></div>
+                </div>
+                <div class="about-grid">
+                    <div class="about-image-wrapper animate-on-scroll">
+                        <img src="assets/my_image.jpg" alt="A pensive anime character in a snowy city scene">
+                        <div class="status-tag"><span class="green-dot"></span> Available for work</div>
+                    </div>
+                    <div class="about-text-content animate-on-scroll">
+                        <p>I am a dedicated Software Engineering student at Ton Duc Thang University with a deep passion for building efficient and user-friendly web solutions. My journey into programming started with a curiosity to understand how things work, and it has grown into a drive to create meaningful applications.</p>
+                        <p>I enjoy tackling challenging problems and continuously expanding my skill set in the ever-evolving world of technology. From developing full-stack e-commerce platforms to creating fun, interactive web apps, my goal is to leverage my technical abilities to build impactful products.</p>
+                        <div class="info-box-wrapper glass-card">
+                            <div class="info-box">
+                                <div><span class="info-label">Name</span><p>Trần Hữu Đạt</p></div>
+                                <div><span class="info-label">Email</span><p>tranhuudat.cv@gmail.com</p></div>
+                                <div><span class="info-label">Location</span><p>Ho Chi Minh City, VN</p></div>
+                                <div><span class="info-label">Availability</span><p class="available-status">Open to Internship</p></div>
+                            </div>
+                            <a href="download-resume.html" download class="btn-download-resume">Download Resume <i class="fas fa-download"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="content-section">
+            <div class="container">
+                <div class="section-header animate-on-scroll">
+                    <div class="section-badge">My Skills</div>
+                    <h2 class="section-title">Technical Stack</h2>
+                    <div class="title-underline"></div>
+                </div>
+                <div class="skills-wrapper"><div class="skills-grid"><p class="skills-loading"><i class="fas fa-spinner fa-spin"></i> Loading technical skills...</p></div></div>
+            </div>
+        </section>
+
+        <section id="projects" class="content-section">
+            <div class="container">
+                <div class="section-header animate-on-scroll">
+                    <div class="section-badge">Some of my recent work</div>
+                    <h2 class="section-title">Featured Projects</h2>
+                    <div class="title-underline"></div>
+                </div>
+                <div class="project-showcase-grid animate-on-scroll">
+                    <div class="showcase-card">
+                        <div class="showcase-header"><span>Omacha Project</span></div>
+                        <div class="showcase-content">
+                            <div class="text-features">
+                                <h1>OMACHA SHOP<br>E-COMMERCE</h1>
+                                <h4 class="feature-title">FEATURES</h4>
+                                <ul>
+                                    <li>Full-stack e-commerce platform built with PHP & MySQL.</li>
+                                    <li>Robust admin panel for product, order, and user management.</li>
+                                    <li>Responsive design ensuring a seamless experience on all devices.</li>
+                                </ul>
+                            </div>
+                            <div class="image-gallery">
+                                <img src="assets/omacha/Home1.jpg" alt="Omacha Homepage" class="showcase-img">
+                                <img src="assets/omacha/product_detail.jpg" alt="Omacha Homepage" class="showcase-img">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="details-column">
+                        <h2>Omacha Shop</h2>
+                        <p class="project-category">Web, E-commerce, Full-stack</p>
+                        <div class="project-tags"><span>PHP</span><span>MySQL</span><span>JavaScript</span><span>Bootstrap</span></div>
+                        <div class="description-box glass-card"><p>A comprehensive toy e-commerce platform designed for a fun shopping experience and powerful admin tools.</p></div>
+                        <div class="project-links">
+                            <a href="https://github.com/TranHuuDat2004/Omacha_Shop" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="https://tranhuudat2004.github.io/Omacha-Shop-Demo/" aria-label="Project Details"><i class="fas fa-link"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="content-section">
+            <div class="container">
+                <div class="section-header animate-on-scroll">
+                    <div class="section-badge">My professional journey</div>
+                    <h2 class="section-title">Experience & Education</h2>
+                    <div class="title-underline"></div>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-item animate-on-scroll">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content glass-card">
+                            <h3>Bachelor of Software Engineering</h3>
+                            <p class="timeline-meta">Ton Duc Thang University | 2022 - 2026</p>
+                            <p>Building a strong foundation in computer science, algorithms, and web development principles, while maintaining a GPA of 7.8/10.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="blog" class="content-section">
+            <div class="container">
+                <div class="section-header animate-on-scroll">
+                    <div class="section-badge">Sharing my knowledge</div>
+                    <h2 class="section-title">From The Blog (Maintenance)</h2>
+                    <div class="title-underline"></div>
+                </div>
+                <div class="blog-grid"></div>
+                <div class="view-all-posts-container animate-on-scroll"><a href="blog.html" class="btn btn-secondary">View All Posts</a></div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container footer-container">
+            <div class="footer-column footer-about">
+                <h3 class="footer-logo"><span>tranhuudat</span>2004</h3>
+                <p>A passionate Web Developer dedicated to building beautiful and useful applications.</p>
+            </div>
+            <div class="footer-column footer-links">
+                <h4 class="footer-title">Quick Links</h4>
+                <ul>
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="assets/resume.pdf" download>Resume</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column footer-connect">
+                <h4 class="footer-title">Connect with Me</h4>
+                <ul>
+                    <li><a href="https://github.com/TranHuuDat2004" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
+                    <li><a href="https://linkedin.com/in/tranhuudat2004" target="_blank"><i class="fab fa-linkedin-in"></i> LinkedIn</a></li>
+                    <li><a href="mailto:tranhuudat.cv@gmail.com"><i class="fas fa-envelope"></i> Email</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                <p>Copyright © <span id="currentYear"></span> Trần Hữu Đạt. All rights reserved.</p>
+                <p>Last updated: <b> October 14th 2025</b></p>
+            </div>
+        </div>
+    </footer>
+
+    <audio id="audio-source"></audio>
+    <script src="js/playlist.js"></script>
+    <script src="js/scripts.js"></script>
+    <script>
+        // Christmas specific scripts
+        document.addEventListener('DOMContentLoaded', () => {
+            // Snowfall
+            const snowContainer = document.querySelector('.snow-container');
+            if (snowContainer) {
+                for (let i = 0; i < 150; i++) {
+                    const snowflake = document.createElement('div');
+                    snowflake.classList.add('snowflake');
+                    const size = Math.random() * 4 + 2;
+                    snowflake.style.width = size + 'px';
+                    snowflake.style.height = size + 'px';
+                    snowflake.style.left = Math.random() * 100 + 'vw';
+                    snowflake.style.animationDelay = Math.random() * -10 + 's';
+                    snowflake.style.animationDuration = 5 + Math.random() * 5 + 's';
+                    snowflake.style.opacity = Math.random();
+                    snowContainer.appendChild(snowflake);
+                }
+            }
+
+            // Override music player for Christmas song
+            const audio = document.getElementById('audio-source');
+            const songTitle = document.getElementById('song-title');
+            const songArtist = document.getElementById('song-artist');
+            const nextBtn = document.getElementById('next-btn');
+            const prevBtn = document.getElementById('prev-btn');
+
+            if (audio) audio.src = 'assets/music/jingle-bells.mp3'; // Placeholder
+            if (songTitle) songTitle.textContent = 'Jingle Bells';
+            if (songArtist) songArtist.textContent = 'Christmas Song';
+            if (nextBtn) nextBtn.style.display = 'none';
+            if (prevBtn) prevBtn.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
