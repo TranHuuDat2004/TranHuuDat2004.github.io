@@ -328,6 +328,7 @@
                         <div class="profile-details">
                             <p><i class="fas fa-map-marker-alt"></i> Ho Chi Minh City, Vietnam</p>
                             <p><i class="fas fa-calendar-alt"></i> Joined 2022</p>
+                            <p><i class="fas fa-birthday-cake"></i> <span id="age"></span> years old</p>
                             <p><i class="fas fa-briefcase"></i> Ton Duc Thang University</p>
                         </div>
                     </div>
@@ -416,7 +417,7 @@
         </section>
     </main>
 
-    <audio id="audio-source"></audio>
+    <audio id="audio-source" src="assets/music/happy-birthday.mp3"></audio>
     <script>
         // Improved script to make confetti
         const partyContainer = document.querySelector('.party-container');
@@ -463,6 +464,44 @@
         document.querySelectorAll('.animate-on-scroll').forEach(el => {
             animateOnScroll.observe(el);
         });
+
+        // Music Player Logic
+        const audio = document.getElementById('audio-source');
+        const playPauseBtn = document.getElementById('play-pause-btn');
+        let isPlaying = false;
+
+        function playSong() {
+            isPlaying = true;
+            playPauseBtn.classList.replace('fa-play', 'fa-pause');
+            audio.play();
+        }
+
+        function pauseSong() {
+            isPlaying = false;
+            playPauseBtn.classList.replace('fa-pause', 'fa-play');
+            audio.pause();
+        }
+
+        if (playPauseBtn) {
+            playPauseBtn.addEventListener('click', () => (isPlaying ? pauseSong() : playSong()));
+        }
+
+        // For simplicity, prev/next buttons do nothing on this page
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        if(prevBtn) prevBtn.style.display = 'none';
+        if(nextBtn) nextBtn.style.display = 'none';
+
+        // Age Calculation
+        const birthDate = new Date(2004, 10, 10); // Month is 0-indexed (November is 10)
+        const today = new Date();
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        document.getElementById('age').textContent = age;
+
     </script>
 </body>
 </html>
