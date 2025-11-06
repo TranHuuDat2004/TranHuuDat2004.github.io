@@ -52,6 +52,62 @@
             0% { transform: translateY(0) rotateZ(0) rotateY(0); opacity: 1; }
             100% { transform: translateY(105vh) rotateZ(720deg) rotateY(360deg); opacity: 0; }
         }
+        .theme-switcher-dropdown {
+            position: relative;
+            display: inline-block;
+            margin-left: 1rem;
+        }
+
+        .dropdown-toggle {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: background-color 0.3s, border-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dropdown-toggle:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: var(--bg-card);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 0.5rem;
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 0;
+            right: 0;
+            top: 100%;
+            margin-top: 0.5rem;
+        }
+
+        .dropdown-menu a {
+            color: var(--text-primary);
+            padding: 0.75rem 1rem;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+            transition: background-color 0.2s;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .dropdown-menu.show {
+            display: block;
+        }
     </style>
 </head>
 
@@ -60,24 +116,42 @@
     <div class="scroll-progress-bar"></div>
 
     <header class="main-header">
+        <!-- Nhóm 1: Logo -->
         <a class="logo" href="index.html"><span>tranhuudat</span>2004</a>
-        <div class="header-navigation">
+
+        <!-- Nhóm 2: Khối điều hướng -->
+        <div class="header-navigation"> <!-- THÊM THẺ NÀY -->
             <nav class="main-nav">
                 <a href="#hero">Home</a>
                 <a href="#about">About</a>
                 <a href="#skills">Skills</a>
+                <!-- <a href="#coding-activity">Activity</a> -->
                 <a href="#projects">Projects</a>
                 <a href="#experience">Experience</a>
-                <a href="#blog">Blog</a>
+                <a href="#blog">Blog</a> <!-- << THÊM DÒNG NÀY VÀO -->
                 <a href="#contact">Contact</a>
                 <span class="nav-indicator"></span>
             </nav>
             <a href="download-resume.html" class="resume-button">Resume</a>
+
             <button id="theme-toggle" class="theme-toggle-btn">
                 <i class="fas fa-sun"></i>
                 <i class="fas fa-moon"></i>
             </button>
-        </div>
+
+            <div class="theme-switcher-dropdown">
+                <button class="dropdown-toggle">Themes <i class="fas fa-chevron-down"></i></button>
+                <div class="dropdown-menu">
+                    <a href="index.html">Default</a>
+                    <a href="birthday.html">Birthday</a>
+                    <a href="noel.html">Noel</a>
+                    <a href="halloween.html">Halloween</a>
+                    <a href="tet.html">Tết</a>
+                </div>
+            </div>
+
+        </div> <!-- THÊM THẺ NÀY -->
+
     </header>
 
     <main>
@@ -707,6 +781,23 @@
             if (songArtist) songArtist.textContent = 'Birthday Song';
             if (nextBtn) nextBtn.style.display = 'none';
             if (prevBtn) prevBtn.style.display = 'none';
+
+            const dropdownToggle = document.querySelector('.theme-switcher-dropdown .dropdown-toggle');
+            const dropdownMenu = document.querySelector('.theme-switcher-dropdown .dropdown-menu');
+
+            if (dropdownToggle && dropdownMenu) {
+                dropdownToggle.addEventListener('click', () => {
+                    dropdownMenu.classList.toggle('show');
+                });
+
+                window.addEventListener('click', (event) => {
+                    if (!event.target.matches('.dropdown-toggle') && !event.target.matches('.dropdown-toggle i')) {
+                        if (dropdownMenu.classList.contains('show')) {
+                            dropdownMenu.classList.remove('show');
+                        }
+                    }
+                });
+            }
         });
     </script>
 </body>

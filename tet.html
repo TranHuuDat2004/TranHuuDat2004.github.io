@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Trần Hữu Đạt - Merry Christmas!</title>
+    <title>Trần Hữu Đạt - Chúc Mừng Năm Mới!</title>
     <link rel="icon" type="image/png" href="assets/favicon.png" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="css/components/theme.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        .snow-container {
+        .tet-container {
             position: fixed;
             top: 0;
             left: 0;
@@ -40,17 +40,21 @@
             pointer-events: none;
             z-index: 9999;
         }
-        .snowflake {
+        .blossom {
             position: absolute;
             top: -20px;
-            background: white;
-            border-radius: 50%;
-            opacity: 0.8;
-            animation: snowfall linear infinite;
+            color: #ffc0cb; /* Pink for peach blossoms */
+            font-size: 1.5rem;
+            animation: fall linear infinite;
         }
-        @keyframes snowfall {
-            0% { transform: translateY(0) translateX(0); }
-            100% { transform: translateY(105vh) translateX(50px); }
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0); }
+            100% { transform: translateY(105vh) rotate(360deg); }
+        }
+        .tet-gradient-text {
+            background: linear-gradient(to right, #ff0000, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         .theme-switcher-dropdown {
             position: relative;
@@ -112,7 +116,7 @@
 </head>
 
 <body>
-    <div class="snow-container"></div>
+    <div class="tet-container"></div>
     <div class="scroll-progress-bar"></div>
 
     <header class="main-header">
@@ -177,12 +181,12 @@
                     </div>
                 </div>
                 <div class="hero-text-content">
-                    <div class="welcome-badge animate-on-scroll">MERRY CHRISTMAS!</div>
+                    <div class="welcome-badge animate-on-scroll">CHÚC MỪNG NĂM MỚI</div>
                     <h1 class="animate-on-scroll">
-                        Season's Greetings<br>
-                        <span class="gradient-text">And Joy</span>
+                        An Khang<br>
+                        <span class="tet-gradient-text">Thịnh Vượng</span>
                     </h1>
-                    <p style="color: white;" class="animate-on-scroll">Wishing you a festive and joyful holiday season.</p>
+                    <p style="color: white;" class="animate-on-scroll">Chúc bạn và gia đình một năm mới vạn sự như ý.</p>
                     <div class="social-links animate-on-scroll">
                         <a style="color: white;" href="https://linkedin.com/in/tranhuudat2004" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
                         <a style="color: white;" href="https://github.com/TranHuuDat2004" aria-label="GitHub"><i class="fab fa-github"></i></a>
@@ -197,8 +201,8 @@
         <div class="music-player-widget">
             <img src="assets/song-cover.png" alt="Song Cover" class="song-cover" id="song-cover">
             <div class="song-info">
-                <h4 id="song-title">Jingle Bells</h4>
-                <p id="song-artist">Christmas Song</p>
+                <h4 id="song-title">Ngày Xuân Long Phụng Sum Vầy</h4>
+                <p id="song-artist">Tết Song</p>
             </div>
             <div class="player-controls">
                 <i class="fas fa-backward-step" id="prev-btn"></i>
@@ -357,35 +361,34 @@
     <script src="js/playlist.js"></script>
     <script src="js/scripts.js"></script>
     <script>
-        // Christmas specific scripts
+        // Tet specific scripts
         document.addEventListener('DOMContentLoaded', () => {
-            // Snowfall
-            const snowContainer = document.querySelector('.snow-container');
-            if (snowContainer) {
-                for (let i = 0; i < 150; i++) {
-                    const snowflake = document.createElement('div');
-                    snowflake.classList.add('snowflake');
-                    const size = Math.random() * 4 + 2;
-                    snowflake.style.width = size + 'px';
-                    snowflake.style.height = size + 'px';
-                    snowflake.style.left = Math.random() * 100 + 'vw';
-                    snowflake.style.animationDelay = Math.random() * -10 + 's';
-                    snowflake.style.animationDuration = 5 + Math.random() * 5 + 's';
-                    snowflake.style.opacity = Math.random();
-                    snowContainer.appendChild(snowflake);
+            // Falling Blossoms
+            const tetContainer = document.querySelector('.tet-container');
+            if (tetContainer) {
+                for (let i = 0; i < 50; i++) {
+                    const blossom = document.createElement('div');
+                    blossom.classList.add('blossom');
+                    blossom.textContent = '🌸'; // Using emoji for blossom
+                    blossom.style.left = Math.random() * 100 + 'vw';
+                    blossom.style.animationDelay = Math.random() * -10 + 's';
+                    blossom.style.animationDuration = 8 + Math.random() * 7 + 's';
+                    blossom.style.fontSize = (Math.random() * 1 + 0.5) + 'rem';
+                    blossom.style.opacity = Math.random() * 0.5 + 0.5;
+                    tetContainer.appendChild(blossom);
                 }
             }
 
-            // Override music player for Christmas song
+            // Override music player for Tet song
             const audio = document.getElementById('audio-source');
             const songTitle = document.getElementById('song-title');
             const songArtist = document.getElementById('song-artist');
             const nextBtn = document.getElementById('next-btn');
             const prevBtn = document.getElementById('prev-btn');
 
-            if (audio) audio.src = 'assets/music/jingle-bells.mp3'; // Placeholder
-            if (songTitle) songTitle.textContent = 'Jingle Bells';
-            if (songArtist) songArtist.textContent = 'Christmas Song';
+            if (audio) audio.src = 'assets/music/tet-song.mp3'; // Placeholder
+            if (songTitle) songTitle.textContent = 'Ngày Xuân Long Phụng Sum Vầy';
+            if (songArtist) songArtist.textContent = 'Tết Song';
             if (nextBtn) nextBtn.style.display = 'none';
             if (prevBtn) prevBtn.style.display = 'none';
 

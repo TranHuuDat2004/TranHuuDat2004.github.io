@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Trần Hữu Đạt - Merry Christmas!</title>
+    <title>Trần Hữu Đạt - Happy Halloween!</title>
     <link rel="icon" type="image/png" href="assets/favicon.png" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="css/components/theme.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        .snow-container {
+        .halloween-container {
             position: fixed;
             top: 0;
             left: 0;
@@ -40,17 +40,22 @@
             pointer-events: none;
             z-index: 9999;
         }
-        .snowflake {
+        .ghost {
             position: absolute;
-            top: -20px;
-            background: white;
-            border-radius: 50%;
-            opacity: 0.8;
-            animation: snowfall linear infinite;
+            bottom: -50px;
+            font-size: 2rem;
+            opacity: 0.6;
+            animation: float-up linear infinite;
         }
-        @keyframes snowfall {
-            0% { transform: translateY(0) translateX(0); }
-            100% { transform: translateY(105vh) translateX(50px); }
+        @keyframes float-up {
+            0% { transform: translateY(0) translateX(0); opacity: 0.8; }
+            50% { transform: translateX(20px); }
+            100% { transform: translateY(-105vh) translateX(-20px); opacity: 0; }
+        }
+        .halloween-gradient-text {
+            background: linear-gradient(to right, #ff8c00, #9400d3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         .theme-switcher-dropdown {
             position: relative;
@@ -112,7 +117,7 @@
 </head>
 
 <body>
-    <div class="snow-container"></div>
+    <div class="halloween-container"></div>
     <div class="scroll-progress-bar"></div>
 
     <header class="main-header">
@@ -177,12 +182,12 @@
                     </div>
                 </div>
                 <div class="hero-text-content">
-                    <div class="welcome-badge animate-on-scroll">MERRY CHRISTMAS!</div>
+                    <div class="welcome-badge animate-on-scroll">HAPPY HALLOWEEN!</div>
                     <h1 class="animate-on-scroll">
-                        Season's Greetings<br>
-                        <span class="gradient-text">And Joy</span>
+                        Spooky Season<br>
+                        <span class="halloween-gradient-text">Is Here</span>
                     </h1>
-                    <p style="color: white;" class="animate-on-scroll">Wishing you a festive and joyful holiday season.</p>
+                    <p style="color: white;" class="animate-on-scroll">Have a hauntingly good time!</p>
                     <div class="social-links animate-on-scroll">
                         <a style="color: white;" href="https://linkedin.com/in/tranhuudat2004" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
                         <a style="color: white;" href="https://github.com/TranHuuDat2004" aria-label="GitHub"><i class="fab fa-github"></i></a>
@@ -197,8 +202,8 @@
         <div class="music-player-widget">
             <img src="assets/song-cover.png" alt="Song Cover" class="song-cover" id="song-cover">
             <div class="song-info">
-                <h4 id="song-title">Jingle Bells</h4>
-                <p id="song-artist">Christmas Song</p>
+                <h4 id="song-title">This Is Halloween</h4>
+                <p id="song-artist">The Nightmare Before Christmas</p>
             </div>
             <div class="player-controls">
                 <i class="fas fa-backward-step" id="prev-btn"></i>
@@ -357,35 +362,33 @@
     <script src="js/playlist.js"></script>
     <script src="js/scripts.js"></script>
     <script>
-        // Christmas specific scripts
+        // Halloween specific scripts
         document.addEventListener('DOMContentLoaded', () => {
-            // Snowfall
-            const snowContainer = document.querySelector('.snow-container');
-            if (snowContainer) {
-                for (let i = 0; i < 150; i++) {
-                    const snowflake = document.createElement('div');
-                    snowflake.classList.add('snowflake');
-                    const size = Math.random() * 4 + 2;
-                    snowflake.style.width = size + 'px';
-                    snowflake.style.height = size + 'px';
-                    snowflake.style.left = Math.random() * 100 + 'vw';
-                    snowflake.style.animationDelay = Math.random() * -10 + 's';
-                    snowflake.style.animationDuration = 5 + Math.random() * 5 + 's';
-                    snowflake.style.opacity = Math.random();
-                    snowContainer.appendChild(snowflake);
+            // Floating Ghosts
+            const halloweenContainer = document.querySelector('.halloween-container');
+            if (halloweenContainer) {
+                for (let i = 0; i < 30; i++) {
+                    const ghost = document.createElement('div');
+                    ghost.classList.add('ghost');
+                    ghost.textContent = '👻';
+                    ghost.style.left = Math.random() * 100 + 'vw';
+                    ghost.style.animationDelay = Math.random() * -15 + 's';
+                    ghost.style.animationDuration = 10 + Math.random() * 10 + 's';
+                    ghost.style.fontSize = (Math.random() * 2 + 1) + 'rem'; // Size between 1rem and 3rem
+                    halloweenContainer.appendChild(ghost);
                 }
             }
 
-            // Override music player for Christmas song
+            // Override music player for Halloween song
             const audio = document.getElementById('audio-source');
             const songTitle = document.getElementById('song-title');
             const songArtist = document.getElementById('song-artist');
             const nextBtn = document.getElementById('next-btn');
             const prevBtn = document.getElementById('prev-btn');
 
-            if (audio) audio.src = 'assets/music/jingle-bells.mp3'; // Placeholder
-            if (songTitle) songTitle.textContent = 'Jingle Bells';
-            if (songArtist) songArtist.textContent = 'Christmas Song';
+            if (audio) audio.src = 'assets/music/spooky-song.mp3'; // Placeholder
+            if (songTitle) songTitle.textContent = 'This Is Halloween';
+            if (songArtist) songArtist.textContent = 'The Nightmare Before Christmas';
             if (nextBtn) nextBtn.style.display = 'none';
             if (prevBtn) prevBtn.style.display = 'none';
 
