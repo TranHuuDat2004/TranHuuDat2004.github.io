@@ -1,13 +1,13 @@
 {
   "CSS": 3,
   "HTML": 7,
+  "JavaScript": 10,
   "C#": 1,
   "Jupyter Notebook": 3,
-  "JavaScript": 10,
   "PHP": 3,
   "ShaderLab": 1,
   "Python": 2,
   "TypeScript": 1,
-  "Java": 4,
+  "Java": 3,
   "Dart": 2
 }
