@@ -4,14 +4,18 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Trần Hữu Đạt - Merry Christmas!</title>
+    <!-- TIÊU ĐỀ MỚI -->
+    <title>Trần Hữu Đạt - Full-stack Web Developer</title>
+    <!-- THAY ICON MỚI (NẾU CÓ) -->
     <link rel="icon" type="image/png" href="assets/favicon.png" />
 
+    <!-- THÊM FONT MỚI TỪ GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/components/base.css" />
+    <!-- LINK CSS VÀ FONT AWESOME -->
+        <link rel="stylesheet" href="css/components/base.css" />
     <link rel="stylesheet" href="css/components/header.css" />
     <link rel="stylesheet" href="css/components/hero.css" />
     <link rel="stylesheet" href="css/components/music-player.css" />
@@ -31,27 +35,6 @@
     <link rel="stylesheet" href="css/components/theme.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        .snow-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 9999;
-        }
-        .snowflake {
-            position: absolute;
-            top: -20px;
-            background: white;
-            border-radius: 50%;
-            opacity: 0.8;
-            animation: snowfall linear infinite;
-        }
-        @keyframes snowfall {
-            0% { transform: translateY(0) translateX(0); }
-            100% { transform: translateY(105vh) translateX(50px); }
-        }
         .theme-switcher-dropdown {
             position: relative;
             display: inline-block;
@@ -111,7 +94,7 @@
 </head>
 
 <body>
-    <div class="snow-container"></div>
+    <!-- Thanh tiến trình cuộn giữ nguyên -->
     <div class="scroll-progress-bar"></div>
 
     <header class="main-header">
@@ -143,9 +126,13 @@
     </header>
 
     <main>
+        <!-- ====================================================== -->
+        <!-- Section 1: Hero (THAY ĐỔI LỚN) -->
+        <!-- ====================================================== -->
         <section id="hero" class="hero-section">
             <div class="hero-background"></div>
             <div class="container hero-container">
+                <!-- Profile Card (bên trái) -->
                 <div class="profile-card-container animate-on-scroll">
                     <div class="profile-card glass-card">
                         <div class="profile-header">
@@ -160,21 +147,35 @@
                         </div>
                         <div class="profile-details">
                             <p><i class="fas fa-map-marker-alt"></i> Ho Chi Minh City, Vietnam</p>
+                            <p><i class="fas fa-calendar-alt"></i> Joined 2022</p>
                             <p><i class="fas fa-briefcase"></i> Ton Duc Thang University</p>
                         </div>
+
                     </div>
                 </div>
+
+                <!-- Hero Text Content (ở giữa) -->
                 <div class="hero-text-content">
-                    <div class="welcome-badge animate-on-scroll">MERRY CHRISTMAS!</div>
+                    <div class="welcome-badge animate-on-scroll">Welcome to my Portfolio</div>
                     <h1 class="animate-on-scroll">
-                        Season's Greetings<br>
-                        <span class="gradient-text">And Joy</span>
+                        Building Digital<br>
+                        <span class="gradient-text">Experiences</span>
                     </h1>
-                    <p style="color: white;" class="animate-on-scroll">Wishing you a festive and joyful holiday season.</p>
+                    <p style="color: white;" class="animate-on-scroll">A passionate Software Engineering student
+                        specializing in creating
+                        efficient, user-centric web applications.</p>
+                    <div class="hero-buttons animate-on-scroll">
+                        <a href="#projects" class="btn btn-primary">View my projects <i
+                                class="fas fa-arrow-right"></i></a>
+                        <a href="#contact" class="btn btn-secondary">Get in touch</a>
+                    </div>
                     <div class="social-links animate-on-scroll">
-                        <a style="color: white;" href="https://linkedin.com/in/tranhuudat2004" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        <a style="color: white;" href="https://github.com/TranHuuDat2004" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                        <a style="color: white;" href="mailto:tranhuudat.cv@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                        <a style="color: white;" href="https://linkedin.com/in/tranhuudat2004" aria-label="LinkedIn"><i
+                                class="fab fa-linkedin-in"></i></a>
+                        <a style="color: white;" href="https://github.com/TranHuuDat2004" aria-label="GitHub"><i
+                                class="fab fa-github"></i></a>
+                        <a style="color: white;" href="mailto:tranhuudat.cv@gmail.com" aria-label="Email"><i
+                                class="fas fa-envelope"></i></a>
                         <a style="color: white;" href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
                     </div>
                 </div>
@@ -182,21 +183,25 @@
             <div class="scroll-down-indicator"></div>
         </section>
 
+        <!-- ====================================================== -->
+        <!-- Music Player Widget -->
+        <!-- ====================================================== -->
         <div class="music-player-widget">
             <img src="assets/song-cover.png" alt="Song Cover" class="song-cover" id="song-cover">
             <div class="song-info">
-                <h4 id="song-title">Jingle Bells</h4>
-                <p id="song-artist">Christmas Song</p>
+                <h4 id="song-title">Điều chưa nói</h4>
+                <p id="song-artist">Tia ft. OMIXX</p>
             </div>
             <div class="player-controls">
+                <!-- Thêm ID cho các nút -->
                 <i class="fas fa-backward-step" id="prev-btn"></i>
-                <i class="fas fa-play" id="play-pause-btn"></i>
+                <i class="fas fa-pause" id="play-pause-btn"></i> <!-- Bắt đầu với icon pause -->
                 <i class="fas fa-forward-step" id="next-btn"></i>
             </div>
-            <i class="fas fa-volume-high"></i>
+            <i class="fas fa-volume-high"></i> <!-- Phần volume sẽ làm sau nếu bạn muốn -->
         </div>
 
-                <!-- ====================================================== -->
+        <!-- ====================================================== -->
         <!-- Section 2: About Me (CẬP NHẬT) -->
         <!-- ====================================================== -->
         <section id="about" class="content-section">
@@ -273,7 +278,46 @@
             </div>
         </section>
 
-<!-- ====================================================== -->
+
+
+
+
+        <!-- ====================================================== -->
+        <!-- Section: Coding Activity (MỚI) -->
+        <!-- ====================================================== -->
+        <!-- <section id="coding-activity" class="content-section">
+            <div class="container">
+                <div class="section-header animate-on-scroll">
+                    <div class="section-badge">Developer Insights</div>
+                    <h2 class="section-title">Coding Activity</h2>
+                    <div class="title-underline"></div>
+                </div>
+
+                <div class="wakatime-grid animate-on-scroll">
+                     WakaTime Chart 1: Ngôn ngữ lập trình 
+                    <div class="wakatime-card glass-card">
+                        <h3>Languages (All time)</h3>
+
+
+<figure><embed src="https://wakatime.com/share/@TranHuuDat2004/2702fa9b-4da9-4c2a-8088-051ea8a07211.svg"></embed></figure>
+
+                    </div>
+
+                     WakaTime Chart 2: Hoạt động hàng ngày 
+                    <div class="wakatime-card glass-card">
+                        <h3>Daily Activity (All time)</h3>
+
+                         DÁN MÃ IFRAME BIỂU ĐỒ HOẠT ĐỘNG CỦA BẠN VÀO ĐÂY 
+                        <figure><embed
+                                src="https://wakatime.com/share/@TranHuuDat2004/8f2a8fe2-d87f-487b-926a-daed1065ce97.svg"></embed>
+                        </figure>
+
+                    </div>
+                </div>
+            </div>
+         </section> -->
+
+        <!-- ====================================================== -->
         <!-- Section 4: Featured Works (NEW ALTERNATING LAYOUT) -->
         <!-- ====================================================== -->
         <section id="projects" class="content-section">
@@ -649,14 +693,20 @@
             </div>
         </section>
     </main>
-        
-    </main>
+
+    <!-- ====================================================== -->
+    <!-- Footer (MỚI) -->
+    <!-- ====================================================== -->
+
     <footer class="main-footer">
         <div class="container footer-container">
+            <!-- Cột 1: Giới thiệu -->
             <div class="footer-column footer-about">
                 <h3 class="footer-logo"><span>tranhuudat</span>2004</h3>
                 <p>A passionate Web Developer dedicated to building beautiful and useful applications.</p>
             </div>
+
+            <!-- Cột 2: Quick Links -->
             <div class="footer-column footer-links">
                 <h4 class="footer-title">Quick Links</h4>
                 <ul>
@@ -666,15 +716,21 @@
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </div>
+
+            <!-- Cột 3: Connect with Me -->
             <div class="footer-column footer-connect">
                 <h4 class="footer-title">Connect with Me</h4>
                 <ul>
-                    <li><a href="https://github.com/TranHuuDat2004" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
-                    <li><a href="https://linkedin.com/in/tranhuudat2004" target="_blank"><i class="fab fa-linkedin-in"></i> LinkedIn</a></li>
+                    <li><a href="https://github.com/TranHuuDat2004" target="_blank"><i class="fab fa-github"></i>
+                            GitHub</a>
+                    </li>
+                    <li><a href="https://linkedin.com/in/tranhuudat2004" target="_blank"><i
+                                class="fab fa-linkedin-in"></i>
+                            LinkedIn</a></li>
                     <li><a href="mailto:tranhuudat.cv@gmail.com"><i class="fas fa-envelope"></i> Email</a></li>
                 </ul>
             </div>
-
+            
             <!-- Cột 4: Themes -->
             <div class="footer-column footer-themes">
                 <h4 class="footer-title">Themes</h4>
@@ -690,6 +746,8 @@
                 </div>
             </div>
         </div>
+
+        <!-- Dòng Copyright ở dưới cùng -->
         <div class="footer-copyright">
             <div class="container">
                 <p>Copyright © <span id="currentYear"></span> Trần Hữu Đạt. All rights reserved.</p>
@@ -701,41 +759,8 @@
     <audio id="audio-source"></audio>
     <script src="js/playlist.js"></script>
     <script src="js/scripts.js"></script>
-     <!-- === TẢI CÁC SECTION CHUNG === -->
-    <script src="js/load-sections.js"></script>
     <script>
-        // Christmas specific scripts
         document.addEventListener('DOMContentLoaded', () => {
-            // Snowfall
-            const snowContainer = document.querySelector('.snow-container');
-            if (snowContainer) {
-                for (let i = 0; i < 150; i++) {
-                    const snowflake = document.createElement('div');
-                    snowflake.classList.add('snowflake');
-                    const size = Math.random() * 4 + 2;
-                    snowflake.style.width = size + 'px';
-                    snowflake.style.height = size + 'px';
-                    snowflake.style.left = Math.random() * 100 + 'vw';
-                    snowflake.style.animationDelay = Math.random() * -10 + 's';
-                    snowflake.style.animationDuration = 5 + Math.random() * 5 + 's';
-                    snowflake.style.opacity = Math.random();
-                    snowContainer.appendChild(snowflake);
-                }
-            }
-
-            // Override music player for Christmas song
-            const audio = document.getElementById('audio-source');
-            const songTitle = document.getElementById('song-title');
-            const songArtist = document.getElementById('song-artist');
-            const nextBtn = document.getElementById('next-btn');
-            const prevBtn = document.getElementById('prev-btn');
-
-            if (audio) audio.src = 'assets/music/jingle-bells.mp3'; // Placeholder
-            if (songTitle) songTitle.textContent = 'Jingle Bells';
-            if (songArtist) songArtist.textContent = 'Christmas Song';
-            if (nextBtn) nextBtn.style.display = 'none';
-            if (prevBtn) prevBtn.style.display = 'none';
-
             const dropdownToggle = document.querySelector('.theme-switcher-dropdown .dropdown-toggle');
             const dropdownMenu = document.querySelector('.theme-switcher-dropdown .dropdown-menu');
 
@@ -755,4 +780,5 @@
         });
     </script>
 </body>
+
 </html>
