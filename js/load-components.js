@@ -1,14 +1,28 @@
-document.addEventListener("DOMContentLoaded", function () {
-    loadComponent("header-placeholder", "components/header.html", true);
-    loadComponent("footer-placeholder", "components/footer.html", false);
+document.addEventListener("DOMContentLoaded", async function () {
+    // 1. Load Header & Footer
+    await loadComponent("header-placeholder", "components/header.html", true);
+    await loadComponent("footer-placeholder", "components/footer.html", false);
+
+    // 2. Load các Section nội dung (Chạy vòng lặp)
+    const sections = ['about', 'skills', 'projects', 'experience', 'blog', 'contact'];
+    
+    // Sử dụng Promise.all để load tất cả song song cho nhanh
+    await Promise.all(sections.map(section => 
+        loadComponent(`${section}-placeholder`, `components/sections/${section}.html`, false)
+    ));
+
+    // 3. QUAN TRỌNG: Khởi tạo lại Animation sau khi load xong HTML
+    // Vì HTML được chèn động, Observer cũ có thể không bắt được
+    if (window.initScrollAnimations) {
+        window.initScrollAnimations(); 
+    }
 });
 
 async function loadComponent(elementId, filePath, isHeader) {
     const element = document.getElementById(elementId);
     if (!element) return;
 
-    // 1. Xác định vị trí file component dựa trên trang hiện tại
-    // Nếu đang ở thư mục con (VD: blog/), cần lùi ra 1 cấp (../components/...)
+    // Xử lý đường dẫn tương đối cho thư mục con
     const isSubFolder = window.location.pathname.includes("/blog/") || window.location.pathname.includes("/projects/");
     const fetchPath = isSubFolder ? "../" + filePath : filePath;
 
@@ -17,35 +31,29 @@ async function loadComponent(elementId, filePath, isHeader) {
         if (response.ok) {
             let html = await response.text();
             
-            // 2. Sửa đường dẫn link nếu đang ở thư mục con
+            // Fix đường dẫn ảnh/link khi ở thư mục con
             if (isSubFolder) {
-                // Thay thế href="ten-file" thành href="../ten-file"
-                // Regex này tìm các href không bắt đầu bằng http, https, #, mailto
                 html = html.replace(/href="(?!(http|#|mailto|\.\.))([^"]*)"/g, 'href="../$2"');
-                
-                // Sửa đường dẫn ảnh (src) nếu có
                 html = html.replace(/src="(?!(http|\.\.))([^"]*)"/g, 'src="../$2"');
             }
 
+            // Chèn HTML vào (nối thêm vào section đang có hoặc thay thế div placeholder)
+            // Lưu ý: Nếu element là <section id="about">, ta dùng innerHTML
             element.innerHTML = html;
 
-            // 3. Logic riêng cho Header (Active Menu & Theme Toggle)
+            // Logic riêng cho Header
             if (isHeader) {
                 highlightActiveMenu();
-                initThemeToggle(); // Hàm này cần có trong script.js hoặc viết lại ở đây
+                if(typeof initThemeToggle === 'function') initThemeToggle();
             }
-            
-            // 4. Logic riêng cho Footer (Update Year)
-            if (!isHeader) {
-                const yearSpan = document.getElementById('year-placeholder');
+            // Logic riêng cho Footer
+            if (!isHeader && elementId === 'footer-placeholder') {
+                const yearSpan = document.getElementById('currentYear');
                 if(yearSpan) yearSpan.textContent = new Date().getFullYear();
             }
-
-        } else {
-            console.error(`Error loading ${filePath}: ${response.statusText}`);
         }
     } catch (error) {
-        console.error(`Fetch error:`, error);
+        console.error(`Error loading ${filePath}:`, error);
     }
 }
 

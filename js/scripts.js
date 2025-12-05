@@ -1,14 +1,50 @@
-// Gộp tất cả logic vào MỘT sự kiện DOMContentLoaded duy nhất
+// ======================================================
+// --- 0. KHỞI TẠO GLOBAL FUNCTION CHO ANIMATION ---
+// ======================================================
+// Đặt hàm này ở ngoài cùng để load-components.js có thể gọi lại
+window.initScrollAnimations = function() {
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                // Tùy chọn: Nếu muốn animation chạy 1 lần rồi thôi thì bỏ comment dòng dưới
+                // observer.unobserve(entry.target); 
+            } else {
+                // Nếu muốn cuộn lên cuộn xuống đều chạy lại animation thì giữ dòng này
+                entry.target.classList.remove('is-visible');
+            }
+        });
+    }, observerOptions);
+
+    const elements = document.querySelectorAll('.animate-on-scroll');
+    elements.forEach(el => observer.observe(el));
+    
+    // Log để kiểm tra (có thể xóa sau này)
+    // console.log(`Animation initialized for ${elements.length} elements.`);
+};
+
+// ======================================================
+// --- MAIN LOGIC ---
+// ======================================================
 document.addEventListener('DOMContentLoaded', () => {
+
+    // Gọi hàm animation ngay lập tức cho các phần tử có sẵn (VD: Hero Section)
+    window.initScrollAnimations();
 
     // ======================================================
     // --- 1. LOGIC CHUNG & HEADER/PROGRESS BAR ---
     // ======================================================
     const header = document.querySelector('.main-header');
     const progressBar = document.querySelector('.scroll-progress-bar');
+    
+    // Cập nhật năm hiện tại (nếu load-components chưa xử lý footer)
     const yearSpan = document.getElementById('currentYear');
-
-    // Cập nhật năm hiện tại trong footer
     if (yearSpan) {
         yearSpan.textContent = new Date().getFullYear();
     }
@@ -16,43 +52,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // Theo dõi sự kiện cuộn trang
     window.addEventListener('scroll', () => {
         // Hiển thị header khi cuộn xuống
-        if (window.scrollY > 100) {
-            header.classList.add('visible');
-        } else {
-            header.classList.remove('visible');
+        if (header) {
+            if (window.scrollY > 100) {
+                header.classList.add('visible');
+            } else {
+                header.classList.remove('visible');
+            }
         }
 
         // Cập nhật thanh tiến trình
-        const totalHeight = document.body.scrollHeight - window.innerHeight;
-        const progress = totalHeight > 0 ? (window.scrollY / totalHeight) * 100 : 0;
-        progressBar.style.width = `${progress}%`;
+        if (progressBar) {
+            const totalHeight = document.body.scrollHeight - window.innerHeight;
+            const progress = totalHeight > 0 ? (window.scrollY / totalHeight) * 100 : 0;
+            progressBar.style.width = `${progress}%`;
+        }
     });
-
 
     // ======================================================
-    // --- 2. LOGIC ANIMATION KHI CUỘN TỚI ---
+    // --- 2. LOGIC ANIMATION (ĐÃ CHUYỂN LÊN ĐẦU FILE) ---
     // ======================================================
-    const animatedElements = document.querySelectorAll('.animate-on-scroll');
-
-    // NÂNG CẤP OBSERVER NÀY
-    const animationObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            // Nếu phần tử đang ở trong màn hình (isIntersecting là true)
-            if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
-            }
-            // Nếu phần tử KHÔNG còn ở trong màn hình (isIntersecting là false)
-            else {
-                entry.target.classList.remove('is-visible');
-            }
-        });
-    }, {
-        threshold: 0.1 // Kích hoạt khi 10% của phần tử đi vào hoặc đi ra
-    });
-
-    animatedElements.forEach(el => {
-        animationObserver.observe(el);
-    });
+    // (Đã được thay thế bởi window.initScrollAnimations ở trên)
 
 
     // ======================================================
@@ -61,42 +80,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const skillsGrid = document.querySelector('.skills-grid');
 
-    // Cập nhật lại toàn bộ hàm này
     function initializeSkillBars() {
         const skillLevels = document.querySelectorAll('.skill-level');
-
-        // Logic của Observer sẽ được thay đổi
-        const skillObserver = new IntersectionObserver((entries, observer) => {
+        const skillObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 const element = entry.target;
                 const level = element.getAttribute('data-level');
-
-                // Nếu phần tử đang ở trong màn hình (isIntersecting là true)
                 if (entry.isIntersecting) {
-                    // Thì chạy animation đến mức % của nó
                     element.style.width = level;
                 } else {
-                    // Ngược lại, nếu nó đã ra ngoài màn hình, RESET nó về 0%
                     element.style.width = '0%';
                 }
             });
-        }, {
-            threshold: 0.5 // Kích hoạt khi 50% của thanh skill hiện ra
-        });
+        }, { threshold: 0.5 });
 
-        skillLevels.forEach(level => {
-            skillObserver.observe(level);
-        });
+        skillLevels.forEach(level => skillObserver.observe(level));
     }
 
-    // Hàm hiển thị kỹ năng phiên bản nâng cao
     async function fetchAndDisplayHybridSkills() {
         if (!skillsGrid) return;
 
-        // --- BƯỚC 1: ĐỊNH NGHĨA KỸ NĂNG CỐT LÕI VÀ ICON ---
-        // Đây là danh sách các kỹ năng cơ bản của bạn.
-        // 'percentage' ở đây là điểm cơ bản, sẽ được cộng thêm dựa vào GitHub.
-        // Tách riêng HTML và CSS như bạn muốn.
         const skillsMap = new Map([
             ['HTML', { name: 'HTML', percentage: 40, icon: 'assets/icons/html.png' }],
             ['CSS', { name: 'CSS', percentage: 40, icon: 'assets/icons/css.png' }],
@@ -106,51 +109,42 @@ document.addEventListener('DOMContentLoaded', () => {
             ['Dart', { name: 'Dart', percentage: 20, icon: 'assets/icons/dart.png' }],
             ['Python', { name: 'Python', percentage: 15, icon: 'assets/icons/python.png' }],
             ['TypeScript', { name: 'TypeScript', percentage: 15, icon: 'assets/icons/typescript.png' }],
-            // Các kỹ năng không phải ngôn ngữ lập trình
             ['Git & GitHub', { name: 'Git & GitHub', percentage: 85, icon: 'assets/icons/github.png' }],
             ['Docker', { name: 'Docker', percentage: 60, icon: 'assets/icons/docker.png' }],
-
         ]);
 
-        // Icon mặc định cho các ngôn ngữ không có trong danh sách trên
         const defaultIcon = 'assets/icons/default.png';
-
         const apiUrl = 'github_stats.json';
 
         try {
-            // --- BƯỚC 2: FETCH VÀ PHÂN TÍCH GITHUB ---
             const response = await fetch(apiUrl);
-            if (!response.ok) throw new Error(`GitHub API Error: ${response.status}`);
-            const langStatsData = await response.json();
+            // Nếu lỗi fetch file json, dùng dữ liệu mặc định trong skillsMap
+            if (response.ok) {
+                const langStatsData = await response.json();
+                const langStats = new Map(Object.entries(langStatsData));
 
-            const langStats = new Map(Object.entries(langStatsData));
+                langStats.forEach((count, lang) => {
+                    const factor = 2; 
+                    const maxBonus = 40; 
 
-            // --- BƯỚC 3: TÍNH TOÁN & CẬP NHẬT PHẦN TRĂM ---
-            langStats.forEach((count, lang) => {
-                const factor = 2; // Mỗi repo ngôn ngữ đó sẽ cộng thêm 2%
-                const maxBonus = 40; // Cộng tối đa 40% để tránh quá cao
+                    if (skillsMap.has(lang)) {
+                        const skill = skillsMap.get(lang);
+                        const bonus = Math.min(count * factor, maxBonus);
+                        skill.percentage = Math.min(skill.percentage + bonus, 95); 
+                    } else {
+                        skillsMap.set(lang, {
+                            name: lang,
+                            percentage: Math.min(10 + (count * factor), 50),
+                            icon: defaultIcon
+                        });
+                    }
+                });
+            }
 
-                if (skillsMap.has(lang)) {
-                    // Nếu ngôn ngữ đã có, cộng thêm %
-                    const skill = skillsMap.get(lang);
-                    const bonus = Math.min(count * factor, maxBonus);
-                    skill.percentage = Math.min(skill.percentage + bonus, 95); // Giới hạn cuối cùng là 95%
-                } else {
-                    // Nếu là ngôn ngữ mới, thêm vào danh sách
-                    skillsMap.set(lang, {
-                        name: lang,
-                        percentage: Math.min(10 + (count * factor), 50), // Ngôn ngữ mới có base 10%
-                        icon: defaultIcon
-                    });
-                }
-            });
-
-            // --- BƯỚC 4: HIỂN THỊ KẾT QUẢ ---
-            // Chuyển Map thành Array và sắp xếp theo % giảm dần
             const finalSkills = Array.from(skillsMap.values())
                 .sort((a, b) => b.percentage - a.percentage);
 
-            skillsGrid.innerHTML = ''; // Xóa thông báo loading
+            skillsGrid.innerHTML = ''; 
 
             finalSkills.forEach(skill => {
                 const skillCardHTML = `
@@ -170,19 +164,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 skillsGrid.innerHTML += skillCardHTML;
             });
 
-            // Kích hoạt lại animation cho các card và thanh skill vừa tạo
-            const newAnimatedElements = skillsGrid.querySelectorAll('.animate-on-scroll');
-            newAnimatedElements.forEach(el => animationObserver.observe(el));
+            // Kích hoạt animation cho các skill card mới tạo
+            window.initScrollAnimations(); // GỌI LẠI HÀM NÀY ĐỂ NHẬN DIỆN CARD MỚI
             initializeSkillBars();
 
         } catch (error) {
-            console.error("Failed to fetch skills:", error);
-            skillsGrid.innerHTML = '<p class="skills-loading">Could not load skills from GitHub. Displaying default skills.</p>';
-            // Có thể gọi một hàm hiển thị danh sách mặc định ở đây nếu muốn
+            console.error("Failed to fetch skills/stats:", error);
+            // Vẫn hiển thị skillsMap cơ bản nếu lỗi
+             skillsGrid.innerHTML = '<p class="skills-loading">Error loading stats. Check console.</p>';
         }
     }
 
-    // Gọi hàm chính để bắt đầu
     fetchAndDisplayHybridSkills();
 
 
@@ -197,156 +189,138 @@ document.addEventListener('DOMContentLoaded', () => {
     const songTitle = document.getElementById('song-title');
     const songArtist = document.getElementById('song-artist');
 
-
     let currentSongIndex = 0;
     let isPlaying = false;
 
-    function loadSong(song) {
-        if (song) {
-            songTitle.textContent = song.title;
-            songArtist.textContent = song.artist;
-            songCover.src = song.coverPath;
-            audio.src = song.audioPath;
+    // Kiểm tra biến playlist có tồn tại không (từ playlist.js)
+    if (typeof playlist !== 'undefined' && playlist.length > 0) {
+        function loadSong(song) {
+            if (song) {
+                if(songTitle) songTitle.textContent = song.title;
+                if(songArtist) songArtist.textContent = song.artist;
+                if(songCover) songCover.src = song.coverPath;
+                if(audio) audio.src = song.audioPath;
+            }
         }
-    }
 
-    function playSong() {
-        isPlaying = true;
-        playPauseBtn.classList.replace('fa-play', 'fa-pause');
-        audio.play();
-    }
+        function playSong() {
+            if(!audio) return;
+            isPlaying = true;
+            if(playPauseBtn) playPauseBtn.classList.replace('fa-play', 'fa-pause');
+            audio.play();
+        }
 
-    function pauseSong() {
-        isPlaying = false;
-        playPauseBtn.classList.replace('fa-pause', 'fa-play');
-        audio.pause();
-    }
+        function pauseSong() {
+            if(!audio) return;
+            isPlaying = false;
+            if(playPauseBtn) playPauseBtn.classList.replace('fa-pause', 'fa-play');
+            audio.pause();
+        }
 
-    function nextSong() {
-        currentSongIndex = (currentSongIndex + 1) % playlist.length;
+        function nextSong() {
+            currentSongIndex = (currentSongIndex + 1) % playlist.length;
+            loadSong(playlist[currentSongIndex]);
+            playSong();
+        }
+
+        function prevSong() {
+            currentSongIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
+            loadSong(playlist[currentSongIndex]);
+            playSong();
+        }
+
+        if (playPauseBtn) playPauseBtn.addEventListener('click', () => (isPlaying ? pauseSong() : playSong()));
+        if (nextBtn) nextBtn.addEventListener('click', nextSong);
+        if (prevBtn) prevBtn.addEventListener('click', prevSong);
+        if (audio) audio.addEventListener('ended', nextSong);
+
         loadSong(playlist[currentSongIndex]);
-        playSong();
     }
-
-    function prevSong() {
-        currentSongIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
-        loadSong(playlist[currentSongIndex]);
-        playSong();
-    }
-
-
-    // Gắn sự kiện cho các nút điều khiển nhạc
-    if (playPauseBtn) playPauseBtn.addEventListener('click', () => (isPlaying ? pauseSong() : playSong()));
-    if (nextBtn) nextBtn.addEventListener('click', nextSong);
-    if (prevBtn) prevBtn.addEventListener('click', prevSong);
-    if (audio) audio.addEventListener('ended', nextSong);
-
-    // Tải bài hát đầu tiên
-    loadSong(playlist[currentSongIndex]);
 
 
     // ======================================================
     // --- 5. LOGIC CHO ACTIVE NAV INDICATOR ---
     // ======================================================
-    const navLinks = document.querySelectorAll('.main-nav a');
-    const navIndicator = document.querySelector('.nav-indicator');
-    const sections = document.querySelectorAll('main section');
+    // Logic này có thể cần chạy lại sau khi Header được load
+    // Vì vậy ta bọc nó vào hàm để load-components.js có thể gọi (nếu cần)
+    window.highlightActiveMenu = function() {
+        const navLinks = document.querySelectorAll('.main-nav a');
+        const navIndicator = document.querySelector('.nav-indicator');
+        const sections = document.querySelectorAll('main section');
 
-    function moveIndicator(targetLink) {
-    // Kiểm tra an toàn, nếu không có vạch chỉ báo thì không làm gì cả
-    if (!navIndicator) return;
-
-    // Nếu không có link mục tiêu (ví dụ: cuộn ra khỏi vùng các section), ẩn vạch chỉ báo đi
-    if (!targetLink) {
-        navIndicator.style.opacity = '0';
-        return;
-    }
-
-    // === PHẦN LOGIC BỊ THIẾU ĐÂY ===
-    // Lấy thông tin vị trí và kích thước của link mục tiêu
-    const linkRect = targetLink.getBoundingClientRect();
-    // Lấy thông tin vị trí của thanh điều hướng (để tính toán vị trí tương đối)
-    const navRect = targetLink.parentElement.getBoundingClientRect();
-
-    // Di chuyển và thay đổi kích thước của vạch chỉ báo
-    navIndicator.style.width = `${linkRect.width}px`;
-    navIndicator.style.left = `${linkRect.left - navRect.left}px`;
-    navIndicator.style.opacity = '1';
-
-    // Cập nhật class 'is-active' cho các link
-    navLinks.forEach(link => link.classList.remove('is-active'));
-    targetLink.classList.add('is-active');
-}
-
-    navLinks.forEach(link => {
-        link.addEventListener('click', (e) => moveIndicator(e.currentTarget));
-    });
-
-    const navObserverOptions = {
-        rootMargin: "-50% 0px -50% 0px",
-        threshold: 0
-    };
-
-    const navSectionObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const sectionId = entry.target.id;
-                const correspondingLink = document.querySelector(`.main-nav a[href="#${sectionId}"]`);
-                moveIndicator(correspondingLink);
+        function moveIndicator(targetLink) {
+            if (!navIndicator) return;
+            if (!targetLink) {
+                navIndicator.style.opacity = '0';
+                return;
             }
+            const linkRect = targetLink.getBoundingClientRect();
+            const navRect = targetLink.parentElement.getBoundingClientRect();
+
+            navIndicator.style.width = `${linkRect.width}px`;
+            navIndicator.style.left = `${linkRect.left - navRect.left}px`;
+            navIndicator.style.opacity = '1';
+
+            navLinks.forEach(link => link.classList.remove('is-active'));
+            targetLink.classList.add('is-active');
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => moveIndicator(e.currentTarget));
         });
-    }, navObserverOptions);
 
-    sections.forEach(section => {
-        navSectionObserver.observe(section);
-    });
+        const navSectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const sectionId = entry.target.id;
+                    const correspondingLink = document.querySelector(`.main-nav a[href="#${sectionId}"]`);
+                    moveIndicator(correspondingLink);
+                }
+            });
+        }, { rootMargin: "-50% 0px -50% 0px", threshold: 0 });
 
-    // Xử lý khi tải lại trang, di chuyển indicator đến vị trí đúng
-    setTimeout(() => {
-        let activeSectionVisible = false;
         sections.forEach(section => {
-            const rect = section.getBoundingClientRect();
-            if (rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2) {
-                const correspondingLink = document.querySelector(`.main-nav a[href="#${section.id}"]`);
-                moveIndicator(correspondingLink);
-                activeSectionVisible = true;
-            }
+            navSectionObserver.observe(section);
         });
+    };
+    
+    // Gọi lần đầu (cho các trang không dùng load-components hoặc đã có sẵn html)
+    window.highlightActiveMenu();
 
-        // Nếu không có section nào active (ví dụ đang ở đầu trang), active #hero
-        if (!activeSectionVisible && window.scrollY < window.innerHeight / 2) {
-            const initialLink = document.querySelector('.main-nav a[href="#hero"]');
-            moveIndicator(initialLink);
-        }
-    }, 200);
 
     // ======================================================
-    // --- BỔ SUNG: LOGIC CHO LIGHT/DARK THEME ---
+    // --- 6. LOGIC CHO LIGHT/DARK THEME ---
     // ======================================================
-    const themeToggleBtn = document.getElementById('theme-toggle');
+    // Cũng bọc vào hàm để gọi lại sau khi Header load xong
+    window.initThemeToggle = function() {
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const body = document.body;
 
-    if (themeToggleBtn) {
-        // Function to set the theme
-        function setTheme(theme) {
-            if (theme === 'light-mode') {
-                document.body.classList.add('light-mode');
-                localStorage.setItem('theme', 'light-mode');
-            } else {
-                document.body.classList.remove('light-mode');
-                localStorage.removeItem('theme');
-            }
-        }
-
-        // Event listener for the button
-        themeToggleBtn.addEventListener('click', () => {
-            const isLight = document.body.classList.contains('light-mode');
-            setTheme(isLight ? 'dark-mode' : 'light-mode');
-        });
-
-        // Apply initial theme on load
+        // Apply initial theme
         const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-            setTheme(savedTheme);
+        if (savedTheme === 'light-mode') {
+            body.classList.add('light-mode');
+        } else {
+            body.classList.remove('light-mode');
+        }
+
+        if (themeToggleBtn) {
+            // Xóa event cũ để tránh trùng lặp nếu gọi nhiều lần
+            const newBtn = themeToggleBtn.cloneNode(true);
+            themeToggleBtn.parentNode.replaceChild(newBtn, themeToggleBtn);
+
+            newBtn.addEventListener('click', () => {
+                body.classList.toggle('light-mode');
+                if (body.classList.contains('light-mode')) {
+                    localStorage.setItem('theme', 'light-mode');
+                } else {
+                    localStorage.setItem('theme', 'dark-mode');
+                }
+            });
         }
     }
-}); // <-- Dấu ngoặc đóng của sự kiện DOMContentLoaded duy nhất
+
+    // Gọi lần đầu
+    window.initThemeToggle();
+
+});
