@@ -233,7 +233,24 @@ body.light-mode .theme-toggle-btn .fa-sun { transform: translate(-50%, -50%); op
 /* ====================================================== */
 /* --- FOOTER --- */
 /* ====================================================== */
-.footer {
-    text-align: center; padding: 2rem; margin-top: 2rem;
-    color: var(--color-text-secondary); border-top: 1px solid var(--border-color);
+/* --- FIX LỖI FOOTER BỊ DÀY/HẸP Ở TRANG BLOG --- */
+
+/* 1. Reset chiều rộng cho container trong footer về chuẩn (thường là 1200px hoặc 100% tùy base) */
+.main-footer .container,
+.main-footer .footer-container {
+    max-width: 1200px !important; /* Ghi đè độ rộng hẹp của blog */
+    padding-top: 0 !important;    /* Bỏ padding thừa nếu có */
+    padding-bottom: 0 !important;
+    width: 100% !important;
+}
+
+/* 2. Nếu bạn thấy footer vẫn quá cao do padding mặc định của footer.css */
+.main-footer {
+    padding-top: 3rem !important;    /* Giảm độ cao bên trên */
+    padding-bottom: 1.5rem !important; /* Giảm độ cao bên dưới */
+}
+.blog-reading-container {
+    max-width: 800px; /* Chỉ bóp hẹp phần bài đọc */
+    margin: 0 auto;
+    padding: 40px 20px;
 }

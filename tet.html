@@ -40,22 +40,32 @@
             pointer-events: none;
             z-index: 9999;
         }
+
         .blossom {
             position: absolute;
             top: -20px;
-            color: #ffc0cb; /* Pink for peach blossoms */
+            color: #ffc0cb;
+            /* Pink for peach blossoms */
             font-size: 1.5rem;
             animation: fall linear infinite;
         }
+
         @keyframes fall {
-            0% { transform: translateY(0) rotate(0); }
-            100% { transform: translateY(105vh) rotate(360deg); }
+            0% {
+                transform: translateY(0) rotate(0);
+            }
+
+            100% {
+                transform: translateY(105vh) rotate(360deg);
+            }
         }
+
         .tet-gradient-text {
             background: linear-gradient(to right, #ff0000, #ffd700);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+
         .theme-switcher-dropdown {
             position: relative;
             display: inline-block;
@@ -85,7 +95,7 @@
             position: absolute;
             background-color: var(--bg-card);
             min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
             z-index: 1;
             border-radius: 0.5rem;
             border: 1px solid var(--border-color);
@@ -174,11 +184,15 @@
                         An Khang<br>
                         <span class="tet-gradient-text">Thịnh Vượng</span>
                     </h1>
-                    <p style="color: white;" class="animate-on-scroll">Chúc bạn và gia đình một năm mới vạn sự như ý.</p>
+                    <p style="color: white;" class="animate-on-scroll">Chúc bạn và gia đình một năm mới vạn sự như ý.
+                    </p>
                     <div class="social-links animate-on-scroll">
-                        <a style="color: white;" href="https://linkedin.com/in/tranhuudat2004" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        <a style="color: white;" href="https://github.com/TranHuuDat2004" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                        <a style="color: white;" href="mailto:tranhuudat.cv@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                        <a style="color: white;" href="https://linkedin.com/in/tranhuudat2004" aria-label="LinkedIn"><i
+                                class="fab fa-linkedin-in"></i></a>
+                        <a style="color: white;" href="https://github.com/TranHuuDat2004" aria-label="GitHub"><i
+                                class="fab fa-github"></i></a>
+                        <a style="color: white;" href="mailto:tranhuudat.cv@gmail.com" aria-label="Email"><i
+                                class="fas fa-envelope"></i></a>
                         <a style="color: white;" href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
                     </div>
                 </div>
@@ -200,7 +214,7 @@
             <i class="fas fa-volume-high"></i>
         </div>
 
-                <!-- ====================================================== -->
+        <!-- ====================================================== -->
         <!-- Section 2: About Me (CẬP NHẬT) -->
         <!-- ====================================================== -->
         <section id="about" class="content-section">
@@ -277,7 +291,7 @@
             </div>
         </section>
 
-<!-- ====================================================== -->
+        <!-- ====================================================== -->
         <!-- Section 4: Featured Works (NEW ALTERNATING LAYOUT) -->
         <!-- ====================================================== -->
         <section id="projects" class="content-section">
@@ -654,58 +668,13 @@
         </section>
     </main>
 
-        
-    <footer class="main-footer">
-        <div class="container footer-container">
-            <div class="footer-column footer-about">
-                <h3 class="footer-logo"><span>tranhuudat</span>2004</h3>
-                <p>A passionate Web Developer dedicated to building beautiful and useful applications.</p>
-            </div>
-            <div class="footer-column footer-links">
-                <h4 class="footer-title">Quick Links</h4>
-                <ul>
-                    <li><a href="#hero">Home</a></li>
-                    <li><a href="assets/resume.pdf" download>Resume</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </div>
-            <div class="footer-column footer-connect">
-                <h4 class="footer-title">Connect with Me</h4>
-                <ul>
-                    <li><a href="https://github.com/TranHuuDat2004" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
-                    <li><a href="https://linkedin.com/in/tranhuudat2004" target="_blank"><i class="fab fa-linkedin-in"></i> LinkedIn</a></li>
-                    <li><a href="mailto:tranhuudat.cv@gmail.com"><i class="fas fa-envelope"></i> Email</a></li>
-                </ul>
-            </div>
 
-            <!-- Cột 4: Themes -->
-            <div class="footer-column footer-themes">
-                <h4 class="footer-title">Themes</h4>
-                <div class="theme-switcher-dropdown">
-                    <button class="dropdown-toggle">Themes <i class="fas fa-chevron-down"></i></button>
-                    <div class="dropdown-menu">
-                        <a href="index.html">Default</a>
-                        <a href="birthday.html">Birthday</a>
-                        <a href="noel.html">Noel</a>
-                        <a href="halloween.html">Halloween</a>
-                        <a href="tet.html">Tết</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="footer-copyright">
-            <div class="container">
-                <p>Copyright © <span id="currentYear"></span> Trần Hữu Đạt. All rights reserved.</p>
-                <p>Last updated: <b> October 14th 2025</b></p>
-            </div>
-        </div>
-    </footer>
-
+    <footer class="main-footer" id="footer-placeholder"></footer>
+    <script src="js/load-components.js"></script>
     <audio id="audio-source"></audio>
     <script src="js/playlist.js"></script>
     <script src="js/scripts.js"></script>
-     <!-- === TẢI CÁC SECTION CHUNG === -->
+    <!-- === TẢI CÁC SECTION CHUNG === -->
     <script src="js/load-sections.js"></script>
     <script>
         // Tet specific scripts
@@ -758,4 +727,5 @@
         });
     </script>
 </body>
+
 </html>

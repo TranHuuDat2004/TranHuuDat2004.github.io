@@ -1,62 +1,311 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- TIÊU ĐỀ MỚI -->
-    <title>Trần Hữu Đạt - Full-stack Web Developer</title>
-    <!-- THAY ICON MỚI (NẾU CÓ) -->
+    <title>Blog - Trần Hữu Đạt | Digital Garden</title>
     <link rel="icon" type="image/png" href="assets/favicon.png" />
 
-    <!-- THÊM FONT MỚI TỪ GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- LINK CSS VÀ FONT AWESOME -->
-        <link rel="stylesheet" href="css/components/base.css" />
+    <link rel="stylesheet" href="css/components/base.css" />
     <link rel="stylesheet" href="css/components/header.css" />
-    <link rel="stylesheet" href="css/components/hero.css" />
-    <link rel="stylesheet" href="css/components/music-player.css" />
-    <link rel="stylesheet" href="css/components/sections.css" />
-    <link rel="stylesheet" href="css/components/about.css" />
-    <link rel="stylesheet" href="css/components/skills.css" />
-    <link rel="stylesheet" href="css/components/projects.css" />
-    <link rel="stylesheet" href="css/components/blog.css" />
-    <link rel="stylesheet" href="css/components/experience.css" />
-    <link rel="stylesheet" href="css/components/contact.css" />
-    <link rel="stylesheet" href="css/components/animations.css" />
-    <link rel="stylesheet" href="css/components/awards.css" />
     <link rel="stylesheet" href="css/components/footer.css" />
-    <link rel="stylesheet" href="css/components/wakatime.css" />
-    <link rel="stylesheet" href="css/components/featured-projects.css" />
-    <link rel="stylesheet" href="css/components/interactive-skills.css" />
     <link rel="stylesheet" href="css/components/theme.css" />
-    <link rel="stylesheet" href="css/blog-style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* 1. Hero Section & Search */
+        /* Tìm đoạn này trong thẻ <style> của blog.html */
+        .blog-hero {
+            text-align: center;
+            padding: 80px 20px 50px;
+
+            /* --- SỬA DÒNG NÀY --- */
+            /* Cũ: background: linear-gradient(...) -> Xóa đi */
+
+            /* Mới: Dùng biến màu nền Card (tự động tối khi Dark Mode) */
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            /* Thêm viền mỏng cho nét */
+            border-top: none;
+            /* Bỏ viền trên để liền mạch với Header */
+            /* -------------------- */
+
+            margin-bottom: 40px;
+            border-radius: 0 0 30px 30px;
+        }
+
+        .blog-hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, #6c5ce7, #a29bfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        .blog-hero p {
+            max-width: 600px;
+            margin: 0 auto 35px;
+            color: var(--text-secondary, #666);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .blog-controls {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            align-items: center;
+        }
+
+        /* 2. Thanh Tìm Kiếm */
+        .search-box {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 15px 25px;
+            padding-right: 50px;
+            border-radius: 50px;
+            border: 2px solid var(--border-color, #eee);
+            background: var(--bg-card, #fff);
+            color: var(--text-primary, #333);
+            font-family: 'Sora', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-color, #6c5ce7);
+            box-shadow: 0 4px 20px rgba(108, 92, 231, 0.15);
+        }
+
+        .search-box i {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary, #999);
+            font-size: 1.2rem;
+        }
+
+        /* 3. Bộ lọc Tags */
+        .filter-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            border-radius: 25px;
+            border: 1px solid var(--border-color, #eee);
+            background: var(--bg-card, #fff);
+            color: var(--text-secondary, #666);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            font-weight: 500;
+            font-family: 'Sora', sans-serif;
+        }
+
+        .filter-btn:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary-color, #6c5ce7);
+            color: var(--primary-color, #6c5ce7);
+        }
+
+        .filter-btn.active {
+            background: var(--primary-color, #6c5ce7);
+            color: #fff;
+            border-color: var(--primary-color, #6c5ce7);
+            box-shadow: 0 4px 10px rgba(108, 92, 231, 0.3);
+        }
+
+        /* 4. Grid Layout */
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 40px;
+            padding-bottom: 80px;
+        }
+
+        .post-card {
+            background: var(--bg-card, #fff);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border-color, #eee);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .post-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            border-color: transparent;
+        }
+
+        .card-image {
+            height: 220px;
+            background-color: #f0f0f0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .post-card:hover .card-image img {
+            transform: scale(1.08);
+        }
+
+        .post-card-content {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .post-meta-mini {
+            font-size: 0.85rem;
+            color: var(--text-secondary, #777);
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .post-meta-mini i {
+            margin-right: 5px;
+        }
+
+        .post-tags {
+            margin-bottom: 12px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            background: rgba(108, 92, 231, 0.1);
+            color: var(--primary-color, #6c5ce7);
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .post-card-title {
+            font-size: 1.35rem;
+            margin-bottom: 12px;
+            color: var(--text-primary, #333);
+            line-height: 1.4;
+            font-weight: 700;
+        }
+
+        .post-card-title a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.2s;
+        }
+
+        .post-card-title a:hover {
+            color: var(--primary-color, #6c5ce7);
+        }
+
+        .post-card-excerpt {
+            font-size: 0.95rem;
+            color: var(--text-secondary, #666);
+            margin-bottom: 25px;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        .card-footer {
+            margin-top: auto;
+            border-top: 1px solid var(--border-color, #eee);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .read-more-link {
+            color: var(--primary-color, #6c5ce7);
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: gap 0.3s;
+        }
+
+        .read-more-link:hover {
+            gap: 10px;
+        }
+
+        /* Animation cho việc lọc */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .blog-hero h1 {
+                font-size: 2rem;
+            }
+
+            .posts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <!-- Thanh tiến trình cuộn -->
     <div class="scroll-progress-bar"></div>
 
-    <!-- Header của bạn (đã tùy chỉnh cho blog) -->
     <header class="main-header">
         <a class="logo" href="index.html"><span>tranhuudat</span>2004</a>
-
         <div class="header-navigation">
             <nav class="main-nav">
-                <!-- Các link này điều hướng về trang chủ -->
                 <a href="index.html#hero">Home</a>
                 <a href="index.html#about">About</a>
                 <a href="index.html#skills">Skills</a>
-                <a href="project.html">Projects</a> <!-- Link Projects active -->
+                <a href="project.html">Projects</a>
                 <a href="index.html#experience">Experience</a>
-                <a href="index.html#blog"  class="is-active">Blog</a>
+                <a href="blog.html" class="is-active">Blog</a>
                 <a href="index.html#contact">Contact</a>
-                <a href="download-resume.html">Resume</a>
             </nav>
-            
-            <!-- Nút chuyển theme đã có từ trước -->
+            <a href="download-resume.html" class="resume-button">Resume</a>
             <button id="theme-toggle" class="theme-toggle-btn">
                 <i class="fas fa-sun"></i>
                 <i class="fas fa-moon"></i>
@@ -64,35 +313,226 @@
         </div>
     </header>
 
-    <!-- Nội dung trang blog giữ nguyên -->
     <main class="container">
         <section class="blog-hero">
             <h1>My Digital Garden</h1>
-            <p>Nơi mình chia sẻ kiến thức, ghi chú và những điều hay ho học được trong hành trình làm lập trình viên.</p>
-        </section>
+            <p>Nơi mình chia sẻ kiến thức, ghi chú và những điều hay ho học được trong hành trình làm lập trình viên.
+            </p>
 
-        <section class="posts-list">
-            <div class="post-card">
-                <div class="post-card-content">
-                    <div class="post-tags">
-                        <span class="tag">Unity</span>
-                        <span class="tag">Game Dev</span>
-                        <span class="tag">3D</span>
-                    </div>
-                    <h2 class="post-card-title">Hướng Dẫn: Tải Model & Animation Từ Mixamo Cho Unity (Chuẩn 2025)</h2>
-                    <p class="post-card-excerpt">
-                        Một quy trình chuẩn và hiệu quả nhất để lấy tài nguyên nhân vật 3D từ Mixamo, tối ưu cho việc phát triển game với Unity.
-                    </p>
-                    <a href="post-mixamo-unity.html" class="read-more-btn">Đọc tiếp &rarr;</a>
+            <div class="blog-controls">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Tìm kiếm bài viết (VD: Unity, Web)...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="filter-tags">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="unity">Unity</button>
+                    <button class="filter-btn" data-filter="web">Web Dev</button>
+                    <button class="filter-btn" data-filter="tutorial">Tutorial</button>
+                    <button class="filter-btn" data-filter="life">Life</button>
                 </div>
             </div>
         </section>
+
+        <section class="posts-grid">
+
+            <article class="post-card" data-tags="unity 3d tutorial game dev">
+                <div class="card-image">
+                    <img src="assets/placeholder-600x400.png" alt="Thumbnail Mixamo Unity">
+                </div>
+                <div class="post-card-content">
+                    <div class="post-meta-mini">
+                        <span><i class="far fa-calendar"></i> 14/10/2025</span>
+                        <span><i class="far fa-clock"></i> 5 min read</span>
+                    </div>
+                    <div class="post-tags">
+                        <span class="tag">Unity</span>
+                        <span class="tag">3D</span>
+                        <span class="tag">Tutorial</span>
+                    </div>
+                    <h2 class="post-card-title">
+                        <a href="blog/post-mixamo-unity.html">Hướng Dẫn: Tải Model & Animation Từ Mixamo Cho Unity
+                            (Chuẩn 2025)</a>
+                    </h2>
+                    <p class="post-card-excerpt">
+                        Quy trình chuẩn để tải và import nhân vật 3D từ Mixamo vào Unity, tối ưu hóa animation và sửa
+                        lỗi texture thường gặp.
+                    </p>
+                    <div class="card-footer">
+                        <a href="blog/post-mixamo-unity.html" class="read-more-link">Đọc tiếp <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="post-card" data-tags="unity github web tutorial">
+                <div class="card-image">
+                    <img src="assets/unity-githubpage.png" alt="Thumbnail GitHub Pages">
+                </div>
+                <div class="post-card-content">
+                    <div class="post-meta-mini">
+                        <span><i class="far fa-calendar"></i> 15/10/2025</span>
+                        <span><i class="far fa-clock"></i> 8 min read</span>
+                    </div>
+                    <div class="post-tags">
+                        <span class="tag">Unity</span>
+                        <span class="tag">GitHub</span>
+                        <span class="tag">Web</span>
+                    </div>
+                    <h2 class="post-card-title">
+                        <a href="#">Deploy Game Unity WebGL lên GitHub Pages và Fix lỗi nén</a>
+                    </h2>
+                    <p class="post-card-excerpt">
+                        Hướng dẫn chi tiết cách đưa game Unity của bạn lên web miễn phí, xử lý triệt để lỗi nén
+                        Brotli/Gzip.
+                    </p>
+                    <div class="card-footer">
+                        <a href="#" class="read-more-link">Đọc tiếp <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="post-card" data-tags="web design life">
+                <div class="card-image">
+                    <img src="assets/placeholder-600x400.png" alt="Thumbnail Portfolio">
+                </div>
+                <div class="post-card-content">
+                    <div class="post-meta-mini">
+                        <span><i class="far fa-calendar"></i> 01/10/2025</span>
+                        <span><i class="far fa-clock"></i> 3 min read</span>
+                    </div>
+                    <div class="post-tags">
+                        <span class="tag">Web</span>
+                        <span class="tag">Life</span>
+                    </div>
+                    <h2 class="post-card-title">
+                        <a href="#">Hành trình xây dựng Portfolio cá nhân của mình</a>
+                    </h2>
+                    <p class="post-card-excerpt">
+                        Chia sẻ về quá trình lên ý tưởng, thiết kế và code trang web portfolio này từ con số 0.
+                    </p>
+                    <div class="card-footer">
+                        <a href="#" class="read-more-link">Đọc tiếp <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </article>
+
+            <div id="no-results"
+                style="display: none; text-align: center; width: 100%; grid-column: 1 / -1; padding: 40px;">
+                <i class="fas fa-search" style="font-size: 3rem; color: #ddd; margin-bottom: 20px;"></i>
+                <p style="color: var(--text-secondary); font-size: 1.2rem;">Không tìm thấy bài viết nào phù hợp với từ
+                    khóa này.</p>
+                <button onclick="resetFilter()"
+                    style="margin-top: 15px; padding: 10px 20px; border: 1px solid var(--primary-color); background: transparent; color: var(--primary-color); border-radius: 20px; cursor: pointer;">Xóa
+                    bộ lọc</button>
+            </div>
+
+        </section>
     </main>
 
-    <footer class="footer">
-        <p>&copy; 2025 Trần Hữu Đạt. All Rights Reserved.</p>
+    <footer class="main-footer">
+        <div class="container footer-container">
+            <div class="footer-column footer-about">
+                <h3 class="footer-logo"><span>tranhuudat</span>2004</h3>
+                <p>A passionate Web Developer dedicated to building beautiful and useful applications.</p>
+            </div>
+            <div class="footer-column footer-links">
+                <h4 class="footer-title">Quick Links</h4>
+                <ul>
+                    <li><a href="index.html#hero">Home</a></li>
+                    <li><a href="assets/resume.pdf" download>Resume</a></li>
+                    <li><a href="project.html">Projects</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column footer-connect">
+                <h4 class="footer-title">Connect with Me</h4>
+                <ul>
+                    <li><a href="https://github.com/TranHuuDat2004" target="_blank"><i class="fab fa-github"></i>
+                            GitHub</a></li>
+                    <li><a href="https://linkedin.com/in/tranhuudat2004" target="_blank"><i
+                                class="fab fa-linkedin-in"></i> LinkedIn</a></li>
+                    <li><a href="mailto:tranhuudat.cv@gmail.com"><i class="fas fa-envelope"></i> Email</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                <p>Copyright © <span id="currentYear"></span> Trần Hữu Đạt. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
 
-    <script src="js/blog-script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('searchInput');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const postCards = document.querySelectorAll('.post-card');
+            const noResultsMsg = document.getElementById('no-results');
+
+            // Cập nhật năm footer
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+            // Hàm lọc chính
+            function filterPosts() {
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                const activeBtn = document.querySelector('.filter-btn.active');
+                const activeTag = activeBtn ? activeBtn.getAttribute('data-filter') : 'all';
+
+                let visibleCount = 0;
+
+                postCards.forEach(card => {
+                    // Lấy dữ liệu bài viết
+                    const title = card.querySelector('.post-card-title').innerText.toLowerCase();
+                    const tags = card.getAttribute('data-tags').toLowerCase();
+                    const desc = card.querySelector('.post-card-excerpt').innerText.toLowerCase();
+
+                    // Điều kiện tìm kiếm (Có trong Tiêu đề OR Tags OR Mô tả)
+                    const matchesSearch = title.includes(searchTerm) || tags.includes(searchTerm) || desc.includes(searchTerm);
+
+                    // Điều kiện Tag (Nếu All thì luôn đúng, ngược lại phải chứa tag)
+                    const matchesTag = activeTag === 'all' || tags.includes(activeTag);
+
+                    if (matchesSearch && matchesTag) {
+                        card.style.display = 'flex';
+                        card.style.animation = 'fadeIn 0.5s ease';
+                        visibleCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                // Ẩn hiện thông báo
+                if (visibleCount === 0) {
+                    noResultsMsg.style.display = 'block';
+                } else {
+                    noResultsMsg.style.display = 'none';
+                }
+            }
+
+            // Sự kiện gõ phím
+            searchInput.addEventListener('input', filterPosts);
+
+            // Sự kiện bấm nút Tag
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Xóa class active cũ
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    // Thêm class active mới
+                    btn.classList.add('active');
+                    filterPosts();
+                });
+            });
+
+            // Hàm reset (cho nút Xóa bộ lọc)
+            window.resetFilter = function () {
+                searchInput.value = '';
+                document.querySelector('.filter-btn[data-filter="all"]').click();
+            }
+        });
+    </script>
 </body>
+<!-- === TẢI CÁC SECTION CHUNG === -->
+<script src="js/blog-script.js"></script>
+<script src="js/load-components.js"></script>
 </html>

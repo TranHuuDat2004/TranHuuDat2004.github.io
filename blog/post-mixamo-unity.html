@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hướng Dẫn Mixamo cho Unity | Blog</title>
+    <link rel="icon" type="image/png" href="../assets/favicon.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../css/components/base.css" />
+    <link rel="stylesheet" href="../css/components/header.css" />
+    <link rel="stylesheet" href="../css/components/hero.css" />
+    <link rel="stylesheet" href="../css/components/sections.css" />
+    <link rel="stylesheet" href="../css/components/blog.css" />
+    <link rel="stylesheet" href="../css/components/footer.css" />
+    <link rel="stylesheet" href="../css/components/theme.css" />
+    <link rel="stylesheet" href="../css/blog-style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* Layout chia 2 cột cho Desktop */
+        @media (min-width: 1024px) {
+            .blog-layout {
+                display: grid;
+                grid-template-columns: 250px 1fr; /* Cột mục lục 250px, còn lại là nội dung */
+                gap: 40px;
+                align-items: start;
+            }
+
+            .toc-sidebar {
+                position: sticky;
+                top: 100px; /* Cách đỉnh màn hình khi cuộn */
+                padding: 20px;
+                background: var(--bg-card, #f5f5f5); /* Fallback color */
+                border-radius: 12px;
+                border: 1px solid var(--border-color, #ddd);
+            }
+        }
+
+        /* Mobile: Ẩn hoặc để mục lục lên đầu */
+        @media (max-width: 1023px) {
+            .toc-sidebar {
+                margin-bottom: 30px;
+                background: var(--bg-card, #f5f5f5);
+                padding: 15px;
+                border-radius: 8px;
+            }
+        }
+
+        /* Style cho Link Mục lục */
+        .toc-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .toc-list li {
+            margin-bottom: 10px;
+        }
+
+        .toc-list a {
+            text-decoration: none;
+            color: var(--text-secondary, #666);
+            font-size: 0.95rem;
+            transition: color 0.3s;
+            display: block;
+        }
+
+        .toc-list a:hover {
+            color: var(--primary-color, #6c5ce7);
+            transform: translateX(5px);
+        }
+
+        .toc-list .sub-item {
+            padding-left: 20px;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        
+        .toc-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--text-primary, #333);
+            border-bottom: 2px solid var(--primary-color, #6c5ce7);
+            padding-bottom: 5px;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="scroll-progress-bar"></div>
+
+    <header class="main-header">
+        <a class="logo" href="../index.html"><span>tranhuudat</span>2004</a>
+
+        <div class="header-navigation">
+            <nav class="main-nav">
+                <a href="../index.html#hero">Home</a>
+                <a href="../index.html#about">About</a>
+                <a href="../index.html#skills">Skills</a>
+                <a href="../project.html">Projects</a>
+                <a href="../index.html#experience">Experience</a>
+                <a href="../index.html#blog" class="is-active">Blog</a>
+                <a href="../index.html#contact">Contact</a>
+            </nav>
+            <a href="../download-resume.html" class="resume-button">Resume</a>
+            <button id="theme-toggle" class="theme-toggle-btn">
+                <i class="fas fa-sun"></i>
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="blog-layout">
+            
+            <aside class="toc-sidebar">
+                <div class="toc-title">Mục lục</div>
+                <ul class="toc-list">
+                    <li><a href="#quy-trinh">1. Quy trình tải đúng cách</a></li>
+                    <li>
+                        <a href="#buoc-1" class="sub-item">1.1. File 1: T-Pose</a>
+                    </li>
+                    <li>
+                        <a href="#buoc-2" class="sub-item">1.2. File 2: Idle</a>
+                    </li>
+                    <li>
+                        <a href="#buoc-3" class="sub-item">1.3. File 3: Walking</a>
+                    </li>
+                    <li><a href="#ket-qua">2. Kết quả</a></li>
+                </ul>
+            </aside>
+
+            <article class="blog-post">
+                <header class="post-header">
+                    <h1>Hướng Dẫn: Tải Model & Animation Từ Mixamo Cho Unity (Chuẩn 2025)</h1>
+                    <div class="post-meta">
+                        <span>Đăng bởi Trần Hữu Đạt</span> |
+                        <span>Ngày 14 tháng 10, 2025</span>
+                    </div>
+                    <div class="post-tags">
+                        <span class="tag">Unity</span>
+                        <span class="tag">Game Dev</span>
+                        <span class="tag">3D</span>
+                    </div>
+                </header>
+
+                <div class="post-content">
+                    <p>Khi làm game, việc tìm kiếm model nhân vật 3D có sẵn animation là một trong những bước đầu tiên.
+                        Mixamo của Adobe là một công cụ tuyệt vời và miễn phí cho việc này. Tuy nhiên, để tải tài nguyên
+                        đúng cách và tối ưu cho Unity, bạn cần tuân theo một quy trình chuẩn. Dưới đây là hướng dẫn chi tiết
+                        nhất.</p>
+
+                    <div class="post-image-container">
+                        <img src="../assets/placeholder-600x400.png" alt="Giao diện website Mixamo">
+                        <span class="caption">Giao diện chính của Adobe Mixamo.</span>
+                    </div>
+
+                    <h2 id="quy-trinh">Quy trình tải đúng cách</h2>
+                    <p>Bạn sẽ lặp lại thao tác <strong>Tìm kiếm → Chọn → Tải về</strong> cho mỗi animation bạn cần. Đây là
+                        cách làm linh hoạt và giúp quản lý project gọn gàng.</p>
+
+                    <p>Ví dụ, để có 2 trạng thái cơ bản là <strong>Idle (đứng yên)</strong> và <strong>Walking (đi
+                            bộ)</strong>, bạn cần tải ít nhất 3 file riêng biệt.</p>
+
+                    <h3 id="buoc-1">1. File 1: Nhân vật ở tư thế T-Pose (Quan trọng nhất)</h3>
+                    <p>Đây là file chứa model 3D hoàn chỉnh (lưới, xương, texture).</p>
+                    <ul>
+                        <li>Tìm animation với từ khóa: <code>"T-Pose"</code>.</li>
+                        <li>Nhấn nút <strong>Download</strong>.</li>
+                        <li>Trong cửa sổ thiết lập, chọn <strong>Skin: <code>With Skin</code></strong>. Đây là bước quyết
+                            định để tải cả ngoại hình nhân vật.</li>
+                        <li>Lưu file với tên gợi nhớ, ví dụ: <code>MyCharacter.fbx</code>.</li>
+                    </ul>
+
+                    <div class="post-image-container">
+                        <img src="../assets/placeholder-600x200.png"
+                            alt="Cửa sổ Download Settings trong Mixamo với tùy chọn 'With Skin'">
+                        <span class="caption">Chọn 'With Skin' khi tải model nhân vật gốc.</span>
+                    </div>
+
+                    <h3 id="buoc-2">2. File 2: Animation Đứng yên (Idle)</h3>
+                    <p>File này sẽ chỉ chứa dữ liệu chuyển động, không cần model đi kèm.</p>
+                    <ul>
+                        <li>Tìm animation với từ khóa: <code>"Idle"</code> và chọn một kiểu bạn thích.</li>
+                        <li>Nhấn nút <strong>Download</strong>.</li>
+                        <li>Trong cửa sổ thiết lập, chọn <strong>Skin: <code>Without Skin</code></strong>. Việc này giúp
+                            file cực nhẹ.</li>
+                        <li>Lưu file với tên: <code>Idle.fbx</code>.</li>
+                    </ul>
+
+                    <h3 id="buoc-3">3. File 3: Animation Đi bộ (Walking)</h3>
+                    <p>Tương tự như file Idle, file này cũng chỉ chứa dữ liệu animation.</p>
+                    <ul>
+                        <li>Tìm animation với từ khóa: <code>"Walking"</code> và chọn kiểu phù hợp.</li>
+                        <li>Nhấn nút <strong>Download</strong>.</li>
+                        <li>Trong cửa sổ thiết lập, chọn <strong>Skin: <code>Without Skin</code></strong>.</li>
+                        <li>Lưu file với tên: <code>Walking.fbx</code>.</li>
+                    </ul>
+
+                    <h2 id="ket-qua">Kết quả</h2>
+                    <p>Sau khi tải xong, bạn sẽ có một thư mục chứa các file như sau, sẵn sàng để import vào Unity và bắt
+                        đầu tạo Animator Controller:</p>
+                    <pre><code>/YourAssetsFolder
+├── MyCharacter.fbx
+├── Idle.fbx
+├── Walking.fbx
+├── (Nếu cần) Running.fbx
+└── (Nếu cần) Jump.fbx
+</code></pre>
+
+                    <div class="post-image-container">
+                        <img src="../assets/placeholder-600x400.png" alt="Nhân vật đã được import vào Unity Scene">
+                        <span class="caption">Nhân vật đã sẵn sàng trong Unity để bắt đầu lập trình.</span>
+                    </div>
+
+                    <p>Đây là cách làm chuẩn và hiệu quả nhất khi làm việc với Mixamo và Unity, giúp bạn quản lý tài nguyên
+                        một cách chuyên nghiệp.</p>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container footer-container">
+            <div class="footer-column footer-about">
+                <h3 class="footer-logo"><span>tranhuudat</span>2004</h3>
+                <p>A passionate Web Developer dedicated to building beautiful and useful applications.</p>
+            </div>
+
+            <div class="footer-column footer-links">
+                <h4 class="footer-title">Quick Links</h4>
+                <ul>
+                    <li><a href="../index.html#hero">Home</a></li>
+                    <li><a href="../assets/resume.pdf" download>Resume</a></li>
+                    <li><a href="../index.html#projects">Projects</a></li>
+                    <li><a href="../index.html#contact">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column footer-connect">
+                <h4 class="footer-title">Connect with Me</h4>
+                <ul>
+                    <li><a href="https://github.com/TranHuuDat2004" target="_blank"><i class="fab fa-github"></i>
+                            GitHub</a>
+                    </li>
+                    <li><a href="https://linkedin.com/in/tranhuudat2004" target="_blank"><i
+                                class="fab fa-linkedin-in"></i>
+                            LinkedIn</a></li>
+                    <li><a href="mailto:tranhuudat.cv@gmail.com"><i class="fas fa-envelope"></i> Email</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-copyright">
+            <div class="container">
+                <p>Copyright © <span id="currentYear"></span> Trần Hữu Đạt. All rights reserved.</p>
+                <p>Last updated: <b> October 14th 2025</b></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/blog-script.js"></script>
+</body>
+
+</html>
