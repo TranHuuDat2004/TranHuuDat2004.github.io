@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Botnet Hunter: A Comparative ML Study</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        /* Chart Container Rules - Strict Constraints */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 300px;
+            }
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569; 
+        }
+
+        /* Pipeline Step Animation */
+        .step-card {
+            transition: all 0.3s ease;
+        }
+        .step-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+        .active-step {
+            border-color: #0ea5e9; /* sky-500 */
+            background-color: rgba(14, 165, 233, 0.1);
+        }
+    </style>
+    <!-- Chosen Palette: Cyber Defense (Slate Dark Mode with Sky/Rose/Emerald Accents) -->
+    <!-- Application Structure Plan: Dashboard layout. 
+         1. Hero Section: High-level metrics.
+         2. Context: The problem of Botnets.
+         3. Pipeline Explorer: Interactive step-by-step of the methodology.
+         4. Data Analysis: Charts showing imbalance.
+         5. Results Center: Tabbed views for Internal Tuning, SOTA Comparison, and Generalization.
+    -->
+    <!-- Visualization & Content Choices:
+         - Chart.js for all metrics (Accuracy, F1, Distribution).
+         - HTML/CSS Grid for Confusion Matrix simulation.
+         - Interactive DOM manipulation for Pipeline steps.
+         - Confirming NO SVG graphics used. NO Mermaid JS used.
+    -->
+</head>
+<body class="bg-slate-900 text-slate-200 antialiased selection:bg-sky-500 selection:text-white">
+
+    <!-- Navigation / Header -->
+    <nav class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-3">
+                    <div class="w-3 h-3 rounded-full bg-sky-500 animate-pulse"></div>
+                    <span class="font-bold text-xl tracking-tight text-white">Botnet<span class="text-sky-500">Hunter</span></span>
+                </div>
+                <div class="hidden md:flex space-x-8 text-sm font-medium">
+                    <a href="#overview" class="hover:text-sky-400 transition-colors">Overview</a>
+                    <a href="#pipeline" class="hover:text-sky-400 transition-colors">Methodology</a>
+                    <a href="#results" class="hover:text-sky-400 transition-colors">Results</a>
+                    <a href="#analysis" class="hover:text-sky-400 transition-colors">Analysis</a>
+                </div>
+                <div class="text-xs text-slate-400">
+                    Based on Dat et al., 2025
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-20">
+
+        <!-- 1. Hero Section: The Core Message -->
+        <section id="overview" class="text-center space-y-6">
+            <div class="inline-flex items-center px-3 py-1 rounded-full border border-sky-500/30 bg-sky-500/10 text-sky-300 text-xs font-medium">
+                Research Highlight: Random Forest vs. Deep Learning
+            </div>
+            <h1 class="text-4xl md:text-6xl font-bold text-white tracking-tight">
+                Can Simple Models Outperform <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400">Deep Learning?</span>
+            </h1>
+            <p class="max-w-2xl mx-auto text-lg text-slate-400 leading-relaxed">
+                Investigating whether a well-engineered traditional <strong>Random Forest</strong> can beat complex <strong>CNNs</strong> in Botnet Detection. 
+                <span class="block mt-2 text-white">Result: <span class="text-emerald-400 font-bold">99.89% Accuracy</span> on CIC-IDS-2017.</span>
+            </p>
+            
+            <!-- Quick Stats Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+                <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-700">
+                    <div class="text-2xl font-bold text-white">99.89%</div>
+                    <div class="text-xs text-slate-400 uppercase tracking-wider mt-1">Our RF Accuracy</div>
+                </div>
+                <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-700">
+                    <div class="text-2xl font-bold text-rose-400">98.61%</div>
+                    <div class="text-xs text-slate-400 uppercase tracking-wider mt-1">Baseline CNN</div>
+                </div>
+                <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-700">
+                    <div class="text-2xl font-bold text-sky-400">Data-Centric</div>
+                    <div class="text-xs text-slate-400 uppercase tracking-wider mt-1">Core Strategy</div>
+                </div>
+                <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-700">
+                    <div class="text-2xl font-bold text-white">53</div>
+                    <div class="text-xs text-slate-400 uppercase tracking-wider mt-1">Optimized Features</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Methodology Pipeline: Interactive -->
+        <section id="pipeline" class="scroll-mt-20">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-white mb-2">The "Data-Centric" Pipeline</h2>
+                <p class="text-slate-400">How we transformed raw noise into high-precision signals. Click steps to explore.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Interactive Steps -->
+                <div class="space-y-4">
+                    <div class="step-card active-step p-4 rounded-lg border border-slate-700 bg-slate-800 cursor-pointer" onclick="updatePipeline('clean')">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-semibold text-white">1. Data Cleaning</h3>
+                            <span class="text-xs bg-slate-700 px-2 py-1 rounded text-slate-300">Start</span>
+                        </div>
+                        <p class="text-sm text-slate-400">Handling 2.8M+ rows, removing infinite values, and eliminating duplicates.</p>
+                    </div>
+
+                    <div class="step-card p-4 rounded-lg border border-slate-700 bg-slate-800 cursor-pointer" onclick="updatePipeline('features')">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-semibold text-white">2. Feature Engineering</h3>
+                            <span class="text-xs bg-rose-500/20 text-rose-300 px-2 py-1 rounded">Crucial</span>
+                        </div>
+                        <p class="text-sm text-slate-400">Correlation Analysis (>0.95) to remove redundancy vs. PCA.</p>
+                    </div>
+
+                    <div class="step-card p-4 rounded-lg border border-slate-700 bg-slate-800 cursor-pointer" onclick="updatePipeline('labels')">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-semibold text-white">3. Label Grouping</h3>
+                            <span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded">Innovation</span>
+                        </div>
+                        <p class="text-sm text-slate-400">Aggregating minority classes (e.g., DoS Hulk -> DoS) to solve imbalance.</p>
+                    </div>
+                    
+                    <div class="step-card p-4 rounded-lg border border-slate-700 bg-slate-800 cursor-pointer" onclick="updatePipeline('tuning')">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-semibold text-white">4. Hyperparameter Tuning</h3>
+                            <span class="text-xs bg-purple-500/20 text-purple-300 px-2 py-1 rounded">Optimization</span>
+                        </div>
+                        <p class="text-sm text-slate-400">Scaling RF from naive (depth 10) to optimized (depth 50).</p>
+                    </div>
+                </div>
+
+                <!-- Dynamic Content Display -->
+                <div class="lg:col-span-2 bg-slate-800 rounded-xl border border-slate-700 p-6 flex flex-col justify-center">
+                    <div id="pipeline-content" class="space-y-4">
+                        <!-- Content injected via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. The Challenge: Imbalance -->
+        <section class="grid md:grid-cols-2 gap-12 items-center bg-slate-800/30 p-8 rounded-2xl border border-slate-700/50">
+            <div>
+                <h3 class="text-xl font-bold text-white mb-4">The Silent Killer: Class Imbalance</h3>
+                <p class="text-slate-400 mb-4">
+                    In CIC-IDS-2017, normal traffic overwhelms attack data. Without intervention, models ignore rare but critical attacks like <strong>Web Attacks</strong> and <strong>Bots</strong> (both < 0.1%).
+                </p>
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between text-sm">
+                        <span class="text-slate-300">Normal Traffic</span>
+                        <span class="text-white font-mono">83.11%</span>
+                    </div>
+                    <div class="w-full bg-slate-700 h-2 rounded-full overflow-hidden">
+                        <div class="bg-emerald-500 h-full" style="width: 83.11%"></div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between text-sm mt-2">
+                        <span class="text-slate-300">DoS / DDoS</span>
+                        <span class="text-white font-mono">12.77%</span>
+                    </div>
+                    <div class="w-full bg-slate-700 h-2 rounded-full overflow-hidden">
+                        <div class="bg-rose-500 h-full" style="width: 12.77%"></div>
+                    </div>
+
+                    <div class="flex items-center justify-between text-sm mt-2">
+                        <span class="text-slate-300">Web Attacks / Bots</span>
+                        <span class="text-rose-400 font-bold font-mono">~0.17%</span>
+                    </div>
+                    <div class="w-full bg-slate-700 h-2 rounded-full overflow-hidden">
+                        <div class="bg-rose-400 h-full" style="width: 0.5%"></div>
+                    </div>
+                </div>
+                <p class="text-xs text-slate-500 mt-4 italic">
+                    *Our "Label Grouping" strategy consolidates granular attacks to boost visibility for the model.
+                </p>
+            </div>
+            <div class="chart-container">
+                <canvas id="imbalanceChart"></canvas>
+            </div>
+        </section>
+
+        <!-- 4. Results Arena -->
+        <section id="results" class="space-y-8">
+            <div class="text-center max-w-3xl mx-auto">
+                <h2 class="text-3xl font-bold text-white">Performance Analysis</h2>
+                <p class="text-slate-400 mt-2">Compare the internal impact of our optimization strategies and see how we stack up against State-of-the-Art Deep Learning models.</p>
+            </div>
+
+            <!-- Tab Controls -->
+            <div class="flex justify-center gap-4 mb-8">
+                <button onclick="switchTab('internal')" id="btn-internal" class="px-6 py-2 rounded-lg bg-sky-600 text-white font-medium hover:bg-sky-500 transition-colors">Impact of Tuning</button>
+                <button onclick="switchTab('sota')" id="btn-sota" class="px-6 py-2 rounded-lg bg-slate-800 text-slate-400 font-medium hover:bg-slate-700 hover:text-white transition-colors">Vs. CNN (SOTA)</button>
+                <button onclick="switchTab('general')" id="btn-general" class="px-6 py-2 rounded-lg bg-slate-800 text-slate-400 font-medium hover:bg-slate-700 hover:text-white transition-colors">Generalization</button>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-xl">
+                
+                <!-- Internal Tuning View -->
+                <div id="view-internal" class="grid md:grid-cols-2 gap-8 items-center">
+                    <div class="chart-container">
+                        <canvas id="tuningChart"></canvas>
+                    </div>
+                    <div class="space-y-6">
+                        <h3 class="text-xl font-bold text-white">Baseline vs. Optimized</h3>
+                        <p class="text-slate-400">
+                            The Baseline model (Depth 10) completely failed to detect minority classes. 
+                            By optimizing to <strong>Depth 50</strong> and using our Label Grouping strategy, we achieved a massive breakthrough.
+                        </p>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="p-4 bg-slate-900/50 rounded-lg border border-rose-900/30">
+                                <div class="text-sm text-slate-400">Web Attacks F1 (Baseline)</div>
+                                <div class="text-2xl font-bold text-rose-500">0.00</div>
+                                <div class="text-xs text-rose-400/70">Completely Missed</div>
+                            </div>
+                            <div class="p-4 bg-slate-900/50 rounded-lg border border-emerald-900/30">
+                                <div class="text-sm text-slate-400">Web Attacks F1 (Optimized)</div>
+                                <div class="text-2xl font-bold text-emerald-400">0.9803</div>
+                                <div class="text-xs text-emerald-400/70">Near Perfect</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SOTA Comparison View -->
+                <div id="view-sota" class="hidden grid md:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-6 order-2 md:order-1">
+                        <h3 class="text-xl font-bold text-white">Optimized RF vs. CNN (Jose et al., 2023)</h3>
+                        <p class="text-slate-400">
+                            Despite being computationally simpler, our "Well-Engineered" Random Forest outperformed the complex CNN baseline across all key metrics on the CIC-IDS-2017 dataset.
+                        </p>
+                        <ul class="space-y-3">
+                            <li class="flex items-center gap-3">
+                                <div class="w-2 h-2 rounded-full bg-emerald-400"></div>
+                                <span class="text-slate-300">Accuracy: <strong>+0.28%</strong> (99.89% vs 98.61%)</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <div class="w-2 h-2 rounded-full bg-emerald-400"></div>
+                                <span class="text-slate-300">Training Time: <strong>Seconds vs Hours</strong> (RF is faster)</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <div class="w-2 h-2 rounded-full bg-emerald-400"></div>
+                                <span class="text-slate-300">Interpretability: <strong>High vs Low</strong> (Correlation Analysis preserves feature meaning)</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="chart-container order-1 md:order-2">
+                        <canvas id="sotaChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Generalization View -->
+                <div id="view-general" class="hidden grid md:grid-cols-2 gap-8 items-center">
+                    <div class="chart-container">
+                        <canvas id="generalChart"></canvas>
+                    </div>
+                    <div class="space-y-6">
+                        <h3 class="text-xl font-bold text-white">The "No Free Lunch" Trade-off</h3>
+                        <p class="text-slate-400">
+                            When tested on a completely different dataset (UNSW-NB15), the CNN generalized better. 
+                            Our RF model is highly specialized for CIC-IDS-2017 traffic patterns.
+                        </p>
+                        <div class="bg-slate-900/50 p-4 rounded-lg border-l-4 border-amber-500">
+                            <h4 class="text-amber-400 font-semibold mb-1">Key Insight</h4>
+                            <p class="text-sm text-slate-400">
+                                <strong>Random Forest:</strong> Best for specific, resource-constrained environments where traffic patterns are known. <br>
+                                <strong>Deep Learning:</strong> Better for diverse, evolving ecosystems where generalization is priority.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 5. Discussion / Analysis -->
+        <section id="analysis" class="grid md:grid-cols-3 gap-6">
+            <div class="col-span-full md:col-span-1 p-6 bg-slate-800 rounded-xl border border-slate-700">
+                <div class="text-3xl mb-4">🔍</div>
+                <h3 class="text-lg font-bold text-white mb-2">Why RF Won?</h3>
+                <p class="text-sm text-slate-400">
+                    <strong>Feature Engineering Strategy:</strong> We used Correlation Analysis (>0.95) which kept original columns. Jose et al. used PCA which obscures meaning. Our model learned from interpretable physical signals (e.g., Packet Size).
+                </p>
+            </div>
+            <div class="col-span-full md:col-span-1 p-6 bg-slate-800 rounded-xl border border-slate-700">
+                <div class="text-3xl mb-4">🏷️</div>
+                <h3 class="text-lg font-bold text-white mb-2">The Label Trick</h3>
+                <p class="text-sm text-slate-400">
+                    <strong>Label Grouping:</strong> Consolidating <i>DoS Hulk</i> and <i>DoS GoldenEye</i> into a single <i>DoS</i> category gave the model enough samples to learn the pattern, boosting minority class detection.
+                </p>
+            </div>
+            <div class="col-span-full md:col-span-1 p-6 bg-slate-800 rounded-xl border border-slate-700">
+                <div class="text-3xl mb-4">⚡</div>
+                <h3 class="text-lg font-bold text-white mb-2">Efficiency</h3>
+                <p class="text-sm text-slate-400">
+                    <strong>Resource Usage:</strong> Our method uses CPU only (n_jobs=-1), making it deployable on edge devices. CNNs typically require heavy GPUs.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 py-8 mt-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 text-center text-slate-500 text-sm">
+            <p>Based on the report: "Applying Machine Learning for Botnet Detection" by Tran Huu Dat et al.</p>
+            <p class="mt-2">Generated by Canvas Webapp Generator</p>
+        </div>
+    </footer>
+
+    <!-- Logic Script -->
+    <script>
+        // --- DATA STORAGE ---
+        const pipelineData = {
+            'clean': {
+                title: 'Data Consolidation & Cleaning',
+                content: `
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="text-4xl text-sky-500">🧹</div>
+                        <div>
+                            <div class="text-2xl font-bold text-white">2,830,743 → 2,520,751</div>
+                            <div class="text-sm text-slate-400">Rows reduced after cleaning</div>
+                        </div>
+                    </div>
+                    <ul class="space-y-2 text-slate-300 text-sm list-disc pl-5">
+                        <li>Merged 8 separate CSV files into one dataframe.</li>
+                        <li>Removed rows with <code>NaN</code> and <code>Infinity</code> values.</li>
+                        <li><strong>Critical Step:</strong> Removed duplicate rows to prevent model bias.</li>
+                    </ul>
+                `
+            },
+            'features': {
+                title: 'Feature Engineering: Correlation vs. PCA',
+                content: `
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="text-4xl text-rose-500">📉</div>
+                        <div>
+                            <div class="text-2xl font-bold text-white">79 → 53</div>
+                            <div class="text-sm text-slate-400">Features Optimized</div>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 text-sm mb-2"><strong>Our Strategy:</strong> Correlation Analysis (> 0.95). We remove redundant columns but keep the original, interpretable names.</p>
+                    <p class="text-slate-500 text-sm italic">Compare to SOTA: They used PCA which reduced to 71 features but lost physical meaning.</p>
+                `
+            },
+            'labels': {
+                title: 'Label Grouping Strategy',
+                content: `
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div class="bg-slate-900 p-3 rounded">
+                            <div class="text-rose-400 font-bold mb-1">Before</div>
+                            <ul class="text-slate-500 text-xs space-y-1">
+                                <li>DoS Hulk</li>
+                                <li>DoS GoldenEye</li>
+                                <li>DoS Slowloris</li>
+                                <li>... (Too sparse)</li>
+                            </ul>
+                        </div>
+                        <div class="bg-slate-900 p-3 rounded border border-emerald-500/30">
+                            <div class="text-emerald-400 font-bold mb-1">After</div>
+                            <ul class="text-slate-300 text-xs space-y-1">
+                                <li>DoS (Aggregated)</li>
+                                <li>Significant sample size boost</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p class="text-slate-400 text-sm mt-3">This aggregation allows the model to learn general attack behaviors instead of memorizing specific tool signatures.</p>
+                `
+            },
+            'tuning': {
+                title: 'Baseline vs. Optimized Config',
+                content: `
+                    <table class="w-full text-sm text-left text-slate-400">
+                        <thead class="text-xs uppercase bg-slate-900 text-slate-200">
+                            <tr>
+                                <th class="px-2 py-2">Param</th>
+                                <th class="px-2 py-2">Baseline</th>
+                                <th class="px-2 py-2 text-sky-400">Optimized</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-700">
+                            <tr>
+                                <td class="px-2 py-2 font-medium">n_estimators</td>
+                                <td class="px-2 py-2">20</td>
+                                <td class="px-2 py-2 text-sky-300 font-bold">100</td>
+                            </tr>
+                            <tr>
+                                <td class="px-2 py-2 font-medium">max_depth</td>
+                                <td class="px-2 py-2">10</td>
+                                <td class="px-2 py-2 text-sky-300 font-bold">50</td>
+                            </tr>
+                            <tr>
+                                <td class="px-2 py-2 font-medium">Result (Web Attack F1)</td>
+                                <td class="px-2 py-2 text-rose-500">0.00</td>
+                                <td class="px-2 py-2 text-emerald-400 font-bold">0.98</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                `
+            }
+        };
+
+        // --- PIPELINE INTERACTION ---
+        function updatePipeline(step) {
+            // Update UI State
+            document.querySelectorAll('.step-card').forEach(el => {
+                el.classList.remove('active-step');
+                el.classList.remove('ring-2', 'ring-sky-500');
+            });
+            event.currentTarget.classList.add('active-step', 'ring-2', 'ring-sky-500');
+
+            // Update Content with fade effect
+            const container = document.getElementById('pipeline-content');
+            container.style.opacity = '0';
+            setTimeout(() => {
+                const data = pipelineData[step];
+                container.innerHTML = `
+                    <h3 class="text-xl font-bold text-white mb-2">${data.title}</h3>
+                    ${data.content}
+                `;
+                container.style.opacity = '1';
+            }, 200);
+        }
+
+        // Initialize Pipeline
+        document.querySelector('.step-card').click();
+
+
+        // --- CHARTS CONFIGURATION ---
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = "'Inter', sans-serif";
+
+        // 1. Imbalance Chart
+        const ctxImbalance = document.getElementById('imbalanceChart').getContext('2d');
+        new Chart(ctxImbalance, {
+            type: 'doughnut',
+            data: {
+                labels: ['Normal', 'DoS', 'DDoS', 'Port Scan', 'Brute Force', 'Web Attacks', 'Bots'],
+                datasets: [{
+                    data: [83.11, 7.69, 5.08, 3.60, 0.36, 0.09, 0.08],
+                    backgroundColor: [
+                        '#10b981', // Normal (Emerald)
+                        '#f43f5e', // DoS (Rose)
+                        '#e11d48', // DDoS
+                        '#fbbf24', // Port Scan (Amber)
+                        '#f97316', // Brute Force
+                        '#8b5cf6', // Web (Violet)
+                        '#0ea5e9'  // Bots (Sky)
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'right', labels: { boxWidth: 12 } },
+                    title: { display: true, text: 'Dataset Class Distribution (%)' }
+                }
+            }
+        });
+
+        // 2. Internal Tuning Chart
+        const ctxTuning = document.getElementById('tuningChart').getContext('2d');
+        new Chart(ctxTuning, {
+            type: 'bar',
+            data: {
+                labels: ['Accuracy', 'F1 (Bots)', 'F1 (Web Attacks)'],
+                datasets: [
+                    {
+                        label: 'Baseline Model',
+                        data: [99.58, 2.70, 0.00],
+                        backgroundColor: '#475569', // Slate
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Optimized RF',
+                        data: [99.89, 76.79, 98.03],
+                        backgroundColor: '#0ea5e9', // Sky
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { y: { beginAtZero: true, max: 100 } },
+                plugins: {
+                    title: { display: true, text: 'Impact of Hyperparameter Tuning (%)' }
+                }
+            }
+        });
+
+        // 3. SOTA Comparison Chart
+        const ctxSota = document.getElementById('sotaChart').getContext('2d');
+        new Chart(ctxSota, {
+            type: 'bar',
+            data: {
+                labels: ['Accuracy', 'Precision', 'Recall', 'F1-Score'],
+                datasets: [
+                    {
+                        label: 'CNN (Jose et al.)',
+                        data: [98.61, 97.05, 96.95, 98.09],
+                        backgroundColor: '#f43f5e', // Rose
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Our Optimized RF',
+                        data: [99.89, 99.89, 99.89, 99.89],
+                        backgroundColor: '#10b981', // Emerald
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { y: { min: 95, max: 100 } }, // Zoom in to show difference
+                plugins: {
+                    title: { display: true, text: 'Comparison vs. Deep Learning Baseline (%)' }
+                }
+            }
+        });
+
+        // 4. Generalization Chart
+        const ctxGeneral = document.getElementById('generalChart').getContext('2d');
+        new Chart(ctxGeneral, {
+            type: 'bar',
+            data: {
+                labels: ['CIC-IDS-2017 (Specialization)', 'UNSW-NB15 (Generalization)'],
+                datasets: [
+                    {
+                        label: 'Our Optimized RF',
+                        data: [99.89, 82.56],
+                        backgroundColor: '#0ea5e9',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'CNN (Jose et al.)',
+                        data: [98.61, 92.16],
+                        backgroundColor: '#f43f5e',
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { y: { beginAtZero: false, min: 70 } },
+                plugins: {
+                    title: { display: true, text: 'Cross-Dataset Performance (%)' }
+                }
+            }
+        });
+
+        // --- TAB LOGIC ---
+        function switchTab(tabName) {
+            // Hide all views
+            ['internal', 'sota', 'general'].forEach(t => {
+                document.getElementById(`view-${t}`).classList.add('hidden');
+                document.getElementById(`btn-${t}`).classList.replace('bg-sky-600', 'bg-slate-800');
+                document.getElementById(`btn-${t}`).classList.replace('text-white', 'text-slate-400');
+            });
+
+            // Show selected view
+            document.getElementById(`view-${tabName}`).classList.remove('hidden');
+            
+            // Highlight button
+            const btn = document.getElementById(`btn-${tabName}`);
+            btn.classList.replace('bg-slate-800', 'bg-sky-600');
+            btn.classList.replace('text-slate-400', 'text-white');
+        }
+
+    </script>
+</body>
+</html>
