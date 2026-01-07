@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phân Tích Báo Cáo Turnitin & Hướng Dẫn Trích Dẫn</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .chart-container { 
+            position: relative; 
+            width: 100%; 
+            max-width: 500px; 
+            margin: 0 auto; 
+            height: 300px; 
+        }
+        .card-hover:hover { transform: translateY(-2px); transition: all 0.3s ease; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .tab-active { border-bottom: 2px solid #2563eb; color: #2563eb; font-weight: 600; }
+        .tab-inactive { color: #64748b; }
+        .source-tag { font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 9999px; font-weight: 600; }
+        .tag-student { background-color: #fee2e2; color: #991b1b; } /* Red for Student Papers (Hard to cite) */
+        .tag-internet { background-color: #dbeafe; color: #1e40af; } /* Blue for Internet */
+        .tag-pub { background-color: #dcfce7; color: #166534; } /* Green for Publications (Good to cite) */
+    </style>
+    <!-- Chosen Palette: Slate (Background), Blue (Primary), Red/Green (Indicators) - Creating a professional, academic analysis look. -->
+    <!-- Application Structure Plan: 
+         1. Dashboard: Overview of the 11% score and authorship details.
+         2. Source Breakdown: List of the 9 identified sources from the PDF.
+         3. Action Guide (The Answer): Interactive logic tree answering "Can I cite this?" based on source type.
+         Rationale: The user has a specific problem (plagiarism score) and a specific question (referencing). 
+         The structure guides them from understanding the data to taking the correct action.
+    -->
+    <!-- Visualization & Content Choices:
+         - Donut Chart: To visualize the 11% similarity vs Unique content. Goal: Inform context.
+         - Bar Chart: To compare Internet vs Student Papers vs Publications. Goal: Compare sources.
+         - Interactive List: To display the specific sources found in the PDF. Goal: Organize data.
+         - Decision Logic (Text): To answer the user's specific question about citing. Goal: Educate/Guide.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+</head>
+<body class="text-slate-800">
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center gap-2">
+                        <span class="text-2xl">📑</span>
+                        <h1 class="font-bold text-xl tracking-tight text-slate-900">Turnitin Analyzer</h1>
+                    </div>
+                </div>
+                <div class="hidden sm:flex sm:space-x-8 items-center" id="desktop-nav">
+                    <!-- Nav items injected by JS -->
+                </div>
+                <div class="flex items-center sm:hidden">
+                    <button id="mobile-menu-btn" class="text-slate-500 hover:text-slate-700 p-2">☰</button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden sm:hidden bg-white border-t border-slate-200">
+            <div class="pt-2 pb-4 space-y-1 px-4" id="mobile-nav-items"></div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- Welcome / Context Section -->
+        <div class="mb-8">
+            <h2 class="text-3xl font-bold text-slate-900">Kết quả kiểm tra đạo văn</h2>
+            <p class="mt-2 text-slate-600 max-w-3xl">
+                Dưới đây là phân tích chi tiết báo cáo Turnitin cho đề tài <strong>"Applying Machine Learning for Botnet Detection in Network"</strong>. 
+                Ứng dụng này sẽ giúp bạn hiểu các chỉ số trùng lặp và quyết định cách xử lý trích dẫn hợp lý.
+            </p>
+        </div>
+
+        <!-- Dynamic Content Container -->
+        <div id="app-content" class="space-y-8">
+            <!-- Content injected by JS based on active tab -->
+        </div>
+
+    </main>
+
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-sm text-slate-500">
+                Phân tích dựa trên tài liệu: <code>baocao - turnitin.pdf</code> (Authors: Tran Huu Dat & Duong Thi Thuy Linh)
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // --- DATA STATE ---
+        const reportData = {
+            title: "Applying Machine Learning for Botnet Detection in Network",
+            authors: ["Tran Huu Dat (522H0081)", "Duong Thi Thuy Linh (522H0015)"],
+            advisor: "PhD. Truong Dinh Tu",
+            institution: "Ton Duc Thang University",
+            similarity: 11,
+            breakdown: {
+                internet: 5,
+                publications: 5,
+                studentPapers: 6
+            },
+            sources: [
+                { id: 1, name: "Submitted to Ton Duc Thang University", type: "Student Paper", percentage: 3, url: "N/A" },
+                { id: 2, name: "tnsroindia.org.in", type: "Internet Source", percentage: 2, url: "http://tnsroindia.org.in" },
+                { id: 3, name: "Sukhpreet Kaur, et al. 'Recent Advances in Computational Methods...'", type: "Publication", percentage: 1, publisher: "CRC Press" },
+                { id: 4, name: "Sukhpreet Kaur, et al. (Duplicate match)", type: "Publication", percentage: 1, publisher: "CRC Press" },
+                { id: 5, name: "Submitted to National School of Business Management NSBM", type: "Student Paper", percentage: 1, url: "N/A" },
+                { id: 6, name: "archives.univ-biskra.dz", type: "Internet Source", percentage: 1, url: "http://archives.univ-biskra.dz" },
+                { id: 7, name: "scholarworks.alaska.edu", type: "Internet Source", percentage: 1, url: "http://scholarworks.alaska.edu" },
+                { id: 8, name: "T. Joshva Devadas, et al. 'Advanced Computational Intelligence...'", type: "Publication", percentage: 1, publisher: "CRC Press" },
+                { id: 9, name: "www.mdpi.com", type: "Internet Source", percentage: 1, url: "http://www.mdpi.com" }
+            ]
+        };
+
+        const appState = {
+            currentTab: 'dashboard' // dashboard, breakdown, guide
+        };
+
+        // --- NAVIGATION LOGIC ---
+        const tabs = [
+            { id: 'dashboard', label: 'Tổng Quan (Dashboard)' },
+            { id: 'breakdown', label: 'Chi Tiết Nguồn (Details)' },
+            { id: 'guide', label: 'Hướng Dẫn Trích Dẫn (Citation Guide)' } // Crucial for user question
+        ];
+
+        function renderNav() {
+            const desktopNav = document.getElementById('desktop-nav');
+            const mobileNav = document.getElementById('mobile-nav-items');
+            
+            desktopNav.innerHTML = '';
+            mobileNav.innerHTML = '';
+
+            tabs.forEach(tab => {
+                // Desktop
+                const btn = document.createElement('button');
+                btn.className = `px-3 py-2 text-sm font-medium transition-colors ${appState.currentTab === tab.id ? 'text-blue-600 bg-blue-50 rounded-md' : 'text-slate-500 hover:text-slate-700'}`;
+                btn.innerText = tab.label;
+                btn.onclick = () => switchTab(tab.id);
+                desktopNav.appendChild(btn);
+
+                // Mobile
+                const mBtn = document.createElement('button');
+                mBtn.className = `block w-full text-left px-3 py-2 text-base font-medium rounded-md ${appState.currentTab === tab.id ? 'bg-blue-50 text-blue-600' : 'text-slate-600 hover:bg-slate-50'}`;
+                mBtn.innerText = tab.label;
+                mBtn.onclick = () => { switchTab(tab.id); toggleMobileMenu(); };
+                mobileNav.appendChild(mBtn);
+            });
+        }
+
+        function switchTab(tabId) {
+            appState.currentTab = tabId;
+            renderNav();
+            renderContent();
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        document.getElementById('mobile-menu-btn').addEventListener('click', toggleMobileMenu);
+
+        // --- CONTENT RENDERING ---
+        function renderContent() {
+            const container = document.getElementById('app-content');
+            container.innerHTML = '';
+
+            if (appState.currentTab === 'dashboard') renderDashboard(container);
+            else if (appState.currentTab === 'breakdown') renderBreakdown(container);
+            else if (appState.currentTab === 'guide') renderGuide(container);
+        }
+
+        // 1. DASHBOARD VIEW
+        function renderDashboard(container) {
+            // Intro
+            const intro = document.createElement('div');
+            intro.innerHTML = `
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-6">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
+                        <div>
+                            <h3 class="text-lg font-semibold text-slate-800">Thông tin bài nộp</h3>
+                            <ul class="mt-2 text-sm text-slate-600 space-y-1">
+                                <li><strong>Sinh viên:</strong> ${reportData.authors.join(", ")}</li>
+                                <li><strong>GVHD:</strong> ${reportData.advisor}</li>
+                                <li><strong>Trường:</strong> ${reportData.institution}</li>
+                            </ul>
+                        </div>
+                        <div class="mt-4 md:mt-0 flex items-center">
+                            <div class="text-center px-6 py-3 bg-blue-50 rounded-lg border border-blue-100">
+                                <span class="block text-3xl font-bold text-blue-600">${reportData.similarity}%</span>
+                                <span class="text-xs font-medium text-blue-800 uppercase tracking-wide">Tổng trùng lặp</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.appendChild(intro);
+
+            // Charts Grid
+            const grid = document.createElement('div');
+            grid.className = "grid grid-cols-1 md:grid-cols-2 gap-6";
+
+            // Chart 1: Donut
+            const chart1Card = document.createElement('div');
+            chart1Card.className = "bg-white p-6 rounded-xl shadow-sm border border-slate-200";
+            chart1Card.innerHTML = `
+                <h4 class="text-base font-semibold mb-4 text-slate-800">Tỷ lệ Độc bản vs Trùng lặp</h4>
+                <div class="chart-container">
+                    <canvas id="similarityChart"></canvas>
+                </div>
+                <p class="mt-4 text-sm text-slate-500 text-center">
+                    Tỷ lệ 11% là mức chấp nhận được ở hầu hết các trường đại học (thường < 20%), tuy nhiên cần xem xét kỹ các nguồn trùng lặp.
+                </p>
+            `;
+            grid.appendChild(chart1Card);
+
+            // Chart 2: Bar Breakdown
+            const chart2Card = document.createElement('div');
+            chart2Card.className = "bg-white p-6 rounded-xl shadow-sm border border-slate-200";
+            chart2Card.innerHTML = `
+                <h4 class="text-base font-semibold mb-4 text-slate-800">Phân bố nguồn trùng lặp</h4>
+                <div class="chart-container">
+                    <canvas id="breakdownChart"></canvas>
+                </div>
+                <div class="mt-4 grid grid-cols-3 gap-2 text-center text-xs text-slate-600">
+                    <div class="p-2 bg-red-50 rounded">Student Papers<br><strong>${reportData.breakdown.studentPapers}%</strong></div>
+                    <div class="p-2 bg-blue-50 rounded">Internet<br><strong>${reportData.breakdown.internet}%</strong></div>
+                    <div class="p-2 bg-green-50 rounded">Publications<br><strong>${reportData.breakdown.publications}%</strong></div>
+                </div>
+            `;
+            grid.appendChild(chart2Card);
+
+            container.appendChild(grid);
+
+            // Chart Initialization
+            setTimeout(() => {
+                initDashboardCharts();
+            }, 0);
+        }
+
+        // 2. BREAKDOWN VIEW (List of Sources)
+        function renderBreakdown(container) {
+            const header = document.createElement('div');
+            header.innerHTML = `
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-slate-900">Chi tiết 9 nguồn bị đánh dấu</h3>
+                    <p class="text-sm text-slate-600">
+                        Hệ thống Turnitin đã tìm thấy sự tương đồng với các nguồn dưới đây. 
+                        Màu sắc thẻ phân loại giúp bạn nhận diện nhanh loại nguồn để có hướng xử lý.
+                    </p>
+                </div>
+            `;
+            container.appendChild(header);
+
+            const listContainer = document.createElement('div');
+            listContainer.className = "space-y-3";
+
+            reportData.sources.forEach(source => {
+                let tagClass = '';
+                let adviceShort = '';
+                
+                if (source.type === 'Student Paper') {
+                    tagClass = 'tag-student';
+                    adviceShort = '⚠️ Khó trích dẫn (Không public)';
+                } else if (source.type === 'Publication') {
+                    tagClass = 'tag-pub';
+                    adviceShort = '✅ Nên trích dẫn (Uy tín)';
+                } else {
+                    tagClass = 'tag-internet';
+                    adviceShort = 'ℹ️ Kiểm tra độ uy tín';
+                }
+
+                const item = document.createElement('div');
+                item.className = "bg-white p-4 rounded-lg border border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center card-hover";
+                item.innerHTML = `
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="font-bold text-blue-600 text-lg w-8">#${source.id}</span>
+                            <span class="source-tag ${tagClass}">${source.type}</span>
+                        </div>
+                        <h4 class="text-sm font-semibold text-slate-800">${source.name}</h4>
+                        ${source.publisher ? `<p class="text-xs text-slate-500 mt-1">NXB: ${source.publisher}</p>` : ''}
+                    </div>
+                    <div class="mt-3 sm:mt-0 flex flex-col items-end gap-1">
+                        <span class="text-lg font-bold text-slate-700">${source.percentage}%</span>
+                        <span class="text-xs text-slate-400 italic">${adviceShort}</span>
+                    </div>
+                `;
+                listContainer.appendChild(item);
+            });
+
+            container.appendChild(listContainer);
+        }
+
+        // 3. GUIDE VIEW (Answering the User's Question)
+        function renderGuide(container) {
+            const guideHeader = document.createElement('div');
+            guideHeader.innerHTML = `
+                <div class="bg-indigo-50 border-l-4 border-indigo-500 p-4 mb-8">
+                    <h3 class="font-bold text-indigo-900 text-lg">Câu hỏi của bạn: "Có thể viết các bài báo bị dính vào Reference được không?"</h3>
+                    <p class="mt-2 text-indigo-800">
+                        <strong>Câu trả lời ngắn:</strong> Phụ thuộc vào loại nguồn. Không phải nguồn nào bị Turnitin bắt lỗi cũng có thể đưa vào Reference để "chữa" lỗi đạo văn.
+                    </p>
+                </div>
+            `;
+            container.appendChild(guideHeader);
+
+            // Interactive Flow
+            const flow = document.createElement('div');
+            flow.className = "grid grid-cols-1 lg:grid-cols-3 gap-6";
+
+            // Scenario A: Student Paper
+            const col1 = document.createElement('div');
+            col1.className = "bg-white rounded-xl shadow-sm border border-red-100 p-6";
+            col1.innerHTML = `
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="bg-red-100 p-2 rounded-full text-red-600">🚫</div>
+                    <h4 class="font-bold text-slate-800">Nguồn là "Student Paper"</h4>
+                </div>
+                <div class="text-sm text-slate-600 space-y-3">
+                    <p class="font-semibold text-red-600">Ví dụ: Source #1, #5 (Submitted to Ton Duc Thang Univ...)</p>
+                    <p>Đây là bài làm của sinh viên khóa trước hoặc trường khác nộp vào hệ thống. Nó <strong>không phải là tài liệu xuất bản chính thống</strong>.</p>
+                    <div class="bg-slate-50 p-3 rounded border border-slate-200">
+                        <p class="font-bold text-slate-800 mb-1">Hành động:</p>
+                        <ul class="list-disc pl-4 space-y-1">
+                            <li><strong>KHÔNG</strong> trích dẫn nguồn này trong Reference (Giảng viên sẽ đánh giá thấp vì dùng bài sinh viên làm tài liệu).</li>
+                            <li><strong>PHẢI</strong> viết lại (Paraphrase) đoạn văn đó hoàn toàn theo văn phong của bạn.</li>
+                            <li>Lỗi này thường do bạn copy định nghĩa cơ bản giống người khác.</li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+            flow.appendChild(col1);
+
+            // Scenario B: Publication
+            const col2 = document.createElement('div');
+            col2.className = "bg-white rounded-xl shadow-sm border border-green-100 p-6";
+            col2.innerHTML = `
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="bg-green-100 p-2 rounded-full text-green-600">✅</div>
+                    <h4 class="font-bold text-slate-800">Nguồn là "Publication"</h4>
+                </div>
+                <div class="text-sm text-slate-600 space-y-3">
+                    <p class="font-semibold text-green-700">Ví dụ: Source #3, #4, #8 (CRC Press)</p>
+                    <p>Đây là sách, báo hoặc tạp chí khoa học uy tín. Turnitin phát hiện bạn dùng câu chữ giống họ.</p>
+                    <div class="bg-slate-50 p-3 rounded border border-slate-200">
+                        <p class="font-bold text-slate-800 mb-1">Hành động:</p>
+                        <ul class="list-disc pl-4 space-y-1">
+                            <li><strong>CÓ</strong>, hãy đưa ngay vào Reference. Đây là nguồn tốt.</li>
+                            <li><strong>TUY NHIÊN</strong>: Chỉ trích dẫn thôi chưa đủ. Bạn phải trích dẫn + <em>viết lại ý (Paraphrase)</em>.</li>
+                            <li>Nếu để nguyên văn 100% thì vẫn bị tính là đạo văn dù có trích dẫn (trừ khi để trong ngoặc kép " ").</li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+            flow.appendChild(col2);
+
+            // Scenario C: Internet
+            const col3 = document.createElement('div');
+            col3.className = "bg-white rounded-xl shadow-sm border border-blue-100 p-6";
+            col3.innerHTML = `
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="bg-blue-100 p-2 rounded-full text-blue-600">⚠️</div>
+                    <h4 class="font-bold text-slate-800">Nguồn là "Internet"</h4>
+                </div>
+                <div class="text-sm text-slate-600 space-y-3">
+                    <p class="font-semibold text-blue-700">Ví dụ: Source #2, #6, #7, #9 (mdpi.com, univ-biskra...)</p>
+                    <p>Các trang web, kho lưu trữ online. Độ uy tín tùy thuộc vào trang web đó.</p>
+                    <div class="bg-slate-50 p-3 rounded border border-slate-200">
+                        <p class="font-bold text-slate-800 mb-1">Hành động:</p>
+                        <ul class="list-disc pl-4 space-y-1">
+                            <li>Kiểm tra trang web đó.</li>
+                            <li>Nếu là <strong>MDPI, IEEE, ScienceDirect</strong>: Xử lý như "Publication" (Trích dẫn + Paraphrase).</li>
+                            <li>Nếu là <strong>Blog, SlideShare, Wikipedia</strong>: Hạn chế trích dẫn. Nên tìm nguồn gốc (báo gốc) của thông tin đó để trích dẫn.</li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+            flow.appendChild(col3);
+
+            container.appendChild(flow);
+
+            // Example Box
+            const example = document.createElement('div');
+            example.className = "mt-8 bg-slate-800 text-white p-6 rounded-xl";
+            example.innerHTML = `
+                <h4 class="font-bold text-lg mb-2">Lời khuyên chiến thuật cho 11%:</h4>
+                <p class="opacity-90">
+                    Mức 11% là khá an toàn. Tuy nhiên, nếu 11% đó tập trung vào <strong>một đoạn văn lớn</strong> (copy nguyên khối), bạn sẽ gặp rắc rối lớn. 
+                    Nếu 11% đó là các câu rải rác (như định nghĩa Botnet, công thức Machine Learning), bạn chỉ cần viết lại cấu trúc câu (đổi chủ ngữ, dùng từ đồng nghĩa) là sẽ giảm xuống dưới 5%.
+                </p>
+            `;
+            container.appendChild(example);
+        }
+
+        // --- CHARTS CONFIG ---
+        function initDashboardCharts() {
+            // Chart 1: Donut
+            const ctx1 = document.getElementById('similarityChart').getContext('2d');
+            new Chart(ctx1, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Trùng lặp (Similarity)', 'Độc bản (Original)'],
+                    datasets: [{
+                        data: [reportData.similarity, 100 - reportData.similarity],
+                        backgroundColor: ['#ef4444', '#e2e8f0'],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+
+            // Chart 2: Horizontal Bar
+            const ctx2 = document.getElementById('breakdownChart').getContext('2d');
+            new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: ['Student Papers', 'Internet Sources', 'Publications'],
+                    datasets: [{
+                        label: 'Tỷ lệ %',
+                        data: [
+                            reportData.breakdown.studentPapers, 
+                            reportData.breakdown.internet, 
+                            reportData.breakdown.publications
+                        ],
+                        backgroundColor: ['#fecaca', '#bfdbfe', '#bbf7d0'],
+                        borderColor: ['#b91c1c', '#1d4ed8', '#15803d'],
+                        borderWidth: 1,
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: { beginAtZero: true, max: 10 }
+                    }
+                }
+            });
+        }
+
+        // Init App
+        renderNav();
+        renderContent();
+
+    </script>
+</body>
+</html>
