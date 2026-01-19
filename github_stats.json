@@ -1,4 +1,5 @@
 {
+  "Java": 3,
   "HTML": 10,
   "TypeScript": 2,
   "CSS": 4,
@@ -8,6 +9,5 @@
   "C#": 1,
   "ShaderLab": 1,
   "Python": 2,
-  "Java": 2,
   "Dart": 2
 }
