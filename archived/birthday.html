@@ -5,30 +5,30 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Trần Hữu Đạt - Happy Birthday!</title>
-    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="icon" type="image/png" href="../../assets/favicon.png" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/components/base.css" />
-    <link rel="stylesheet" href="css/components/header.css" />
-    <link rel="stylesheet" href="css/components/hero.css" />
-    <link rel="stylesheet" href="css/components/music-player.css" />
-    <link rel="stylesheet" href="css/components/sections.css" />
-    <link rel="stylesheet" href="css/components/about.css" />
-    <link rel="stylesheet" href="css/components/skills.css" />
-    <link rel="stylesheet" href="css/components/projects.css" />
-    <link rel="stylesheet" href="css/components/blog.css" />
-    <link rel="stylesheet" href="css/components/experience.css" />
-    <link rel="stylesheet" href="css/components/contact.css" />
-    <link rel="stylesheet" href="css/components/animations.css" />
-    <link rel="stylesheet" href="css/components/awards.css" />
-    <link rel="stylesheet" href="css/components/footer.css" />
-    <link rel="stylesheet" href="css/components/wakatime.css" />
-    <link rel="stylesheet" href="css/components/featured-projects.css" />
-    <link rel="stylesheet" href="css/components/interactive-skills.css" />
-    <link rel="stylesheet" href="css/components/theme.css" />
+    <link rel="stylesheet" href="../css/components/base.css" />
+    <link rel="stylesheet" href="../css/components/header.css" />
+    <link rel="stylesheet" href="../css/components/hero.css" />
+    <link rel="stylesheet" href="../css/components/music-player.css" />
+    <link rel="stylesheet" href="../css/components/sections.css" />
+    <link rel="stylesheet" href="../css/components/about.css" />
+    <link rel="stylesheet" href="../css/components/skills.css" />
+    <link rel="stylesheet" href="../css/components/projects.css" />
+    <link rel="stylesheet" href="../css/components/blog.css" />
+    <link rel="stylesheet" href="../css/components/experience.css" />
+    <link rel="stylesheet" href="../css/components/contact.css" />
+    <link rel="stylesheet" href="../css/components/animations.css" />
+    <link rel="stylesheet" href="../css/components/awards.css" />
+    <link rel="stylesheet" href="../css/components/footer.css" />
+    <link rel="stylesheet" href="../css/components/wakatime.css" />
+    <link rel="stylesheet" href="../css/components/featured-projects.css" />
+    <link rel="stylesheet" href="../css/components/interactive-skills.css" />
+    <link rel="stylesheet" href="../css/components/theme.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         .party-container {
@@ -40,17 +40,95 @@
             pointer-events: none;
             z-index: 9999;
         }
+
         .confetti {
             position: absolute;
             top: -20px;
             animation: confetti-fall 5s linear infinite;
         }
-        .confetti.confetti-square { width: 10px; height: 10px; }
-        .confetti.confetti-rectangle { width: 15px; height: 8px; }
-        .confetti.confetti-circle { width: 12px; height: 12px; border-radius: 50%; }
+
+        .confetti.confetti-square {
+            width: 10px;
+            height: 10px;
+        }
+
+        .confetti.confetti-rectangle {
+            width: 15px;
+            height: 8px;
+        }
+
+        .confetti.confetti-circle {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
         @keyframes confetti-fall {
-            0% { transform: translateY(0) rotateZ(0) rotateY(0); opacity: 1; }
-            100% { transform: translateY(105vh) rotateZ(720deg) rotateY(360deg); opacity: 0; }
+            0% {
+                transform: translateY(0) rotateZ(0) rotateY(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(105vh) rotateZ(720deg) rotateY(360deg);
+                opacity: 0;
+            }
+        }
+
+        .theme-switcher-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-toggle {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: background-color 0.3s, border-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dropdown-toggle:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: var(--bg-card);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 0.5rem;
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 0;
+            right: 0;
+            bottom: 100%;
+            margin-bottom: 0.5rem;
+        }
+
+        .dropdown-menu a {
+            color: var(--text-primary);
+            padding: 0.75rem 1rem;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+            transition: background-color 0.2s;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .dropdown-menu.show {
+            display: block;
         }
     </style>
 </head>
@@ -60,24 +138,31 @@
     <div class="scroll-progress-bar"></div>
 
     <header class="main-header">
-        <a class="logo" href="index.html"><span>tranhuudat</span>2004</a>
-        <div class="header-navigation">
+        <!-- Nhóm 1: Logo -->
+        <a class="logo" href="../index.html"><span>tranhuudat</span>2004</a>
+
+        <!-- Nhóm 2: Khối điều hướng -->
+        <div class="header-navigation"> <!-- THÊM THẺ NÀY -->
             <nav class="main-nav">
                 <a href="#hero">Home</a>
                 <a href="#about">About</a>
                 <a href="#skills">Skills</a>
+                <!-- <a href="#coding-activity">Activity</a> -->
                 <a href="#projects">Projects</a>
                 <a href="#experience">Experience</a>
-                <a href="#blog">Blog</a>
+                <a href="#blog">Blog</a> <!-- << THÊM DÒNG NÀY VÀO -->
                 <a href="#contact">Contact</a>
                 <span class="nav-indicator"></span>
             </nav>
-            <a href="download-resume.html" class="resume-button">Resume</a>
+            <a href="../download-resume.html" class="resume-button">Resume</a>
+
             <button id="theme-toggle" class="theme-toggle-btn">
                 <i class="fas fa-sun"></i>
                 <i class="fas fa-moon"></i>
             </button>
-        </div>
+
+        </div> <!-- THÊM THẺ NÀY -->
+
     </header>
 
     <main>
@@ -88,7 +173,7 @@
                     <div class="profile-card glass-card">
                         <div class="profile-header">
                             <div class="avatar-wrapper">
-                                <img src="assets/my_image1.jpg" alt="Avatar" class="avatar" />
+                                <img src="../../assets/my_image1.jpg" alt="Avatar" class="avatar" />
                                 <div class="status-indicator online"></div>
                             </div>
                             <div class="profile-info">
@@ -106,14 +191,18 @@
                 <div class="hero-text-content">
                     <div class="welcome-badge animate-on-scroll">HAPPY BIRTHDAY TO ME!</div>
                     <h1 class="animate-on-scroll">
-                       Have a <br>
-                        <span class="gradient-text">wonderful birthday!</span>
+                        Celebrating Another<br>
+                        <span class="gradient-text">Great Year</span>
                     </h1>
-                    <p style="color: white;" class="animate-on-scroll">Thank you for being a part of my journey. Let's celebrate!</p>
+                    <p style="color: white;" class="animate-on-scroll">Thank you for being a part of my journey. Let's
+                        celebrate!</p>
                     <div class="social-links animate-on-scroll">
-                        <a style="color: white;" href="https://linkedin.com/in/tranhuudat2004" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        <a style="color: white;" href="https://github.com/TranHuuDat2004" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                        <a style="color: white;" href="mailto:tranhuudat.cv@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                        <a style="color: white;" href="https://linkedin.com/in/tranhuudat2004" aria-label="LinkedIn"><i
+                                class="fab fa-linkedin-in"></i></a>
+                        <a style="color: white;" href="https://github.com/TranHuuDat2004" aria-label="GitHub"><i
+                                class="fab fa-github"></i></a>
+                        <a style="color: white;" href="mailto:tranhuudat.cv@gmail.com" aria-label="Email"><i
+                                class="fas fa-envelope"></i></a>
                         <a style="color: white;" href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
                     </div>
                 </div>
@@ -122,7 +211,7 @@
         </section>
 
         <div class="music-player-widget">
-            <img src="assets/song-cover.png" alt="Song Cover" class="song-cover" id="song-cover">
+            <img src="../../assets/song-cover.png" alt="Song Cover" class="song-cover" id="song-cover">
             <div class="song-info">
                 <h4 id="song-title">Happy Birthday</h4>
                 <p id="song-artist">Birthday Song</p>
@@ -135,6 +224,9 @@
             <i class="fas fa-volume-high"></i>
         </div>
 
+  <!-- ====================================================== -->
+        <!-- Section 2: About Me (CẬP NHẬT) -->
+        <!-- ====================================================== -->
         <section id="about" class="content-section">
             <div class="container">
                 <div class="section-header animate-on-scroll">
@@ -144,27 +236,49 @@
                 </div>
                 <div class="about-grid">
                     <div class="about-image-wrapper animate-on-scroll">
-                        <img src="assets/my_image.jpg" alt="A pensive anime character in a snowy city scene">
-                        <div class="status-tag"><span class="green-dot"></span> Available for work</div>
+                        <img src="../assets/my_image.jpg" alt="A pensive anime character in a snowy city scene">
+                        <div class="status-tag">
+                            <span class="green-dot"></span> Available for work
+                        </div>
                     </div>
                     <div class="about-text-content animate-on-scroll">
-                        <p>I am a dedicated Software Engineering student at Ton Duc Thang University with a deep passion for building efficient and user-friendly web solutions. My journey into programming started with a curiosity to understand how things work, and it has grown into a drive to create meaningful applications.</p>
-                        <p>I enjoy tackling challenging problems and continuously expanding my skill set in the ever-evolving world of technology. From developing full-stack e-commerce platforms to creating fun, interactive web apps, my goal is to leverage my technical abilities to build impactful products.</p>
+                        <p>I am a dedicated Software Engineering student at Ton Duc Thang University with a deep passion
+                            for building efficient and user-friendly web solutions. My journey into programming started
+                            with a curiosity to understand how things work, and it has grown into a drive to create
+                            meaningful applications.</p>
+                        <p>I enjoy tackling challenging problems and continuously expanding my skill set in the
+                            ever-evolving world of technology. From developing full-stack e-commerce platforms to
+                            creating fun, interactive web apps, my goal is to leverage my technical abilities to build
+                            impactful products.</p>
                         <div class="info-box-wrapper glass-card">
                             <div class="info-box">
-                                <div><span class="info-label">Name</span><p>Trần Hữu Đạt</p></div>
-                                <div><span class="info-label">Email</span><p>tranhuudat.cv@gmail.com</p></div>
-                                <div><span class="info-label">Location</span><p>Ho Chi Minh City, VN</p></div>
-                                <div><span class="info-label">Availability</span><p class="available-status">Open to Internship</p></div>
+                                <div>
+                                    <span class="info-label">Name</span>
+                                    <p>Trần Hữu Đạt</p>
+                                </div>
+                                <div>
+                                    <span class="info-label">Email</span>
+                                    <p>tranhuudat.cv@gmail.com</p>
+                                </div>
+                                <div>
+                                    <span class="info-label">Location</span>
+                                    <p>Ho Chi Minh City, VN</p>
+                                </div>
+                                <div>
+                                    <span class="info-label">Availability</span>
+                                    <p class="available-status">Open to Internship</p>
+                                </div>
                             </div>
-                            <a href="download-resume.html" download class="btn-download-resume">Download Resume <i class="fas fa-download"></i></a>
+                            <a href="download-resume.html" download class="btn-download-resume">Download Resume <i
+                                    class="fas fa-download"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-                <!-- ====================================================== -->
+
+   <!-- ====================================================== -->
         <!-- Section 3: Skills (CẬP NHẬT) -->
         <!-- ====================================================== -->
         <section id="skills" class="content-section">
@@ -253,9 +367,9 @@
                                 </ul>
                             </div>
                             <div class="image-gallery">
-                                <img src="assets/omacha/Home1.jpg" alt="Omacha Homepage" class="showcase-img">
-                                <!-- <img src="assets/omacha/product.jpg" alt="Omacha Homepage" class="showcase-img"> -->
-                                <img src="assets/omacha/product_detail.jpg" alt="Omacha Homepage" class="showcase-img">
+                                <img src="../assets/omacha/Home1.jpg" alt="Omacha Homepage" class="showcase-img">
+                                <!-- <img src="../assets/omacha/product.jpg" alt="Omacha Homepage" class="showcase-img"> -->
+                                <img src="../assets/omacha/product_detail.jpg" alt="Omacha Homepage" class="showcase-img">
                             </div>
                         </div>
                     </div>
@@ -293,8 +407,8 @@
                                 </ul>
                             </div>
                             <div class="image-gallery">
-                                <img src="assets/brickshop/homepage.png" alt="BrickShop Homepage" class="showcase-img">
-                                <img src="assets/brickshop/admin_dashboard.png" alt="BrickShop Homepage"
+                                <img src="../assets/brickshop/homepage.png" alt="BrickShop Homepage" class="showcase-img">
+                                <img src="../assets/brickshop/admin_dashboard.png" alt="BrickShop Homepage"
                                     class="showcase-img">
                             </div>
                         </div>
@@ -331,9 +445,9 @@
                                 </ul>
                             </div>
                             <div class="image-gallery">
-                                <img src="assets/anime.tv/main-page-spy.PNG" alt="ANIME.TV Homepage"
+                                <img src="../assets/anime.tv/main-page-spy.PNG" alt="ANIME.TV Homepage"
                                     class="showcase-img">
-                                <img src="assets/anime.tv/anime-detail.PNG" alt="ANIME.TV Homepage"
+                                <img src="../assets/anime.tv/anime-detail.PNG" alt="ANIME.TV Homepage"
                                     class="showcase-img">
                             </div>
                         </div>
@@ -405,7 +519,7 @@
                 <div class="award-photo-card glass-card animate-on-scroll">
                     <h3 class="photo-title">A Proud Moment</h3>
                     <div class="photo-wrapper">
-                        <img src="assets/achive.jpg" alt="A memorable moment - Receiving award at TDTU 2023">
+                        <img src="../assets/achive.jpg" alt="A memorable moment - Receiving award at TDTU 2023">
                     </div>
                     <p class="photo-caption">Receiving the design award at Ton Duc Thang University, 2023.</p>
                 </div>
@@ -476,7 +590,7 @@
                         <a href="post-mixamo-unity.html" class="blog-card-image-link">
                             <div class="blog-card-image">
                                 <!-- Bạn có thể tạo 1 ảnh thumbnail cho bài viết này -->
-                                <img src="assets/placeholder-600x400.png" alt="A 3D character in Unity editor">
+                                <img src="../assets/placeholder-600x400.png" alt="A 3D character in Unity editor">
                             </div>
                         </a>
                         <div class="blog-card-content">
@@ -495,7 +609,7 @@
                     <div class="blog-post-card glass-card animate-on-scroll">
                         <a href="post-unity-githubpages.html" class="blog-card-image-link">
                             <div class="blog-card-image">
-                                <img src="assets/placeholder-600x400.png" alt="Unity logo and GitHub logo">
+                                <img src="../assets/placeholder-600x400.png" alt="Unity logo and GitHub logo">
                             </div>
                         </a>
                         <div class="blog-card-content">
@@ -515,7 +629,7 @@
                     <div class="blog-post-card glass-card animate-on-scroll">
                         <a href="#" class="blog-card-image-link">
                             <div class="blog-card-image">
-                                <img src="assets/placeholder-600x400.png" alt="Docker container logos">
+                                <img src="../assets/placeholder-600x400.png" alt="Docker container logos">
                             </div>
                         </a>
                         <div class="blog-card-content">
@@ -621,7 +735,7 @@
                 <h4 class="footer-title">Quick Links</h4>
                 <ul>
                     <li><a href="#hero">Home</a></li>
-                    <li><a href="assets/resume.pdf" download>Resume</a></li>
+                    <li><a href="../assets/resume.pdf" download>Resume</a></li>
                     <li><a href="#projects">Projects</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
@@ -650,10 +764,12 @@
             </div>
         </div>
     </footer>
-
+    <script src="../js/load-components.js"></script>
     <audio id="audio-source"></audio>
-    <script src="js/playlist.js"></script>
-    <script src="js/scripts.js"></script>
+    <script src="../js/playlist.js"></script>
+    <script src="../js/scripts.js"></script>
+    <!-- === TẢI CÁC SECTION CHUNG === -->
+    <script src="../js/load-sections.js"></script>
     <script>
         // Birthday specific scripts
         document.addEventListener('DOMContentLoaded', () => {
@@ -702,12 +818,30 @@
             const songTitle = document.getElementById('song-title');
             const songArtist = document.getElementById('song-artist');
 
-            if (audio) audio.src = 'assets/music/happy-birthday.mp3';
+            if (audio) audio.src = '../../assets/music/happy-birthday.mp3';
             if (songTitle) songTitle.textContent = 'Happy Birthday';
             if (songArtist) songArtist.textContent = 'Birthday Song';
             if (nextBtn) nextBtn.style.display = 'none';
             if (prevBtn) prevBtn.style.display = 'none';
+
+            const dropdownToggle = document.querySelector('.theme-switcher-dropdown .dropdown-toggle');
+            const dropdownMenu = document.querySelector('.theme-switcher-dropdown .dropdown-menu');
+
+            if (dropdownToggle && dropdownMenu) {
+                dropdownToggle.addEventListener('click', () => {
+                    dropdownMenu.classList.toggle('show');
+                });
+
+                window.addEventListener('click', (event) => {
+                    if (!event.target.matches('.dropdown-toggle') && !event.target.matches('.dropdown-toggle i')) {
+                        if (dropdownMenu.classList.contains('show')) {
+                            dropdownMenu.classList.remove('show');
+                        }
+                    }
+                });
+            }
         });
     </script>
 </body>
+
 </html>
