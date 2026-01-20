@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Link CSS -->
-        <link rel="stylesheet" href="css/components/base.css" />
+    <link rel="stylesheet" href="css/components/base.css" />
     <link rel="stylesheet" href="css/components/header.css" />
     <link rel="stylesheet" href="css/components/hero.css" />
     <link rel="stylesheet" href="css/components/music-player.css" />
@@ -78,14 +78,15 @@
 
                 <!-- Cột Phải: Các lựa chọn tải về -->
                 <div class="download-options animate-on-scroll">
-                    
+
                     <!-- Lựa chọn 1: CV tóm tắt (Tiếng Anh & Tiếng Việt) -->
                     <div class="download-card glass-card">
                         <div class="download-header">
                             <i class="fas fa-file-alt"></i>
                             <h3>Summary CV (1 Page)</h3>
                         </div>
-                        <p class="download-desc">A concise, one-page version focusing on key skills and standout projects. Ideal for a quick overview.</p>
+                        <p class="download-desc">A concise, one-page version focusing on key skills and standout
+                            projects. Ideal for a quick overview.</p>
                         <div class="download-buttons">
                             <a href="assets/resume/TranHuuDat-Resume-Summary.pdf" class="btn btn-primary" download>
                                 <i class="fas fa-download"></i> English Version
@@ -102,10 +103,29 @@
                             <i class="fas fa-file-invoice"></i>
                             <h3>Full CV (Detailed)</h3>
                         </div>
-                        <p class="download-desc">The comprehensive version, including all projects, experiences, and achievements. Best for in-depth review.</p>
+                        <p class="download-desc">The comprehensive version, including all projects, experiences, and
+                            achievements. Best for in-depth review.</p>
                         <div class="download-buttons">
                             <a href="assets/resume/TranHuuDat-Resume-Full.pdf" class="btn btn-secondary" download>
                                 <i class="fas fa-download"></i> Download Full CV
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Lựa chọn 3: Bảng điểm (MỚI) -->
+                    <div class="download-card glass-card">
+                        <div class="download-header">
+                            <i class="fas fa-graduation-cap"></i>
+                            <h3>Academic Transcripts</h3>
+                        </div>
+                        <p class="download-desc">Official academic records, including semester grades and cumulative GPA
+                            reports.</p>
+                        <div class="download-buttons">
+                            <a href="assets/score/BangDiemHocKi-TranHuuDat.pdf" class="btn btn-primary" download>
+                                <i class="fas fa-file-pdf"></i> Semester Grades
+                            </a>
+                            <a href="assets/score/BangDiemTichLuy-TranHuuDat.pdf" class="btn btn-secondary" download>
+                                <i class="fas fa-file-pdf"></i> Cumulative GPA
                             </a>
                         </div>
                     </div>
@@ -116,23 +136,23 @@
     </main>
 
     <!-- ====================================================== -->
-        <!-- Music Player Widget -->
-        <!-- ====================================================== -->
-        <div class="music-player-widget">
-            <img src="assets/song-cover.png" alt="Song Cover" class="song-cover" id="song-cover">
-            <div class="song-info">
-                <h4 id="song-title">Điều chưa nói</h4>
-                <p id="song-artist">Tia ft. OMIXX</p>
-            </div>
-            <div class="player-controls">
-                <!-- Thêm ID cho các nút -->
-                <i class="fas fa-backward-step" id="prev-btn"></i>
-                <i class="fas fa-pause" id="play-pause-btn"></i> <!-- Bắt đầu với icon pause -->
-                <i class="fas fa-forward-step" id="next-btn"></i>
-            </div>
-            <i class="fas fa-volume-high"></i> <!-- Phần volume sẽ làm sau nếu bạn muốn -->
+    <!-- Music Player Widget -->
+    <!-- ====================================================== -->
+    <div class="music-player-widget">
+        <img src="assets/song-cover.png" alt="Song Cover" class="song-cover" id="song-cover">
+        <div class="song-info">
+            <h4 id="song-title">Điều chưa nói</h4>
+            <p id="song-artist">Tia ft. OMIXX</p>
         </div>
-        
+        <div class="player-controls">
+            <!-- Thêm ID cho các nút -->
+            <i class="fas fa-backward-step" id="prev-btn"></i>
+            <i class="fas fa-pause" id="play-pause-btn"></i> <!-- Bắt đầu với icon pause -->
+            <i class="fas fa-forward-step" id="next-btn"></i>
+        </div>
+        <i class="fas fa-volume-high"></i> <!-- Phần volume sẽ làm sau nếu bạn muốn -->
+    </div>
+
     <!-- ====================================================== -->
     <!-- Footer (MỚI) -->
     <!-- ====================================================== -->
@@ -185,4 +205,5 @@
     <script src="js/playlist.js"></script>
     <script src="js/scripts.js"></script>
 </body>
+
 </html>
