@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo Cáo Tương Tác: Phát Hiện Botnet Bằng Machine Learning</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Slate 50 */
+            color: #334155; /* Slate 700 */
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px; /* Giới hạn chiều rộng để dễ đọc trên màn hình lớn */
+            height: 400px;
+            max-height: 50vh;
+            margin: 0 auto;
+        }
+
+        .nav-item.active {
+            background-color: #0ea5e9; /* Sky 500 */
+            color: white;
+            border-left: 4px solid #0369a1; /* Sky 700 */
+        }
+
+        .card {
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Tùy chỉnh thanh cuộn cho gọn */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+    <!-- Chosen Palette: Slate (Background/Text) + Sky (Primary/Accent) + Rose (Alerts/Comparison) -->
+    <!-- Application Structure Plan:
+         1. Header: Project Title & Context.
+         2. Sidebar Navigation: Logical flow following the report structure (Overview -> Data -> Methodology -> Results -> Conclusion).
+         3. Main Content Area: Dynamic sections.
+            - Overview: Context cards.
+            - Data: Interactive Pie Chart for Class Imbalance + Pipeline Flow visualization.
+            - Methodology: Comparison card (Baseline vs Optimized params).
+            - Results: The core interactive part. Bar charts comparing models and detailed metrics for minority classes.
+            - Conclusion: Summary cards.
+         Reasoning: This structure guides the user from the problem (imbalance) to the solution (optimized RF) and finally the proof (results), mirroring the scientific method.
+    -->
+    <!-- Visualization & Content Choices:
+         - Pie Chart: To explicitly show the 83% Normal vs <1% Attack imbalance. (Goal: Inform/Context)
+         - Flow Steps: To visualize the preprocessing pipeline (Correlation > 0.95 removal). (Goal: Process/Organize)
+         - Interactive Bar Chart: To compare Acc/F1 across CNN vs Optimized RF. (Goal: Compare/Prove)
+         - Confusion Matrix Highlights: Text/Grid viz to show the specific success in "Web Attacks" detection. (Goal: Detail/Impact)
+         - Justification: Chart.js is used for quantitative data. HTML/Tailwind for structural/process data. No SVG/Mermaid used.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+</head>
+<body class="flex flex-col h-screen overflow-hidden">
+
+    <!-- Header -->
+    <header class="bg-white border-b border-slate-200 p-4 flex justify-between items-center z-10 shrink-0">
+        <div>
+            <h1 class="text-xl md:text-2xl font-bold text-slate-800">Ứng dụng Machine Learning trong Phát hiện Botnet</h1>
+            <p class="text-sm text-slate-500">Đại học Tôn Đức Thắng | Khoa Công nghệ Thông tin | 2025</p>
+        </div>
+        <div class="text-right hidden md:block">
+            <p class="text-xs font-semibold text-slate-600">SVTH: Trần Hữu Đạt & Dương Thị Thùy Linh</p>
+            <p class="text-xs text-slate-400">GVHD: TS. Trương Đình Tú</p>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="flex flex-1 overflow-hidden">
+        
+        <!-- Sidebar Navigation -->
+        <nav class="w-20 md:w-64 bg-white border-r border-slate-200 flex flex-col shrink-0 overflow-y-auto">
+            <div class="p-4 space-y-2">
+                <button onclick="showSection('overview')" id="nav-overview" class="nav-item active w-full text-left px-4 py-3 rounded-md text-sm font-medium transition-colors flex items-center gap-3">
+                    <span class="text-xl">🏠</span>
+                    <span class="hidden md:inline">1. Tổng Quan & Mục Tiêu</span>
+                </button>
+                <button onclick="showSection('data')" id="nav-data" class="nav-item w-full text-left px-4 py-3 rounded-md text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors flex items-center gap-3">
+                    <span class="text-xl">📊</span>
+                    <span class="hidden md:inline">2. Phân Tích Dữ Liệu</span>
+                </button>
+                <button onclick="showSection('methodology')" id="nav-methodology" class="nav-item w-full text-left px-4 py-3 rounded-md text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors flex items-center gap-3">
+                    <span class="text-xl">⚙️</span>
+                    <span class="hidden md:inline">3. Phương Pháp & Mô Hình</span>
+                </button>
+                <button onclick="showSection('results')" id="nav-results" class="nav-item w-full text-left px-4 py-3 rounded-md text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors flex items-center gap-3">
+                    <span class="text-xl">🏆</span>
+                    <span class="hidden md:inline">4. Kết Quả Thực Nghiệm</span>
+                </button>
+                <button onclick="showSection('conclusion')" id="nav-conclusion" class="nav-item w-full text-left px-4 py-3 rounded-md text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors flex items-center gap-3">
+                    <span class="text-xl">📝</span>
+                    <span class="hidden md:inline">5. Kết Luận</span>
+                </button>
+            </div>
+            
+            <div class="mt-auto p-4 border-t border-slate-100">
+                <div class="text-xs text-slate-400 text-center md:text-left">
+                    Sử dụng bộ dữ liệu <br><strong>CIC-IDS-2017</strong>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 overflow-y-auto bg-slate-50 p-4 md:p-8 relative" id="main-content">
+            
+            <!-- SECTION 1: TỔNG QUAN -->
+            <section id="overview" class="space-y-6 max-w-5xl mx-auto">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                    <h2 class="text-2xl font-bold text-sky-700 mb-4">Giới thiệu Dự án</h2>
+                    <p class="text-slate-600 leading-relaxed mb-4">
+                        Botnet (mạng máy tính ma) đang trở thành mối đe dọa an ninh mạng hàng đầu, thực hiện các cuộc tấn công DDoS quy mô lớn. 
+                        Trong khi xu hướng hiện nay tập trung vào Deep Learning (DL) phức tạp, dự án này đặt ra câu hỏi: 
+                        <span class="font-semibold text-slate-800">"Liệu một mô hình Machine Learning truyền thống được tối ưu hóa kỹ lưỡng có thể vượt qua Deep Learning?"</span>
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                        <div class="bg-sky-50 p-4 rounded-lg border border-sky-100">
+                            <h3 class="font-bold text-sky-800 mb-2">🎯 Mục Tiêu</h3>
+                            <p class="text-sm text-sky-700">Xây dựng quy trình phát hiện Botnet hiệu quả sử dụng thuật toán Random Forest với chi phí tính toán thấp.</p>
+                        </div>
+                        <div class="bg-rose-50 p-4 rounded-lg border border-rose-100">
+                            <h3 class="font-bold text-rose-800 mb-2">⚠️ Vấn Đề</h3>
+                            <p class="text-sm text-rose-700">Các phương pháp cũ không hiệu quả với botnet hiện đại. Dữ liệu thực tế thường bị mất cân bằng nghiêm trọng.</p>
+                        </div>
+                        <div class="bg-indigo-50 p-4 rounded-lg border border-indigo-100">
+                            <h3 class="font-bold text-indigo-800 mb-2">💡 Giải Pháp</h3>
+                            <p class="text-sm text-indigo-700">Tập trung vào tiền xử lý dữ liệu tỉ mỉ (CIC-IDS-2017) và tinh chỉnh siêu tham số (Hyperparameter Tuning).</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 2: DỮ LIỆU -->
+            <section id="data" class="space-y-6 max-w-5xl mx-auto hidden">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                    <h2 class="text-2xl font-bold text-sky-700 mb-2">Phân Tích Dữ Liệu CIC-IDS-2017</h2>
+                    <p class="text-slate-600 mb-6">
+                        Phân tích bộ dữ liệu cho thấy sự mất cân bằng nghiêm trọng. Điều này đặt ra thách thức lớn cho các mô hình phân loại, vì chúng có xu hướng thiên vị lớp đa số.
+                    </p>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                        <!-- Chart Container -->
+                        <div class="bg-white rounded-lg p-4 border border-slate-100 shadow-inner">
+                            <h3 class="text-lg font-semibold text-center mb-4">Phân Bố Các Loại Tấn Công</h3>
+                            <div class="chart-container" style="height: 300px;">
+                                <canvas id="dataPieChart"></canvas>
+                            </div>
+                            <p class="text-xs text-center text-slate-400 mt-2">Dữ liệu sau khi làm sạch (Tổng: 2,520,751 mẫu)</p>
+                        </div>
+
+                        <!-- Statistics & Pipeline -->
+                        <div class="space-y-6">
+                            <!-- Key Stats -->
+                            <div class="bg-amber-50 border-l-4 border-amber-400 p-4">
+                                <h4 class="font-bold text-amber-800">Thách Thức Mất Cân Bằng</h4>
+                                <ul class="list-disc list-inside text-sm text-amber-900 mt-2 space-y-1">
+                                    <li><strong>Lưu lượng thường:</strong> Chiếm ưu thế tuyệt đối (83.11%).</li>
+                                    <li><strong>Tấn công hiếm (Bots, Web Attacks):</strong> Chỉ chiếm < 1%.</li>
+                                    <li><strong>Rủi ro:</strong> Mô hình dễ bỏ qua các cuộc tấn công nguy hiểm nhưng hiếm gặp.</li>
+                                </ul>
+                            </div>
+
+                            <!-- Pipeline Visualization -->
+                            <div>
+                                <h3 class="font-bold text-slate-700 mb-3">Quy Trình Tiền Xử Lý (Pre-processing Pipeline)</h3>
+                                <div class="space-y-2">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-600">1</div>
+                                        <div class="bg-white flex-1 p-3 rounded border border-slate-200 text-sm shadow-sm">
+                                            <strong>Làm sạch:</strong> Xóa dữ liệu trùng lặp, NaN, Vô cực.
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-600">2</div>
+                                        <div class="bg-white flex-1 p-3 rounded border border-slate-200 text-sm shadow-sm">
+                                            <strong>Kỹ thuật Đặc trưng (Quan trọng):</strong> Loại bỏ đặc trưng tương quan > 0.95 (giảm đa cộng tuyến).
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-full bg-sky-200 flex items-center justify-center font-bold text-sky-700">3</div>
+                                        <div class="bg-white flex-1 p-3 rounded border border-sky-200 text-sm shadow-sm ring-1 ring-sky-100">
+                                            <strong>Nhóm Nhãn:</strong> Gom các nhóm nhỏ (VD: DoS Hulk, DoS GoldenEye) thành nhóm lớn (DoS) để xử lý mất cân bằng.
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-600">4</div>
+                                        <div class="bg-white flex-1 p-3 rounded border border-slate-200 text-sm shadow-sm">
+                                            <strong>Chuẩn hóa:</strong> StandardScaler & Chia tập dữ liệu (70/30 Stratified).
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 3: PHƯƠNG PHÁP -->
+            <section id="methodology" class="space-y-6 max-w-5xl mx-auto hidden">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                    <h2 class="text-2xl font-bold text-sky-700 mb-4">Phương Pháp & Cấu Hình Mô Hình</h2>
+                    <p class="text-slate-600 mb-6">
+                        Nghiên cứu sử dụng thuật toán <strong>Random Forest (RF)</strong> vì khả năng xử lý tốt dữ liệu dạng bảng và chống overfitting.
+                        Chúng tôi so sánh hai cấu hình để chứng minh tầm quan trọng của việc tinh chỉnh siêu tham số.
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Baseline Config -->
+                        <div class="border border-slate-200 rounded-lg p-5 hover:border-slate-300 transition-colors bg-slate-50">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-lg font-bold text-slate-600">Mô Hình Cơ Sở (Baseline)</h3>
+                                <span class="bg-slate-200 text-slate-600 text-xs px-2 py-1 rounded">Hạn chế</span>
+                            </div>
+                            <code class="block bg-slate-800 text-green-400 p-4 rounded text-sm font-mono mb-4">
+                                n_estimators = 20<br>
+                                max_depth = 10<br>
+                                # Cây nông, ít cây
+                            </code>
+                            <p class="text-sm text-slate-600">
+                                <strong>Giả thuyết:</strong> Cấu hình này bị giới hạn về khả năng học, dẫn đến hiện tượng <em>Underfitting</em> (chưa khớp) đối với các mẫu phức tạp.
+                            </p>
+                        </div>
+
+                        <!-- Optimized Config -->
+                        <div class="border border-sky-200 rounded-lg p-5 hover:border-sky-300 transition-colors bg-sky-50">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-lg font-bold text-sky-700">Mô Hình Tối Ưu Hóa (Optimized)</h3>
+                                <span class="bg-sky-200 text-sky-800 text-xs px-2 py-1 rounded">Đề xuất</span>
+                            </div>
+                            <code class="block bg-slate-800 text-green-400 p-4 rounded text-sm font-mono mb-4">
+                                n_estimators = 100<br>
+                                max_depth = 50<br>
+                                min_samples_split = 5<br>
+                                # Phức tạp hơn + Regularization
+                            </code>
+                            <p class="text-sm text-slate-600">
+                                <strong>Giả thuyết:</strong> Độ sâu lớn hơn giúp nắm bắt các mẫu tấn công tinh vi, trong khi tham số <code>min_samples</code> ngăn chặn <em>Overfitting</em>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 4: KẾT QUẢ -->
+            <section id="results" class="space-y-6 max-w-5xl mx-auto hidden">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+                        <div>
+                            <h2 class="text-2xl font-bold text-sky-700">Kết Quả Thực Nghiệm & So Sánh</h2>
+                            <p class="text-sm text-slate-500 mt-1">So sánh trực tiếp với mô hình CNN (Jose, 2023)</p>
+                        </div>
+                        
+                        <!-- Controls -->
+                        <div class="mt-4 md:mt-0 flex bg-slate-100 p-1 rounded-lg">
+                            <button onclick="updateComparisonChart('Accuracy')" class="metric-btn px-4 py-1.5 rounded-md text-sm font-medium transition-all bg-white shadow text-sky-700" data-metric="Accuracy">Độ Chính Xác</button>
+                            <button onclick="updateComparisonChart('F1')" class="metric-btn px-4 py-1.5 rounded-md text-sm font-medium transition-all text-slate-600 hover:text-sky-700" data-metric="F1">F1-Score</button>
+                        </div>
+                    </div>
+
+                    <!-- Main Comparison Chart -->
+                    <div class="mb-8">
+                        <div class="chart-container">
+                            <canvas id="comparisonChart"></canvas>
+                        </div>
+                        <p class="text-center text-sm text-slate-500 mt-3 italic">
+                            Biểu đồ so sánh hiệu năng giữa CNN, DNN, LSTM (Jose 2023) và Random Forest Tối ưu hóa (Đề xuất).
+                        </p>
+                    </div>
+
+                    <!-- Deep Dive: Minority Classes -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 border-t border-slate-100 pt-8">
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-700 mb-3">🔍 Phân Tích Sâu: Lớp Thiểu Số</h3>
+                            <p class="text-sm text-slate-600 mb-4">
+                                Sự khác biệt lớn nhất không nằm ở độ chính xác tổng thể, mà ở khả năng phát hiện các cuộc tấn công hiếm gặp.
+                            </p>
+                            
+                            <div class="bg-white border border-slate-200 rounded-lg overflow-hidden">
+                                <table class="w-full text-sm text-left">
+                                    <thead class="bg-slate-50 text-slate-700">
+                                        <tr>
+                                            <th class="p-3">Loại Tấn Công</th>
+                                            <th class="p-3">Baseline RF (F1)</th>
+                                            <th class="p-3 text-sky-700">Optimized RF (F1)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-100">
+                                        <tr class="hover:bg-slate-50">
+                                            <td class="p-3 font-medium">Bots</td>
+                                            <td class="p-3 text-rose-500">0.0270</td>
+                                            <td class="p-3 text-emerald-600 font-bold">0.7679 ↗</td>
+                                        </tr>
+                                        <tr class="hover:bg-slate-50">
+                                            <td class="p-3 font-medium">Web Attacks</td>
+                                            <td class="p-3 text-rose-500">0.0000</td>
+                                            <td class="p-3 text-emerald-600 font-bold">0.9803 ↗</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-2">* Mô hình Baseline hoàn toàn thất bại (F1=0) với Web Attacks.</p>
+                        </div>
+
+                        <!-- Key Finding Card -->
+                        <div class="bg-sky-50 rounded-lg p-5 border border-sky-100 flex flex-col justify-center">
+                            <h4 class="font-bold text-sky-800 text-lg mb-2">💡 Phát Hiện Chính</h4>
+                            <p class="text-sky-900 text-sm leading-relaxed mb-4">
+                                "Kết quả chứng minh rằng với việc <strong>xử lý dữ liệu kỹ lưỡng</strong> và <strong>nhóm nhãn hợp lý</strong>, thuật toán Random Forest truyền thống có thể đạt độ chính xác <strong>99.89%</strong>, vượt trội so với các mô hình Deep Learning phức tạp như CNN (98.61%) trên tập dữ liệu này."
+                            </p>
+                            <div class="flex items-center gap-4 text-sm font-semibold text-sky-800">
+                                <div>⏱️ Thời gian huấn luyện: <br><span class="text-slate-600 font-normal">423.67 giây</span></div>
+                                <div>🚀 Hiệu suất: <br><span class="text-slate-600 font-normal">Cao & Ổn định</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 5: KẾT LUẬN -->
+            <section id="conclusion" class="space-y-6 max-w-5xl mx-auto hidden">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 text-center">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-3xl">✅</span>
+                    </div>
+                    <h2 class="text-2xl font-bold text-slate-800 mb-2">Kết Luận Chung</h2>
+                    <p class="text-slate-600 max-w-2xl mx-auto mb-8">
+                        Dự án đã thành công trong việc xây dựng một mô hình phát hiện Botnet mạnh mẽ, thực tế và hiệu quả về mặt tính toán.
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+                        <div class="p-4 border border-slate-200 rounded-lg">
+                            <h3 class="font-bold text-slate-700 mb-2">1. Hiệu Quả ML Truyền Thống</h3>
+                            <p class="text-sm text-slate-600">ML truyền thống (Random Forest) vẫn là đối thủ đáng gờm của Deep Learning nếu được tối ưu đúng cách.</p>
+                        </div>
+                        <div class="p-4 border border-slate-200 rounded-lg">
+                            <h3 class="font-bold text-slate-700 mb-2">2. Tầm Quan Trọng Của Dữ Liệu</h3>
+                            <p class="text-sm text-slate-600">Chiến lược Nhóm Nhãn (Label Grouping) và Phân tích Tương quan là chìa khóa để giải quyết vấn đề mất cân bằng dữ liệu.</p>
+                        </div>
+                        <div class="p-4 border border-slate-200 rounded-lg">
+                            <h3 class="font-bold text-slate-700 mb-2">3. Ứng Dụng Thực Tiễn</h3>
+                            <p class="text-sm text-slate-600">Mô hình đề xuất cung cấp độ chính xác cao (99.89%) với chi phí tài nguyên thấp, phù hợp triển khai thực tế.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // State Management
+        const state = {
+            currentSection: 'overview',
+            currentMetric: 'Accuracy'
+        };
+
+        // Data Storage
+        const data = {
+            pieLabels: ['Normal Traffic', 'DoS', 'DDoS', 'Port Scanning', 'Brute Force', 'Web Attacks', 'Bots'],
+            // Approximate values based on table percentages
+            pieValues: [83.11, 7.69, 5.08, 3.60, 0.36, 0.09, 0.08],
+            pieColors: ['#3b82f6', '#ef4444', '#f97316', '#eab308', '#22c55e', '#a855f7', '#06b6d4'],
+            
+            comparisonLabels: ['DNN (Jose 2023)', 'LSTM (Jose 2023)', 'CNN (Jose 2023)', 'Optimized RF (Đề xuất)'],
+            metrics: {
+                'Accuracy': [94.61, 97.67, 98.61, 99.89],
+                'F1': [84.6, 93.55, 98.09, 99.89]
+            }
+        };
+
+        // Charts Instances
+        let pieChart = null;
+        let comparisonChart = null;
+
+        // Core Interaction Handling: Navigation
+        function showSection(sectionId) {
+            // Update State
+            state.currentSection = sectionId;
+
+            // UI Updates: Hide all sections, show target
+            document.querySelectorAll('main > section').forEach(el => el.classList.add('hidden'));
+            document.getElementById(sectionId).classList.remove('hidden');
+
+            // UI Updates: Active Nav State
+            document.querySelectorAll('.nav-item').forEach(el => {
+                el.classList.remove('active', 'bg-sky-500', 'text-white', 'border-l-4', 'border-sky-700');
+                el.classList.add('text-slate-600', 'hover:bg-slate-50');
+            });
+            const activeNav = document.getElementById(`nav-${sectionId}`);
+            activeNav.classList.add('active');
+            activeNav.classList.remove('text-slate-600', 'hover:bg-slate-50');
+
+            // Trigger Chart Rendering if needed
+            if (sectionId === 'data' && !pieChart) {
+                renderPieChart();
+            }
+            if (sectionId === 'results' && !comparisonChart) {
+                renderComparisonChart();
+            }
+        }
+
+        // Chart Rendering Logic: Pie Chart
+        function renderPieChart() {
+            const ctx = document.getElementById('dataPieChart').getContext('2d');
+            pieChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: data.pieLabels,
+                    datasets: [{
+                        data: data.pieValues,
+                        backgroundColor: data.pieColors,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'right' },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return ` ${context.label}: ${context.raw}%`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Chart Rendering Logic: Comparison Bar Chart
+        function renderComparisonChart() {
+            const ctx = document.getElementById('comparisonChart').getContext('2d');
+            comparisonChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.comparisonLabels,
+                    datasets: [{
+                        label: state.currentMetric,
+                        data: data.metrics[state.currentMetric],
+                        backgroundColor: ['#94a3b8', '#94a3b8', '#94a3b8', '#0ea5e9'], // Highlight Proposed Model
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            min: 80, // Zoom in on the top range since values are high
+                            max: 100,
+                            title: { display: true, text: 'Phần trăm (%)' }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return ` ${context.raw}%`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Core Interaction Handling: Update Metric
+        function updateComparisonChart(metric) {
+            state.currentMetric = metric;
+            
+            // Update Buttons UI
+            document.querySelectorAll('.metric-btn').forEach(btn => {
+                if(btn.dataset.metric === metric) {
+                    btn.classList.add('bg-white', 'shadow', 'text-sky-700');
+                    btn.classList.remove('text-slate-600', 'hover:text-sky-700');
+                } else {
+                    btn.classList.remove('bg-white', 'shadow', 'text-sky-700');
+                    btn.classList.add('text-slate-600', 'hover:text-sky-700');
+                }
+            });
+
+            // Update Chart Data
+            if (comparisonChart) {
+                comparisonChart.data.datasets[0].label = metric;
+                comparisonChart.data.datasets[0].data = data.metrics[metric];
+                comparisonChart.update();
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // No action needed, overview is static text mostly.
+            // Charts load on section navigation.
+        });
+
+    </script>
+</body>
+</html>
