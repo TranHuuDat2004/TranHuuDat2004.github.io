@@ -4,13 +4,17 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Trần Hữu Đạt - Merry Christmas!</title>
+    <!-- TIÊU ĐỀ MỚI -->
+    <title>Trần Hữu Đạt - Full-stack Web Developer</title>
+    <!-- THAY ICON MỚI (NẾU CÓ) -->
     <link rel="icon" type="image/png" href="assets/favicon.png" />
 
+    <!-- THÊM FONT MỚI TỪ GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
+    <!-- LINK CSS VÀ FONT AWESOME -->
     <link rel="stylesheet" href="css/components/base.css" />
     <link rel="stylesheet" href="css/components/header.css" />
     <link rel="stylesheet" href="css/components/hero.css" />
@@ -31,27 +35,6 @@
     <link rel="stylesheet" href="css/components/theme.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        .snow-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 9999;
-        }
-        .snowflake {
-            position: absolute;
-            top: -20px;
-            background: white;
-            border-radius: 50%;
-            opacity: 0.8;
-            animation: snowfall linear infinite;
-        }
-        @keyframes snowfall {
-            0% { transform: translateY(0) translateX(0); }
-            100% { transform: translateY(105vh) translateX(50px); }
-        }
         .theme-switcher-dropdown {
             position: relative;
             display: inline-block;
@@ -81,7 +64,7 @@
             position: absolute;
             background-color: var(--bg-card);
             min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
             z-index: 1;
             border-radius: 0.5rem;
             border: 1px solid var(--border-color);
@@ -111,7 +94,7 @@
 </head>
 
 <body>
-    <div class="snow-container"></div>
+    <!-- Thanh tiến trình cuộn giữ nguyên -->
     <div class="scroll-progress-bar"></div>
 
     <header class="main-header">
@@ -143,9 +126,13 @@
     </header>
 
     <main>
+        <!-- ====================================================== -->
+        <!-- Section 1: Hero (THAY ĐỔI LỚN) -->
+        <!-- ====================================================== -->
         <section id="hero" class="hero-section">
             <div class="hero-background"></div>
             <div class="container hero-container">
+                <!-- Profile Card (bên trái) -->
                 <div class="profile-card-container animate-on-scroll">
                     <div class="profile-card glass-card">
                         <div class="profile-header">
@@ -160,21 +147,35 @@
                         </div>
                         <div class="profile-details">
                             <p><i class="fas fa-map-marker-alt"></i> Ho Chi Minh City, Vietnam</p>
+                            <p><i class="fas fa-calendar-alt"></i> Joined 2022</p>
                             <p><i class="fas fa-briefcase"></i> Ton Duc Thang University</p>
                         </div>
+
                     </div>
                 </div>
+
+                <!-- Hero Text Content (ở giữa) -->
                 <div class="hero-text-content">
-                    <div class="welcome-badge animate-on-scroll">MERRY CHRISTMAS!</div>
+                    <div class="welcome-badge animate-on-scroll">Welcome to my Portfolio</div>
                     <h1 class="animate-on-scroll">
-                        Season's Greetings<br>
-                        <span class="gradient-text">And Joy</span>
+                        Building Digital<br>
+                        <span class="gradient-text">Experiences</span>
                     </h1>
-                    <p style="color: white;" class="animate-on-scroll">Wishing you a festive and joyful holiday season.</p>
+                    <p style="color: white;" class="animate-on-scroll">A passionate Software Engineering student
+                        specializing in creating
+                        efficient, user-centric web applications.</p>
+                    <div class="hero-buttons animate-on-scroll">
+                        <a href="#projects" class="btn btn-primary">View my projects <i
+                                class="fas fa-arrow-right"></i></a>
+                        <a href="#contact" class="btn btn-secondary">Get in touch</a>
+                    </div>
                     <div class="social-links animate-on-scroll">
-                        <a style="color: white;" href="https://linkedin.com/in/tranhuudat2004" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        <a style="color: white;" href="https://github.com/TranHuuDat2004" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                        <a style="color: white;" href="mailto:tranhuudat.cv@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                        <a style="color: white;" href="https://linkedin.com/in/tranhuudat2004" aria-label="LinkedIn"><i
+                                class="fab fa-linkedin-in"></i></a>
+                        <a style="color: white;" href="https://github.com/TranHuuDat2004" aria-label="GitHub"><i
+                                class="fab fa-github"></i></a>
+                        <a style="color: white;" href="mailto:tranhuudat.cv@gmail.com" aria-label="Email"><i
+                                class="fas fa-envelope"></i></a>
                         <a style="color: white;" href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
                     </div>
                 </div>
@@ -196,7 +197,7 @@
             <i class="fas fa-volume-high"></i>
         </div>
 
-                <!-- ====================================================== -->
+        <!-- ====================================================== -->
         <!-- Section 2: About Me (CẬP NHẬT) -->
         <!-- ====================================================== -->
         <section id="about" class="content-section">
@@ -273,7 +274,7 @@
             </div>
         </section>
 
-<!-- ====================================================== -->
+        <!-- ====================================================== -->
         <!-- Section 4: Featured Works (NEW ALTERNATING LAYOUT) -->
         <!-- ====================================================== -->
         <section id="projects" class="content-section">
@@ -518,62 +519,53 @@
                 <!-- Lưới chứa các bài blog nổi bật -->
                 <div class="blog-grid">
                     <!-- Bài Blog 1: Mixamo & Unity -->
-                    <div class="blog-post-card glass-card animate-on-scroll">
-                        <a href="post-mixamo-unity.html" class="blog-card-image-link">
-                            <div class="blog-card-image">
-                                <!-- Bạn có thể tạo 1 ảnh thumbnail cho bài viết này -->
-                                <img src="assets/placeholder-600x400.png" alt="A 3D character in Unity editor">
-                            </div>
-                        </a>
+                    <a href="blog/post-mixamo-unity.html" class="blog-post-card glass-card animate-on-scroll">
+                        <div class="blog-card-image">
+                            <!-- Bạn có thể tạo 1 ảnh thumbnail cho bài viết này -->
+                            <img src="assets/mixamo.png" alt="A 3D character in Unity editor">
+                        </div>
                         <div class="blog-card-content">
                             <div class="blog-card-tags">
                                 <span>Unity</span><span>Game Dev</span>
                             </div>
-                            <h3><a href="post-mixamo-unity.html">Guide: Using Mixamo Assets in Unity</a></h3>
+                            <h3>Guide: Using Mixamo Assets in Unity</h3>
                             <p>A standard workflow to correctly download and implement 3D characters and animations from
                                 Mixamo into your Unity projects.</p>
-                            <a href="post-mixamo-unity.html" class="blog-card-link">Read More <i
-                                    class="fas fa-arrow-right"></i></a>
+                            <span class="blog-card-link">Read More <i class="fas fa-arrow-right"></i></span>
                         </div>
-                    </div>
+                    </a>
 
                     <!-- === BÀI VIẾT MỚI: UNITY & GITHUB PAGES === -->
-                    <div class="blog-post-card glass-card animate-on-scroll">
-                        <a href="post-unity-githubpages.html" class="blog-card-image-link">
-                            <div class="blog-card-image">
-                                <img src="assets/unity-githubpage.png" alt="Unity logo and GitHub logo">
-                            </div>
-                        </a>
+                    <a href="blog/post-unity-githubpages.html" class="blog-post-card glass-card animate-on-scroll">
+                        <div class="blog-card-image">
+                            <img src="assets/unity-githubpage.png" alt="Unity logo and GitHub logo">
+                        </div>
                         <div class="blog-card-content">
                             <div class="blog-card-tags">
                                 <span>Unity</span><span>Game Dev</span><span>GitHub</span>
                             </div>
-                            <h3><a href="post-unity-githubpages.html">Hướng Dẫn: Deploy Game Unity Lên GitHub Pages</a>
-                            </h3>
+                            <h3>Hướng Dẫn: Deploy Game Unity Lên GitHub Pages</h3>
                             <p>Quy trình chi tiết để chia sẻ game Unity của bạn lên web miễn phí và cách khắc phục lỗi
                                 không tải được game phổ biến nhất.</p>
-                            <a href="post-unity-githubpages.html" class="blog-card-link">Read More <i
-                                    class="fas fa-arrow-right"></i></a>
+                            <span class="blog-card-link">Read More <i class="fas fa-arrow-right"></i></span>
                         </div>
-                    </div>
+                    </a>
 
                     <!-- Bài Blog 3 (Ví dụ) -->
-                    <div class="blog-post-card glass-card animate-on-scroll">
-                        <a href="#" class="blog-card-image-link">
-                            <div class="blog-card-image">
-                                <img src="assets/placeholder-600x400.png" alt="Docker container logos">
-                            </div>
-                        </a>
+                    <a href="blog/getting-started-docker.html" class="blog-post-card glass-card animate-on-scroll">
+                        <div class="blog-card-image">
+                            <img src="assets/placeholder-600x400.png" alt="Docker container logos">
+                        </div>
                         <div class="blog-card-content">
                             <div class="blog-card-tags">
                                 <span>Docker</span><span>DevOps</span>
                             </div>
-                            <h3><a href="#">Getting Started with Docker for Web Devs</a></h3>
+                            <h3>Getting Started with Docker for Web Devs</h3>
                             <p>Learn how containerization with Docker can streamline your development workflow, ensuring
                                 consistency across environments.</p>
-                            <a href="#" class="blog-card-link">Read More <i class="fas fa-arrow-right"></i></a>
+                            <span class="blog-card-link">Read More <i class="fas fa-arrow-right"></i></span>
                         </div>
-                    </div>
+                    </a>
                 </div>
 
                 <!-- Nút xem tất cả bài viết -->
@@ -649,7 +641,7 @@
             </div>
         </section>
     </main>
-        
+
     </main>
     <footer class="main-footer">
         <div class="container footer-container">
@@ -669,13 +661,15 @@
             <div class="footer-column footer-connect">
                 <h4 class="footer-title">Connect with Me</h4>
                 <ul>
-                    <li><a href="https://github.com/TranHuuDat2004" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
-                    <li><a href="https://linkedin.com/in/tranhuudat2004" target="_blank"><i class="fab fa-linkedin-in"></i> LinkedIn</a></li>
+                    <li><a href="https://github.com/TranHuuDat2004" target="_blank"><i class="fab fa-github"></i>
+                            GitHub</a></li>
+                    <li><a href="https://linkedin.com/in/tranhuudat2004" target="_blank"><i
+                                class="fab fa-linkedin-in"></i> LinkedIn</a></li>
                     <li><a href="mailto:tranhuudat.cv@gmail.com"><i class="fas fa-envelope"></i> Email</a></li>
                 </ul>
             </div>
 
-            <!-- Cột 4: Themes -->
+            <!-- Cột 4: Themes
             <div class="footer-column footer-themes">
                 <h4 class="footer-title">Themes</h4>
                 <div class="theme-switcher-dropdown">
@@ -688,12 +682,12 @@
                         <a href="tet.html">Tết</a>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="footer-copyright">
             <div class="container">
                 <p>Copyright © <span id="currentYear"></span> Trần Hữu Đạt. All rights reserved.</p>
-                <p>Last updated: <b> October 14th 2025</b></p>
+                <p>Last updated: <b> January 27th 2026</b></p>
             </div>
         </div>
     </footer>
@@ -701,7 +695,7 @@
     <audio id="audio-source"></audio>
     <script src="js/playlist.js"></script>
     <script src="js/scripts.js"></script>
-     <!-- === TẢI CÁC SECTION CHUNG === -->
+    <!-- === TẢI CÁC SECTION CHUNG === -->
     <script src="js/load-sections.js"></script>
     <script>
         // Christmas specific scripts
@@ -755,4 +749,5 @@
         });
     </script>
 </body>
+
 </html>

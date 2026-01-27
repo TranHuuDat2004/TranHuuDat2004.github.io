@@ -15,11 +15,11 @@
     display: flex;
     flex-direction: column;
     /* Sắp xếp ảnh và nội dung theo chiều dọc */
+    text-decoration: none;
+    color: inherit;
 }
 
-.blog-card-image-link {
-    display: block;
-}
+/* .blog-card-image-link removed */
 
 .blog-card-image {
     aspect-ratio: 16 / 9;
@@ -70,11 +70,12 @@
     margin-bottom: 0.75rem;
 }
 
-.blog-card-content h3 a {
+.blog-card-content h3 {
     color: var(--text-primary);
+    transition: color 0.3s ease;
 }
 
-.blog-card-content h3 a:hover {
+.blog-post-card:hover .blog-card-content h3 {
     color: var(--gradient-pink);
 }
 
@@ -99,7 +100,8 @@
     transition: transform 0.3s;
 }
 
-.blog-card-link:hover i {
+.blog-card-link:hover i,
+.blog-post-card:hover .blog-card-link i {
     transform: translateX(4px);
 }
 

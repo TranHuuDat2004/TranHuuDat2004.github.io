@@ -152,6 +152,10 @@
             display: flex;
             flex-direction: column;
             height: 100%;
+            text-decoration: none;
+            /* Removed underline */
+            color: inherit;
+            /* Inherit text color */
         }
 
         .post-card:hover {
@@ -228,7 +232,7 @@
             transition: color 0.2s;
         }
 
-        .post-card-title a:hover {
+        */ .post-card:hover .post-card-title {
             color: var(--primary-color, #6c5ce7);
         }
 
@@ -260,7 +264,7 @@
             transition: gap 0.3s;
         }
 
-        .read-more-link:hover {
+        .post-card:hover .read-more-link {
             gap: 10px;
         }
 
@@ -336,9 +340,9 @@
 
         <section class="posts-grid">
 
-            <article class="post-card" data-tags="unity 3d tutorial game dev">
+            <a href="blog/post-mixamo-unity.html" class="post-card" data-tags="unity 3d tutorial game dev">
                 <div class="card-image">
-                    <img src="assets/placeholder-600x400.png" alt="Thumbnail Mixamo Unity">
+                    <img src="assets/mixamo.png" alt="Thumbnail Mixamo Unity">
                 </div>
                 <div class="post-card-content">
                     <div class="post-meta-mini">
@@ -351,21 +355,19 @@
                         <span class="tag">Tutorial</span>
                     </div>
                     <h2 class="post-card-title">
-                        <a href="blog/post-mixamo-unity.html">Hướng Dẫn: Tải Model & Animation Từ Mixamo Cho Unity
-                            (Chuẩn 2025)</a>
+                        Hướng Dẫn: Tải Model & Animation Từ Mixamo Cho Unity (Chuẩn 2025)
                     </h2>
                     <p class="post-card-excerpt">
                         Quy trình chuẩn để tải và import nhân vật 3D từ Mixamo vào Unity, tối ưu hóa animation và sửa
                         lỗi texture thường gặp.
                     </p>
                     <div class="card-footer">
-                        <a href="blog/post-mixamo-unity.html" class="read-more-link">Đọc tiếp <i
-                                class="fas fa-arrow-right"></i></a>
+                        <span class="read-more-link">Đọc tiếp <i class="fas fa-arrow-right"></i></span>
                     </div>
                 </div>
-            </article>
+            </a>
 
-            <article class="post-card" data-tags="unity github web tutorial">
+            <a href="#" class="post-card" data-tags="unity github web tutorial">
                 <div class="card-image">
                     <img src="assets/unity-githubpage.png" alt="Thumbnail GitHub Pages">
                 </div>
@@ -380,19 +382,19 @@
                         <span class="tag">Web</span>
                     </div>
                     <h2 class="post-card-title">
-                        <a href="#">Deploy Game Unity WebGL lên GitHub Pages và Fix lỗi nén</a>
+                        Deploy Game Unity WebGL lên GitHub Pages và Fix lỗi nén
                     </h2>
                     <p class="post-card-excerpt">
                         Hướng dẫn chi tiết cách đưa game Unity của bạn lên web miễn phí, xử lý triệt để lỗi nén
                         Brotli/Gzip.
                     </p>
                     <div class="card-footer">
-                        <a href="#" class="read-more-link">Đọc tiếp <i class="fas fa-arrow-right"></i></a>
+                        <span class="read-more-link">Đọc tiếp <i class="fas fa-arrow-right"></i></span>
                     </div>
                 </div>
-            </article>
+            </a>
 
-            <article class="post-card" data-tags="web design life">
+            <a href="#" class="post-card" data-tags="web design life">
                 <div class="card-image">
                     <img src="assets/placeholder-600x400.png" alt="Thumbnail Portfolio">
                 </div>
@@ -406,16 +408,16 @@
                         <span class="tag">Life</span>
                     </div>
                     <h2 class="post-card-title">
-                        <a href="#">Hành trình xây dựng Portfolio cá nhân của mình</a>
+                        Hành trình xây dựng Portfolio cá nhân của mình
                     </h2>
                     <p class="post-card-excerpt">
                         Chia sẻ về quá trình lên ý tưởng, thiết kế và code trang web portfolio này từ con số 0.
                     </p>
                     <div class="card-footer">
-                        <a href="#" class="read-more-link">Đọc tiếp <i class="fas fa-arrow-right"></i></a>
+                        <span class="read-more-link">Đọc tiếp <i class="fas fa-arrow-right"></i></span>
                     </div>
                 </div>
-            </article>
+            </a>
 
             <div id="no-results"
                 style="display: none; text-align: center; width: 100%; grid-column: 1 / -1; padding: 40px;">
@@ -535,4 +537,5 @@
 <!-- === TẢI CÁC SECTION CHUNG === -->
 <script src="js/blog-script.js"></script>
 <script src="js/load-components.js"></script>
+
 </html>
