@@ -1,5 +1,5 @@
 {
-  "HTML": 11,
+  "HTML": 12,
   "CSS": 4,
   "TypeScript": 2,
   "Java": 3,
@@ -8,6 +8,6 @@
   "PHP": 3,
   "C#": 1,
   "ShaderLab": 1,
-  "Python": 2,
+  "Python": 1,
   "Dart": 2
 }
