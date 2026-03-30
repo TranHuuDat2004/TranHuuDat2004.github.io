@@ -71,6 +71,10 @@
     justify-content: center; /* Căn giữa nội dung nút */
 }
 
+.btn-download{
+    font-size: 14px;
+}
+
 
 /* --- Responsive cho màn hình nhỏ --- */
 @media (max-width: 992px) {
