@@ -493,28 +493,41 @@
                     <p class="photo-caption">Receiving the design award at Ton Duc Thang University, 2023.</p>
                 </div>
 
-                <!-- NEW: Digital Certifications Section -->
-                <h3 class="section-subtitle animate-on-scroll">Digital Certifications</h3>
+                <!-- NEW: Extracurricular Certificates Section -->
+                <h3 class="section-subtitle animate-on-scroll">Extracurricular Certificates</h3>
                 <div class="certificates-grid">
                     <div class="certificate-card glass-card animate-on-scroll">
                         <div class="certificate-image">
                             <img src="assets/certificate/TranHuuDat_VibeCoding.png" alt="Chứng nhận Vibe Coding">
                         </div>
                         <h4 class="certificate-title">Chứng nhận: Vibe Coding</h4>
-                        <a href="assets/certificate/TranHuuDat_VibeCoding.pdf" class="btn-view-cert" target="_blank">
-                            View PDF <i class="fas fa-file-pdf"></i>
+                        <a href="javascript:void(0)" class="btn-view-cert btn-pdf-modal" data-cert="assets/certificate/TranHuuDat_VibeCoding.png">
+                            View Certificate <i class="fas fa-certificate"></i>
                         </a>
                     </div>
-                    
+
                     <div class="certificate-card glass-card animate-on-scroll">
                         <div class="certificate-image">
-                            <img src="assets/certificate/TranHuuDat_XayDungDuAnCaNhan.png" alt="Chứng nhận Xây Dựng Dự Án Cá Nhân">
+                            <img src="assets/certificate/TranHuuDat_XayDungDuAnCaNhan.png"
+                                alt="Chứng nhận Xây Dựng Dự Án Cá Nhân">
                         </div>
                         <h4 class="certificate-title">Chứng nhận: Xây Dựng Dự Án Cá Nhân</h4>
-                        <a href="assets/certificate/TranHuuDat_XayDungDuAnCaNhan.pdf" class="btn-view-cert" target="_blank">
-                            View PDF <i class="fas fa-file-pdf"></i>
+                        <a href="javascript:void(0)" class="btn-view-cert btn-pdf-modal" data-cert="assets/certificate/TranHuuDat_XayDungDuAnCaNhan.png">
+                            View Certificate <i class="fas fa-certificate"></i>
                         </a>
                     </div>
+
+                    <div class="certificate-card glass-card animate-on-scroll">
+                        <div class="certificate-image">
+                            <img src="assets/certificate/TranHuuDat_GitWorkReady.jpg"
+                                alt="Chứng nhận Git Work Ready">
+                        </div>
+                        <h4 class="certificate-title">Chứng nhận: Git Work Ready</h4>
+                        <a href="javascript:void(0)" class="btn-view-cert btn-pdf-modal" data-cert="assets/certificate/TranHuuDat_GitWorkReady.jpg">
+                            View Certificate <i class="fas fa-certificate"></i>
+                        </a>
+                    </div>
+                
                 </div>
 
             </div>
@@ -751,6 +764,20 @@
             </div>
         </div>
     </footer>
+
+    <div id="pdfModal" class="pdf-modal-overlay">
+        <div class="pdf-modal-container">
+            <div class="pdf-modal-header">
+                <h3 id="pdfModalTitle">Certificate Viewer</h3>
+                <button class="pdf-modal-close">&times;</button>
+            </div>
+            <div class="pdf-modal-body">
+                <div class="zoom-container">
+                    <img id="certImage" src="" alt="Certificate">
+                </div>
+            </div>
+        </div>
+    </div>
 
     <audio id="audio-source"></audio>
     <script src="js/playlist.js"></script>

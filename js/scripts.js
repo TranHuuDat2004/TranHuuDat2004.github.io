@@ -323,4 +323,79 @@ document.addEventListener('DOMContentLoaded', () => {
     // Gọi lần đầu
     window.initThemeToggle();
 
+
+    // ======================================================
+    // --- 7. LOGIC CHO CERTIFICATE MODAL (IMAGE VIEWER WITH ZOOM) ---
+    // ======================================================
+    const pdfModal = document.getElementById('pdfModal');
+    const certImage = document.getElementById('certImage');
+    const pdfModalTitle = document.getElementById('pdfModalTitle');
+    const closeBtn = document.querySelector('.pdf-modal-close');
+    const certButtons = document.querySelectorAll('.btn-pdf-modal');
+    const zoomContainer = document.querySelector('.zoom-container');
+
+    if (pdfModal && certImage && closeBtn) {
+        certButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const imgSrc = btn.getAttribute('data-cert');
+                const certTitle = btn.parentElement.querySelector('.certificate-title').textContent.replace('Chứng nhận: ', '');
+                
+                if (imgSrc) {
+                    certImage.src = imgSrc;
+                    if (pdfModalTitle) pdfModalTitle.textContent = certTitle;
+                    pdfModal.classList.add('active');
+                    document.body.style.overflow = 'hidden'; // Prevent scrolling
+                }
+            });
+        });
+
+        const closeModal = () => {
+            if (!pdfModal) return;
+            pdfModal.classList.remove('active');
+            setTimeout(() => {
+                if (certImage) {
+                    certImage.src = '';
+                    certImage.style.transform = 'scale(1)'; // Reset zoom
+                }
+            }, 300);
+            document.body.style.overflow = ''; // Restore scrolling
+        };
+
+        closeBtn.addEventListener('click', closeModal);
+
+        // Vanilla JS Hover Zoom Logic
+        if (zoomContainer && certImage) {
+            zoomContainer.addEventListener('mousemove', (e) => {
+                const rect = zoomContainer.getBoundingClientRect();
+                const offsetX = e.clientX - rect.left;
+                const offsetY = e.clientY - rect.top;
+                
+                const posX = (offsetX / rect.width) * 100;
+                const posY = (offsetY / rect.height) * 100;
+                
+                certImage.style.transformOrigin = `${posX}% ${posY}%`;
+                certImage.style.transform = 'scale(1.8)';
+            });
+
+            zoomContainer.addEventListener('mouseleave', () => {
+                certImage.style.transform = 'scale(1)';
+            });
+        }
+
+        // Close on escape key
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && pdfModal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+
+        // Close on clicking outside the container
+        pdfModal.addEventListener('click', (e) => {
+            if (e.target === pdfModal) {
+                closeModal();
+            }
+        });
+    }
+
 });
