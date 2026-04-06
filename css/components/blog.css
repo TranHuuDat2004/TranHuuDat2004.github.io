@@ -105,6 +105,29 @@
     transform: translateX(4px);
 }
 
+.blog-card-content .project-links {
+    margin-top: auto;
+    display: flex;
+    gap: 1.25rem;
+    font-size: 1.3rem;
+    padding-top: 1.5rem;
+}
+
+.blog-card-content .project-links a {
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.8;
+}
+
+.blog-card-content .project-links a:hover {
+    color: var(--gradient-pink);
+    transform: translateY(-3px);
+    opacity: 1;
+}
+
 .view-all-posts-container {
     text-align: center;
     margin-top: 2rem;
