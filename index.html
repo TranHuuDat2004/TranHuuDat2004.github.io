@@ -97,40 +97,18 @@
     <!-- Thanh tiến trình cuộn giữ nguyên -->
     <div class="scroll-progress-bar"></div>
 
-    <header class="main-header">
-        <!-- Nhóm 1: Logo -->
-        <a class="logo" href="index.html"><span>tranhuudat</span>2004</a>
-
-        <!-- Nhóm 2: Khối điều hướng -->
-        <div class="header-navigation"> <!-- THÊM THẺ NÀY -->
-            <nav class="main-nav">
-                <a href="#hero">Home</a>
-                <a href="#about">About</a>
-                <a href="#skills">Skills</a>
-                <!-- <a href="#coding-activity">Activity</a> -->
-                <a href="#projects">Projects</a>
-                <a href="#experience">Experience</a>
-                <a href="#blog">Blog</a> <!-- << THÊM DÒNG NÀY VÀO -->
-                <a href="#contact">Contact</a>
-                <span class="nav-indicator"></span>
-            </nav>
-            <a href="download-resume.html" class="resume-button">Resume</a>
-
-            <button id="theme-toggle" class="theme-toggle-btn">
-                <i class="fas fa-sun"></i>
-                <i class="fas fa-moon"></i>
-            </button>
-
-        </div> <!-- THÊM THẺ NÀY -->
-
-    </header>
+    <header id="header-placeholder" class="main-header"></header>
 
     <main>
         <!-- ====================================================== -->
         <!-- Section 1: Hero (THAY ĐỔI LỚN) -->
         <!-- ====================================================== -->
         <section id="hero" class="hero-section">
-            <div class="hero-background"></div>
+            <div class="hero-background">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+            </div>
             <div class="container hero-container">
                 <!-- Profile Card (bên trái) -->
                 <div class="profile-card-container animate-on-scroll">
@@ -721,54 +699,7 @@
     </main>
 
     </main>
-    <footer class="main-footer">
-        <div class="container footer-container">
-            <div class="footer-column footer-about">
-                <h3 class="footer-logo"><span>tranhuudat</span>2004</h3>
-                <p>A passionate Web Developer dedicated to building beautiful and useful applications.</p>
-            </div>
-            <div class="footer-column footer-links">
-                <h4 class="footer-title">Quick Links</h4>
-                <ul>
-                    <li><a href="#hero">Home</a></li>
-                    <li><a href="assets/resume.pdf" download>Resume</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </div>
-            <div class="footer-column footer-connect">
-                <h4 class="footer-title">Connect with Me</h4>
-                <ul>
-                    <li><a href="https://github.com/TranHuuDat2004" target="_blank"><i class="fab fa-github"></i>
-                            GitHub</a></li>
-                    <li><a href="https://linkedin.com/in/tranhuudat2004" target="_blank"><i
-                                class="fab fa-linkedin-in"></i> LinkedIn</a></li>
-                    <li><a href="mailto:tranhuudat.cv@gmail.com"><i class="fas fa-envelope"></i> Email</a></li>
-                </ul>
-            </div>
-
-            <!-- Cột 4: Themes
-            <div class="footer-column footer-themes">
-                <h4 class="footer-title">Themes</h4>
-                <div class="theme-switcher-dropdown">
-                    <button class="dropdown-toggle">Themes <i class="fas fa-chevron-down"></i></button>
-                    <div class="dropdown-menu">
-                        <a href="index.html">Default</a>
-                        <a href="birthday.html">Birthday</a>
-                        <a href="noel.html">Noel</a>
-                        <a href="halloween.html">Halloween</a>
-                        <a href="tet.html">Tết</a>
-                    </div>
-                </div>
-            </div> -->
-        </div>
-        <div class="footer-copyright">
-            <div class="container">
-                <p>Copyright © <span id="currentYear"></span> Trần Hữu Đạt. All rights reserved.</p>
-                <p>Last updated: <b> March 30th 2026</b></p>
-            </div>
-        </div>
-    </footer>
+    <footer id="footer-placeholder" class="main-footer"></footer>
 
     <div id="pdfModal" class="pdf-modal-overlay">
         <div class="pdf-modal-container">
@@ -787,6 +718,8 @@
     <audio id="audio-source"></audio>
     <script src="js/playlist.js"></script>
     <script src="js/scripts.js"></script>
+    <!-- === TẢI CÁC THÀNH PHẦN CHUNG (Header, Footer) === -->
+    <script src="js/load-components.js"></script>
     <!-- === TẢI CÁC SECTION CHUNG === -->
     <script src="js/load-sections.js"></script>
     <script>

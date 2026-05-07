@@ -1,20 +1,28 @@
 document.addEventListener("DOMContentLoaded", async function () {
     // 1. Load Header & Footer
+    // Chèn vào các thẻ <header> và <footer> có ID tương ứng
     await loadComponent("header-placeholder", "components/header.html", true);
     await loadComponent("footer-placeholder", "components/footer.html", false);
 
-    // 2. Load các Section nội dung (Chạy vòng lặp)
+    // 2. Load các Section nội dung nếu có các placeholder tương ứng
     const sections = ['about', 'skills', 'projects', 'experience', 'blog', 'contact'];
     
-    // Sử dụng Promise.all để load tất cả song song cho nhanh
+    // Sử dụng Promise.all để load tất cả song song
     await Promise.all(sections.map(section => 
         loadComponent(`${section}-placeholder`, `components/sections/${section}.html`, false)
     ));
 
-    // 3. QUAN TRỌNG: Khởi tạo lại Animation sau khi load xong HTML
-    // Vì HTML được chèn động, Observer cũ có thể không bắt được
+    // 3. Khởi tạo lại các logic sau khi HTML đã được chèn vào DOM
     if (window.initScrollAnimations) {
         window.initScrollAnimations(); 
+    }
+    if (window.initParallax) {
+        window.initParallax();
+    }
+    
+    // Gọi lại logic GitHub Stars nếu nó tồn tại (được định nghĩa trong scripts.js)
+    if (window.fetchGitHubStars) {
+        window.fetchGitHubStars();
     }
 });
 
@@ -22,7 +30,7 @@ async function loadComponent(elementId, filePath, isHeader) {
     const element = document.getElementById(elementId);
     if (!element) return;
 
-    // Xử lý đường dẫn tương đối cho thư mục con
+    // Xử lý đường dẫn tương đối cho thư mục con (VD: nếu trang nằm trong /blog/)
     const isSubFolder = window.location.pathname.includes("/blog/") || window.location.pathname.includes("/projects/");
     const fetchPath = isSubFolder ? "../" + filePath : filePath;
 
@@ -37,16 +45,15 @@ async function loadComponent(elementId, filePath, isHeader) {
                 html = html.replace(/src="(?!(http|\.\.))([^"]*)"/g, 'src="../$2"');
             }
 
-            // Chèn HTML vào (nối thêm vào section đang có hoặc thay thế div placeholder)
-            // Lưu ý: Nếu element là <section id="about">, ta dùng innerHTML
             element.innerHTML = html;
 
-            // Logic riêng cho Header
+            // Sau khi chèn Header, chạy các logic liên quan đến Header
             if (isHeader) {
-                highlightActiveMenu();
-                if(typeof initThemeToggle === 'function') initThemeToggle();
+                if (window.highlightActiveMenu) window.highlightActiveMenu();
+                if (window.initThemeToggle) window.initThemeToggle();
             }
-            // Logic riêng cho Footer
+            
+            // Sau khi chèn Footer, cập nhật năm
             if (!isHeader && elementId === 'footer-placeholder') {
                 const yearSpan = document.getElementById('currentYear');
                 if(yearSpan) yearSpan.textContent = new Date().getFullYear();
@@ -54,48 +61,5 @@ async function loadComponent(elementId, filePath, isHeader) {
         }
     } catch (error) {
         console.error(`Error loading ${filePath}:`, error);
-    }
-}
-
-// Hàm tô đậm menu đang chọn
-function highlightActiveMenu() {
-    const currentPath = window.location.pathname;
-    const navLinks = document.querySelectorAll('.main-nav a');
-
-    navLinks.forEach(link => {
-        link.classList.remove('is-active');
-        
-        // Lấy data-page của link
-        const page = link.getAttribute('data-page');
-
-        // Logic check đơn giản
-        if (currentPath.includes('blog') && page === 'blog') {
-            link.classList.add('is-active');
-        } else if (currentPath.includes('project') && page === 'projects') {
-            link.classList.add('is-active');
-        } else if ((currentPath.endsWith('index.html') || currentPath === '/' || currentPath.endsWith('tranhuudat2004.github.io/')) && page === 'home') {
-            // Trang chủ
-            // link.classList.add('is-active'); // Thường trang chủ không cần active state cố định nếu là one-page scroll
-        }
-    });
-}
-
-// Hàm Theme Toggle (Copy từ script cũ sang để đảm bảo nút trong header mới hoạt động)
-function initThemeToggle() {
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    const body = document.body;
-    
-    // Check saved theme
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        body.classList.add('dark-mode');
-    }
-
-    if (themeToggleBtn) {
-        themeToggleBtn.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-            const currentTheme = body.classList.contains('dark-mode') ? 'dark' : 'light';
-            localStorage.setItem('theme', currentTheme);
-        });
     }
 }

@@ -14,11 +14,12 @@
     position: absolute;
     inset: 0;
     background-image: url('../../assets/wallpaper5.webp');
-    /* ĐỔI TÊN ẢNH NỀN */
     background-size: cover;
     background-position: center;
     z-index: -2;
     opacity: 0.8;
+    overflow: hidden;
+    will-change: transform;
 }
 
 .hero-background::after {
@@ -27,6 +28,40 @@
     inset: 0;
     background: radial-gradient(circle, rgba(18, 18, 18, 0.2) 0%, rgba(18, 18, 18, 0.8) 70%);
     z-index: -1;
+}
+
+/* Floating Shapes */
+.shape {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    z-index: -1;
+    opacity: 0.4;
+    will-change: transform;
+}
+
+.shape-1 {
+    width: 400px;
+    height: 400px;
+    background: var(--gradient-purple);
+    top: -10%;
+    left: -10%;
+}
+
+.shape-2 {
+    width: 300px;
+    height: 300px;
+    background: var(--gradient-pink);
+    bottom: 10%;
+    right: -5%;
+}
+
+.shape-3 {
+    width: 250px;
+    height: 250px;
+    background: var(--gradient-green);
+    top: 40%;
+    left: 45%;
 }
 
 /* SỬA LỖI: Chuyển sang CSS Grid để layout ổn định */
@@ -45,7 +80,7 @@
 /* SỬA LỖI: Bỏ position absolute */
 .profile-card-container {
     width: 340px;
-    /* Đã bỏ position: absolute, left, top, transform */
+    will-change: transform;
 }
 
 .profile-card .profile-header {
@@ -129,6 +164,7 @@
     text-align: left;
     max-width: 800px;
     margin: 0;
+    will-change: transform;
 }
 
 .welcome-badge {

@@ -1,7 +1,8 @@
 // ======================================================
-// --- 0. KHỞI TẠO GLOBAL FUNCTION CHO ANIMATION ---
+// --- 0. KHỞI TẠO GLOBAL FUNCTIONS CHO COMPONENTS ---
 // ======================================================
-// Đặt hàm này ở ngoài cùng để load-components.js có thể gọi lại
+
+// 0.1 Animation Observer
 window.initScrollAnimations = function() {
     const observerOptions = {
         root: null,
@@ -13,10 +14,7 @@ window.initScrollAnimations = function() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('is-visible');
-                // Tùy chọn: Nếu muốn animation chạy 1 lần rồi thôi thì bỏ comment dòng dưới
-                // observer.unobserve(entry.target); 
             } else {
-                // Nếu muốn cuộn lên cuộn xuống đều chạy lại animation thì giữ dòng này
                 entry.target.classList.remove('is-visible');
             }
         });
@@ -24,9 +22,143 @@ window.initScrollAnimations = function() {
 
     const elements = document.querySelectorAll('.animate-on-scroll');
     elements.forEach(el => observer.observe(el));
+};
+
+// 0.2 Active Menu Highlight
+window.highlightActiveMenu = function() {
+    const navLinks = document.querySelectorAll('.main-nav a');
+    const navIndicator = document.querySelector('.nav-indicator');
+    const sections = document.querySelectorAll('main section');
+
+    function moveIndicator(targetLink) {
+        if (!navIndicator) return;
+        if (!targetLink) {
+            navIndicator.style.opacity = '0';
+            return;
+        }
+        const linkRect = targetLink.getBoundingClientRect();
+        const navRect = targetLink.parentElement.getBoundingClientRect();
+
+        navIndicator.style.width = `${linkRect.width}px`;
+        navIndicator.style.left = `${linkRect.left - navRect.left}px`;
+        navIndicator.style.opacity = '1';
+
+        navLinks.forEach(link => link.classList.remove('is-active'));
+        targetLink.classList.add('is-active');
+    }
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => moveIndicator(e.currentTarget));
+    });
+
+    const navSectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const sectionId = entry.target.id;
+                const correspondingLink = document.querySelector(`.main-nav a[href="#${sectionId}"]`) || 
+                                         document.querySelector(`.main-nav a[href="index.html#${sectionId}"]`);
+                moveIndicator(correspondingLink);
+            }
+        });
+    }, { rootMargin: "-50% 0px -50% 0px", threshold: 0 });
+
+    sections.forEach(section => navSectionObserver.observe(section));
     
-    // Log để kiểm tra (có thể xóa sau này)
-    // console.log(`Animation initialized for ${elements.length} elements.`);
+    // Check current page for non-index pages
+    const currentPath = window.location.pathname;
+    if (currentPath.includes('project.html')) {
+        moveIndicator(document.querySelector('.main-nav a[href="project.html"]'));
+    } else if (currentPath.includes('blog.html')) {
+        moveIndicator(document.querySelector('.main-nav a[href="blog.html"]'));
+    } else if (currentPath.includes('download-resume.html')) {
+        const resumeBtn = document.querySelector('.resume-button');
+        if (resumeBtn) {
+            resumeBtn.classList.add('is-active');
+            moveIndicator(null); // Hide indicator for resume button as it's outside the nav
+        }
+    }
+};
+
+// 0.3 Theme Toggle
+window.initThemeToggle = function() {
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light-mode') {
+        body.classList.add('light-mode');
+    } else {
+        body.classList.remove('light-mode');
+    }
+
+    if (themeToggleBtn) {
+        const newBtn = themeToggleBtn.cloneNode(true);
+        themeToggleBtn.parentNode.replaceChild(newBtn, themeToggleBtn);
+
+        newBtn.addEventListener('click', () => {
+            body.classList.toggle('light-mode');
+            localStorage.setItem('theme', body.classList.contains('light-mode') ? 'light-mode' : 'dark-mode');
+        });
+    }
+};
+
+// 0.4 GitHub Stars
+window.fetchGitHubStars = async function() {
+    const starCountElement = document.getElementById('star-count');
+    if (!starCountElement) return;
+
+    try {
+        const repo = 'TranHuuDat2004/TranHuuDat2004.github.io';
+        const response = await fetch(`https://api.github.com/repos/${repo}`);
+        if (response.ok) {
+            const data = await response.json();
+            starCountElement.textContent = data.stargazers_count;
+        } else {
+            starCountElement.textContent = '0';
+        }
+    } catch (error) {
+        console.error('Error fetching GitHub stars:', error);
+        starCountElement.textContent = '0';
+    }
+};
+
+// 0.5 Parallax Effect for Hero
+window.initParallax = function() {
+    const hero = document.getElementById('hero');
+    if (!hero) return;
+
+    const heroBg = hero.querySelector('.hero-background');
+    const profileCard = hero.querySelector('.profile-card-container');
+    const heroText = hero.querySelector('.hero-text-content');
+    const shapes = hero.querySelectorAll('.shape');
+
+    window.addEventListener('scroll', () => {
+        const scrolled = window.scrollY;
+        
+        // Chỉ chạy parallax khi hero còn đang hiển thị
+        if (scrolled <= hero.offsetHeight) {
+            // Background moves slower (0.4 speed)
+            if (heroBg) {
+                heroBg.style.transform = `translateY(${scrolled * 0.4}px)`;
+            }
+            
+            // Profile card moves slightly faster (0.2 speed)
+            if (profileCard) {
+                profileCard.style.transform = `translateY(${scrolled * 0.15}px)`;
+            }
+            
+            // Hero text moves slightly slower than scroll (0.1 speed)
+            if (heroText) {
+                heroText.style.transform = `translateY(${scrolled * 0.1}px)`;
+            }
+
+            // Decorative shapes move at different speeds
+            shapes.forEach((shape, index) => {
+                const speed = (index + 1) * 0.1;
+                shape.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        }
+    }, { passive: true });
 };
 
 // ======================================================
@@ -34,33 +166,22 @@ window.initScrollAnimations = function() {
 // ======================================================
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Gọi hàm animation ngay lập tức cho các phần tử có sẵn (VD: Hero Section)
+    // Khởi tạo các logic cơ bản
     window.initScrollAnimations();
+    window.highlightActiveMenu();
+    window.initThemeToggle();
+    window.fetchGitHubStars();
+    window.initParallax();
 
-    // ======================================================
-    // --- 1. LOGIC CHUNG & HEADER/PROGRESS BAR ---
-    // ======================================================
+    // 1. Header & Progress Bar Logic
     const header = document.querySelector('.main-header');
     const progressBar = document.querySelector('.scroll-progress-bar');
     
-    // Cập nhật năm hiện tại (nếu load-components chưa xử lý footer)
-    const yearSpan = document.getElementById('currentYear');
-    if (yearSpan) {
-        yearSpan.textContent = new Date().getFullYear();
-    }
-
-    // Theo dõi sự kiện cuộn trang
     window.addEventListener('scroll', () => {
-        // Hiển thị header khi cuộn xuống
         if (header) {
-            if (window.scrollY > 100) {
-                header.classList.add('visible');
-            } else {
-                header.classList.remove('visible');
-            }
+            if (window.scrollY > 100) header.classList.add('visible');
+            else header.classList.remove('visible');
         }
-
-        // Cập nhật thanh tiến trình
         if (progressBar) {
             const totalHeight = document.body.scrollHeight - window.innerHeight;
             const progress = totalHeight > 0 ? (window.scrollY / totalHeight) * 100 : 0;
@@ -68,334 +189,136 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // ======================================================
-    // --- 2. LOGIC ANIMATION (ĐÃ CHUYỂN LÊN ĐẦU FILE) ---
-    // ======================================================
-    // (Đã được thay thế bởi window.initScrollAnimations ở trên)
-
-
-    // ======================================================
-    // --- 3. LOGIC CHO THANH SKILL BAR (PHIÊN BẢN HYBRID) ---
-    // ======================================================
-
+    // 2. Skill Bars Logic
     const skillsGrid = document.querySelector('.skills-grid');
+    if (skillsGrid) {
+        async function fetchAndDisplayHybridSkills() {
+            const skillsMap = new Map([
+                ['HTML', { name: 'HTML', percentage: 40, icon: 'assets/icons/html.png' }],
+                ['CSS', { name: 'CSS', percentage: 40, icon: 'assets/icons/css.png' }],
+                ['JavaScript', { name: 'JavaScript', percentage: 50, icon: 'assets/icons/javascript.png' }],
+                ['PHP', { name: 'PHP', percentage: 30, icon: 'assets/icons/php.png' }],
+                ['Java', { name: 'Java', percentage: 25, icon: 'assets/icons/java1.png' }],
+                ['Dart', { name: 'Dart', percentage: 20, icon: 'assets/icons/dart.png' }],
+                ['Python', { name: 'Python', percentage: 15, icon: 'assets/icons/python.png' }],
+                ['TypeScript', { name: 'TypeScript', percentage: 15, icon: 'assets/icons/typescript.png' }],
+                ['Git & GitHub', { name: 'Git & GitHub', percentage: 85, icon: 'assets/icons/github.png' }],
+                ['Docker', { name: 'Docker', percentage: 60, icon: 'assets/icons/docker.png' }],
+            ]);
 
-    function initializeSkillBars() {
-        const skillLevels = document.querySelectorAll('.skill-level');
-        const skillObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                const element = entry.target;
-                const level = element.getAttribute('data-level');
-                if (entry.isIntersecting) {
-                    element.style.width = level;
-                } else {
-                    element.style.width = '0%';
+            try {
+                const response = await fetch('github_stats.json');
+                if (response.ok) {
+                    const langStatsData = await response.json();
+                    Object.entries(langStatsData).forEach(([lang, count]) => {
+                        if (skillsMap.has(lang)) {
+                            const skill = skillsMap.get(lang);
+                            skill.percentage = Math.min(skill.percentage + Math.min(count * 2, 40), 95);
+                        }
+                    });
                 }
-            });
-        }, { threshold: 0.5 });
-
-        skillLevels.forEach(level => skillObserver.observe(level));
-    }
-
-    async function fetchAndDisplayHybridSkills() {
-        if (!skillsGrid) return;
-
-        const skillsMap = new Map([
-            ['HTML', { name: 'HTML', percentage: 40, icon: 'assets/icons/html.png' }],
-            ['CSS', { name: 'CSS', percentage: 40, icon: 'assets/icons/css.png' }],
-            ['JavaScript', { name: 'JavaScript', percentage: 50, icon: 'assets/icons/javascript.png' }],
-            ['PHP', { name: 'PHP', percentage: 30, icon: 'assets/icons/php.png' }],
-            ['Java', { name: 'Java', percentage: 25, icon: 'assets/icons/java1.png' }],
-            ['Dart', { name: 'Dart', percentage: 20, icon: 'assets/icons/dart.png' }],
-            ['Python', { name: 'Python', percentage: 15, icon: 'assets/icons/python.png' }],
-            ['TypeScript', { name: 'TypeScript', percentage: 15, icon: 'assets/icons/typescript.png' }],
-            ['Git & GitHub', { name: 'Git & GitHub', percentage: 85, icon: 'assets/icons/github.png' }],
-            ['Docker', { name: 'Docker', percentage: 60, icon: 'assets/icons/docker.png' }],
-        ]);
-
-        const defaultIcon = 'assets/icons/default.png';
-        const apiUrl = 'github_stats.json';
-
-        try {
-            const response = await fetch(apiUrl);
-            // Nếu lỗi fetch file json, dùng dữ liệu mặc định trong skillsMap
-            if (response.ok) {
-                const langStatsData = await response.json();
-                const langStats = new Map(Object.entries(langStatsData));
-
-                langStats.forEach((count, lang) => {
-                    const factor = 2; 
-                    const maxBonus = 40; 
-
-                    if (skillsMap.has(lang)) {
-                        const skill = skillsMap.get(lang);
-                        const bonus = Math.min(count * factor, maxBonus);
-                        skill.percentage = Math.min(skill.percentage + bonus, 95); 
-                    } else {
-                        skillsMap.set(lang, {
-                            name: lang,
-                            percentage: Math.min(10 + (count * factor), 50),
-                            icon: defaultIcon
-                        });
-                    }
-                });
-            }
-
-            const finalSkills = Array.from(skillsMap.values())
-                .sort((a, b) => b.percentage - a.percentage);
-
-            skillsGrid.innerHTML = ''; 
-
-            finalSkills.forEach(skill => {
-                const skillCardHTML = `
-                <div class="skill-card glass-card animate-on-scroll">
-                    <div class="skill-header">
-                        <div class="skill-info">
-                            <img src="${skill.icon}" alt="${skill.name} Icon" class="skill-icon-header">
-                            <span class="skill-name">${skill.name}</span>
+                
+                skillsGrid.innerHTML = Array.from(skillsMap.values())
+                    .sort((a, b) => b.percentage - a.percentage)
+                    .map(skill => `
+                        <div class="skill-card glass-card animate-on-scroll">
+                            <div class="skill-header">
+                                <div class="skill-info">
+                                    <img src="${skill.icon}" alt="${skill.name}" class="skill-icon-header">
+                                    <span class="skill-name">${skill.name}</span>
+                                </div>
+                                <span class="skill-percentage">${skill.percentage}%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 0%" data-level="${skill.percentage}%"></div>
+                            </div>
                         </div>
-                        <span class="skill-percentage">${skill.percentage}%</span>
-                    </div>
-                    <div class="skill-bar">
-                        <div class="skill-level" data-level="${skill.percentage}%"></div>
-                    </div>
-                </div>
-            `;
-                skillsGrid.innerHTML += skillCardHTML;
-            });
+                    `).join('');
 
-            // Kích hoạt animation cho các skill card mới tạo
-            window.initScrollAnimations(); // GỌI LẠI HÀM NÀY ĐỂ NHẬN DIỆN CARD MỚI
-            initializeSkillBars();
+                window.initScrollAnimations();
+                
+                const skillObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.width = entry.target.getAttribute('data-level');
+                        }
+                    });
+                }, { threshold: 0.5 });
+                document.querySelectorAll('.skill-level').forEach(el => skillObserver.observe(el));
 
-        } catch (error) {
-            console.error("Failed to fetch skills/stats:", error);
-            // Vẫn hiển thị skillsMap cơ bản nếu lỗi
-             skillsGrid.innerHTML = '<p class="skills-loading">Error loading stats. Check console.</p>';
+            } catch (e) { console.error(e); }
         }
+        fetchAndDisplayHybridSkills();
     }
 
-    fetchAndDisplayHybridSkills();
-
-
-    // ======================================================
-    // --- 4. LOGIC CHO MUSIC PLAYER ---
-    // ======================================================
+    // 3. Music Player Logic
     const audio = document.getElementById('audio-source');
     const playPauseBtn = document.getElementById('play-pause-btn');
-    const prevBtn = document.getElementById('prev-btn');
-    const nextBtn = document.getElementById('next-btn');
-    const songCover = document.getElementById('song-cover');
-    const songTitle = document.getElementById('song-title');
-    const songArtist = document.getElementById('song-artist');
+    if (audio && typeof playlist !== 'undefined' && playlist.length > 0) {
+        let currentSongIndex = 0;
+        let isPlaying = false;
 
-    let currentSongIndex = 0;
-    let isPlaying = false;
+        const loadSong = (song) => {
+            document.getElementById('song-title').textContent = song.title;
+            document.getElementById('song-artist').textContent = song.artist;
+            document.getElementById('song-cover').src = song.coverPath;
+            audio.src = song.audioPath;
+        };
 
-    // Kiểm tra biến playlist có tồn tại không (từ playlist.js)
-    if (typeof playlist !== 'undefined' && playlist.length > 0) {
-        function loadSong(song) {
-            if (song) {
-                if(songTitle) songTitle.textContent = song.title;
-                if(songArtist) songArtist.textContent = song.artist;
-                if(songCover) songCover.src = song.coverPath;
-                if(audio) audio.src = song.audioPath;
-            }
-        }
+        const playSong = () => { isPlaying = true; playPauseBtn.classList.replace('fa-play', 'fa-pause'); audio.play(); };
+        const pauseSong = () => { isPlaying = false; playPauseBtn.classList.replace('fa-pause', 'fa-play'); audio.pause(); };
 
-        function playSong() {
-            if(!audio) return;
-            isPlaying = true;
-            if(playPauseBtn) playPauseBtn.classList.replace('fa-play', 'fa-pause');
-            audio.play();
-        }
-
-        function pauseSong() {
-            if(!audio) return;
-            isPlaying = false;
-            if(playPauseBtn) playPauseBtn.classList.replace('fa-pause', 'fa-play');
-            audio.pause();
-        }
-
-        function nextSong() {
+        playPauseBtn.addEventListener('click', () => isPlaying ? pauseSong() : playSong());
+        document.getElementById('next-btn').addEventListener('click', () => {
             currentSongIndex = (currentSongIndex + 1) % playlist.length;
             loadSong(playlist[currentSongIndex]);
             playSong();
-        }
-
-        function prevSong() {
+        });
+        document.getElementById('prev-btn').addEventListener('click', () => {
             currentSongIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
             loadSong(playlist[currentSongIndex]);
             playSong();
-        }
-
-        if (playPauseBtn) playPauseBtn.addEventListener('click', () => (isPlaying ? pauseSong() : playSong()));
-        if (nextBtn) nextBtn.addEventListener('click', nextSong);
-        if (prevBtn) prevBtn.addEventListener('click', prevSong);
-        if (audio) audio.addEventListener('ended', nextSong);
-
+        });
+        audio.addEventListener('ended', () => {
+            currentSongIndex = (currentSongIndex + 1) % playlist.length;
+            loadSong(playlist[currentSongIndex]);
+            playSong();
+        });
         loadSong(playlist[currentSongIndex]);
     }
 
-
-    // ======================================================
-    // --- 5. LOGIC CHO ACTIVE NAV INDICATOR ---
-    // ======================================================
-    // Logic này có thể cần chạy lại sau khi Header được load
-    // Vì vậy ta bọc nó vào hàm để load-components.js có thể gọi (nếu cần)
-    window.highlightActiveMenu = function() {
-        const navLinks = document.querySelectorAll('.main-nav a');
-        const navIndicator = document.querySelector('.nav-indicator');
-        const sections = document.querySelectorAll('main section');
-
-        function moveIndicator(targetLink) {
-            if (!navIndicator) return;
-            if (!targetLink) {
-                navIndicator.style.opacity = '0';
-                return;
-            }
-            const linkRect = targetLink.getBoundingClientRect();
-            const navRect = targetLink.parentElement.getBoundingClientRect();
-
-            navIndicator.style.width = `${linkRect.width}px`;
-            navIndicator.style.left = `${linkRect.left - navRect.left}px`;
-            navIndicator.style.opacity = '1';
-
-            navLinks.forEach(link => link.classList.remove('is-active'));
-            targetLink.classList.add('is-active');
-        }
-
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => moveIndicator(e.currentTarget));
-        });
-
-        const navSectionObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const sectionId = entry.target.id;
-                    const correspondingLink = document.querySelector(`.main-nav a[href="#${sectionId}"]`);
-                    moveIndicator(correspondingLink);
-                }
-            });
-        }, { rootMargin: "-50% 0px -50% 0px", threshold: 0 });
-
-        sections.forEach(section => {
-            navSectionObserver.observe(section);
-        });
-    };
-    
-    // Gọi lần đầu (cho các trang không dùng load-components hoặc đã có sẵn html)
-    window.highlightActiveMenu();
-
-
-    // ======================================================
-    // --- 6. LOGIC CHO LIGHT/DARK THEME ---
-    // ======================================================
-    // Cũng bọc vào hàm để gọi lại sau khi Header load xong
-    window.initThemeToggle = function() {
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const body = document.body;
-
-        // Apply initial theme
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'light-mode') {
-            body.classList.add('light-mode');
-        } else {
-            body.classList.remove('light-mode');
-        }
-
-        if (themeToggleBtn) {
-            // Xóa event cũ để tránh trùng lặp nếu gọi nhiều lần
-            const newBtn = themeToggleBtn.cloneNode(true);
-            themeToggleBtn.parentNode.replaceChild(newBtn, themeToggleBtn);
-
-            newBtn.addEventListener('click', () => {
-                body.classList.toggle('light-mode');
-                if (body.classList.contains('light-mode')) {
-                    localStorage.setItem('theme', 'light-mode');
-                } else {
-                    localStorage.setItem('theme', 'dark-mode');
-                }
-            });
-        }
-    }
-
-    // Gọi lần đầu
-    window.initThemeToggle();
-
-
-    // ======================================================
-    // --- 7. LOGIC CHO CERTIFICATE MODAL (IMAGE VIEWER WITH ZOOM) ---
-    // ======================================================
+    // 4. Certificate Modal Logic
     const pdfModal = document.getElementById('pdfModal');
-    const certImage = document.getElementById('certImage');
-    const pdfModalTitle = document.getElementById('pdfModalTitle');
-    const closeBtn = document.querySelector('.pdf-modal-close');
-    const certButtons = document.querySelectorAll('.btn-pdf-modal');
-    const zoomContainer = document.querySelector('.zoom-container');
-
-    if (pdfModal && certImage && closeBtn) {
-        certButtons.forEach(btn => {
+    if (pdfModal) {
+        const certImage = document.getElementById('certImage');
+        const closeBtn = document.querySelector('.pdf-modal-close');
+        
+        document.querySelectorAll('.btn-pdf-modal').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
-                const imgSrc = btn.getAttribute('data-cert');
-                const certTitle = btn.parentElement.querySelector('.certificate-title').textContent.replace('Chứng nhận: ', '');
-                
-                if (imgSrc) {
-                    certImage.src = imgSrc;
-                    if (pdfModalTitle) pdfModalTitle.textContent = certTitle;
-                    pdfModal.classList.add('active');
-                    document.body.style.overflow = 'hidden'; // Prevent scrolling
-                }
+                certImage.src = btn.getAttribute('data-cert');
+                document.getElementById('pdfModalTitle').textContent = btn.parentElement.querySelector('.certificate-title').textContent.replace('Chứng nhận: ', '');
+                pdfModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
             });
         });
 
-        const closeModal = () => {
-            if (!pdfModal) return;
+        closeBtn.addEventListener('click', () => {
             pdfModal.classList.remove('active');
-            setTimeout(() => {
-                if (certImage) {
-                    certImage.src = '';
-                    certImage.style.transform = 'scale(1)'; // Reset zoom
-                }
-            }, 300);
-            document.body.style.overflow = ''; // Restore scrolling
-        };
+            setTimeout(() => { certImage.src = ''; certImage.style.transform = 'scale(1)'; }, 300);
+            document.body.style.overflow = '';
+        });
 
-        closeBtn.addEventListener('click', closeModal);
-
-        // Vanilla JS Hover Zoom Logic
-        if (zoomContainer && certImage) {
+        const zoomContainer = document.querySelector('.zoom-container');
+        if (zoomContainer) {
             zoomContainer.addEventListener('mousemove', (e) => {
                 const rect = zoomContainer.getBoundingClientRect();
-                const offsetX = e.clientX - rect.left;
-                const offsetY = e.clientY - rect.top;
-                
-                const posX = (offsetX / rect.width) * 100;
-                const posY = (offsetY / rect.height) * 100;
-                
+                const posX = ((e.clientX - rect.left) / rect.width) * 100;
+                const posY = ((e.clientY - rect.top) / rect.height) * 100;
                 certImage.style.transformOrigin = `${posX}% ${posY}%`;
                 certImage.style.transform = 'scale(1.8)';
             });
-
-            zoomContainer.addEventListener('mouseleave', () => {
-                certImage.style.transform = 'scale(1)';
-            });
+            zoomContainer.addEventListener('mouseleave', () => certImage.style.transform = 'scale(1)');
         }
-
-        // Close on escape key
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && pdfModal.classList.contains('active')) {
-                closeModal();
-            }
-        });
-
-        // Close on clicking outside the container
-        pdfModal.addEventListener('click', (e) => {
-            if (e.target === pdfModal) {
-                closeModal();
-            }
-        });
     }
-
 });
