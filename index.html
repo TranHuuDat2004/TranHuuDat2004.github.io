@@ -162,10 +162,10 @@
         </section>
 
         <div class="music-player-widget">
-            <img src="assets/song-cover.png" alt="Song Cover" class="song-cover" id="song-cover">
+            <img src="assets/music/img/Koe no Kiseki.png" alt="Song Cover" class="song-cover" id="song-cover">
             <div class="song-info">
-                <h4 id="song-title">Jingle Bells</h4>
-                <p id="song-artist">Christmas Song</p>
+                <h4 id="song-title">Koe no Kiseki</h4>
+                <p id="song-artist">Anime Song</p>
             </div>
             <div class="player-controls">
                 <i class="fas fa-backward-step" id="prev-btn"></i>
@@ -742,18 +742,6 @@
                 }
             }
 
-            // Override music player for Christmas song
-            const audio = document.getElementById('audio-source');
-            const songTitle = document.getElementById('song-title');
-            const songArtist = document.getElementById('song-artist');
-            const nextBtn = document.getElementById('next-btn');
-            const prevBtn = document.getElementById('prev-btn');
-
-            if (audio) audio.src = 'assets/music/jingle-bells.mp3'; // Placeholder
-            if (songTitle) songTitle.textContent = 'Jingle Bells';
-            if (songArtist) songArtist.textContent = 'Christmas Song';
-            if (nextBtn) nextBtn.style.display = 'none';
-            if (prevBtn) prevBtn.style.display = 'none';
 
             const dropdownToggle = document.querySelector('.theme-switcher-dropdown .dropdown-toggle');
             const dropdownMenu = document.querySelector('.theme-switcher-dropdown .dropdown-menu');

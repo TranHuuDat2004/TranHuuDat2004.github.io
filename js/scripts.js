@@ -142,7 +142,7 @@ window.initParallax = function() {
                 heroBg.style.transform = `translateY(${scrolled * 0.4}px)`;
             }
             
-            // Profile card moves slightly faster (0.2 speed)
+            // Profile card moves slightly faster (0.15 speed)
             if (profileCard) {
                 profileCard.style.transform = `translateY(${scrolled * 0.15}px)`;
             }

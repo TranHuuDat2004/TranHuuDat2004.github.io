@@ -1,6 +1,12 @@
 // *** QUAN TRỌNG: Đã cập nhật theo danh sách nhạc của bạn ***
 const playlist = [
     {
+        title: 'Koe no Kiseki',
+        artist: 'Anime Song',
+        coverPath: 'assets/music/img/Koe no Kiseki.png',
+        audioPath: 'assets/music/koe no kiseki.mp3'
+    },
+    {
         title: 'On & On',
         artist: 'Cartoon, Jéja',
         coverPath: 'assets/covers/on&on.png',
