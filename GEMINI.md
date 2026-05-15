@@ -94,7 +94,7 @@ Vậy tôi hiểu rằng bạn muốn:
 
 **Gemini:** (Giải thích về Formspree và cách tích hợp)
 
-**Người dùng:** https://formspree.io/f/xpwozknb đây là form của mình bạn chỉnh file contact nhé
+**Người dùng:** https://formspree.io/ đây là form của mình bạn chỉnh file contact nhé
 
 **Gemini:** (Thực hiện tích hợp Formspree vào `contact.html`)
 
